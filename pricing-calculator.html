@@ -909,7 +909,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
       <!-- ── ODOO.SH INLINE CARD ── shown/hidden by setHostInline -->
       <div id="sh-bar-inline" class="hidden" style="margin-top:8px;background:var(--g0,white);border:1px solid var(--g200);border-radius:12px;overflow:hidden">
         <div style="background:#F0EBF4;border-bottom:1px solid #E8DFF0;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-          <span style="font-size:11px;font-weight:700;color:#714B67;display:flex;align-items:center;gap:6px">
+          <span id="lbl-sh-infra-title" style="font-size:11px;font-weight:700;color:#714B67;display:flex;align-items:center;gap:6px">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#714B67" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
             Odoo.sh — Configuración de infraestructura
           </span>
@@ -1297,6 +1297,12 @@ var LANG={
     sh_monthly_lbl:'Mensual:',
     sh_suggest_txt:'Valores sugeridos para',
     sh_suggest_cfg:'worker · storage · 1 staging',
+    sh_infra_title:'Odoo.sh — Configuración de infraestructura',
+    sh_dedicated:'⚡ Servidor dedicado',
+    sh_shared:'Servidor compartido',
+    sh_ded_limits:'Dedicado: &gt;8 workers · &gt;512 GB · &gt;20 stagings',
+    sh_suggested:'sugerido:',
+    sh_suggested_gb:'sugerido: {n} GB',
     additional_disc:'adicional',
     max_lbl:'máx',
     plan_std_short:'Estándar',
@@ -1498,6 +1504,12 @@ var LANG={
     sh_monthly_lbl:'Monthly:',
     sh_suggest_txt:'Suggested values for',
     sh_suggest_cfg:'worker · storage · 1 staging',
+    sh_infra_title:'Odoo.sh — Infrastructure configuration',
+    sh_dedicated:'⚡ Dedicated server',
+    sh_shared:'Shared server',
+    sh_ded_limits:'Dedicated: &gt;8 workers · &gt;512 GB · &gt;20 stagings',
+    sh_suggested:'suggested:',
+    sh_suggested_gb:'suggested: {n} GB',
     additional_disc:'additional',
     max_lbl:'max',
     plan_std_short:'Standard',
@@ -1700,6 +1712,12 @@ var LANG={
     sh_monthly_lbl:'Mensuel :',
     sh_suggest_txt:'Valeurs suggérées pour',
     sh_suggest_cfg:'worker · stockage · 1 staging',
+    sh_infra_title:'Odoo.sh — Configuration de l\'infrastructure',
+    sh_dedicated:'⚡ Serveur dédié',
+    sh_shared:'Serveur partagé',
+    sh_ded_limits:'Dédié : &gt;8 workers · &gt;512 Go · &gt;20 stagings',
+    sh_suggested:'suggéré :',
+    sh_suggested_gb:'suggéré : {n} Go',
     additional_disc:'supplémentaire',
     max_lbl:'max',
     plan_std_short:'Standard',
@@ -1770,6 +1788,8 @@ function setLang(l){
     'lbl-show-erp':' '+t('show_erp'),
     'lbl-no-date':t('no_date'),
     'lbl-no-ded':t('no_dedicated'),
+    'lbl-sh-infra-title':t('sh_infra_title'),
+    'ded-limits':t('sh_ded_limits'),
     'client-placeholder':t('prop_client_placeholder'),
     'lbl-planes':t('plans_lbl'),
     'lbl-add-disc':t('add_disc'),
@@ -1980,7 +2000,7 @@ function checkDed(){
   const b=document.getElementById('ded-badge');
   const limHint=document.getElementById('ded-limits');
   if(b){
-    b.textContent=curDed?'⚡ Servidor dedicado':'Sin dedicado';
+    b.textContent=curDed?t('sh_dedicated'):t('sh_shared');
     b.className='db '+(curDed?'db-hot':'db-ok');
   }
   if(limHint) limHint.style.display=curDed?'none':'block';
@@ -3928,8 +3948,8 @@ function updateShSuggestions(){
   const wkHint=document.getElementById('wk-suggest');
   const gbHint=document.getElementById('gb-suggest');
   const suggest=document.getElementById('sh-suggest');
-  if(wkHint){wkHint.textContent='sugerido: '+sugWk;wkHint.style.display='inline';}
-  if(gbHint){gbHint.textContent='sugerido: '+sugGb+' GB';gbHint.style.display='inline';}
+  if(wkHint){wkHint.textContent=t('sh_suggested')+' '+sugWk;wkHint.style.display='inline';}
+  if(gbHint){gbHint.textContent=t('sh_suggested_gb').replace('{n}',sugGb);gbHint.style.display='inline';}
   if(suggest){
     suggest.textContent=`${t('sh_suggest_txt')} ${u} ${t('edit_users')}: ${sugWk} worker${sugWk>1?'s':''} · ${sugGb} GB storage · 1 staging`;
     suggest.style.display='block';

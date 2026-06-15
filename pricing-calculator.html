@@ -386,18 +386,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   .pc-pt-chosen{display:block!important;font-size:8.5px!important}
   .pc-pt{padding-top:4px!important;margin-top:3px!important}
 
-  /* ── Impact table — rows can break across pages but not mid-row ── */
+  /* ── Impact table — scale to fit, no horizontal scroll ── */
   #view-impact{margin-bottom:8px!important}
   .impact-grid{break-inside:auto!important;page-break-inside:auto!important}
-  .impact-grid>div{border-radius:8px!important}
-  .impact-grid table{font-size:8px!important;width:100%!important;border-collapse:collapse!important}
-  .impact-grid th{padding:3px 4px!important;font-size:7.5px!important;white-space:nowrap!important}
-  .impact-grid td{padding:4px 3px!important;white-space:nowrap!important}
+  .impact-grid>div{border-radius:8px!important;overflow:hidden!important}
+  /* Remove horizontal scroll wrapper */
+  .impact-grid>div>div[style*="overflow-x"]{overflow:visible!important;width:100%!important}
+  .impact-grid table{
+    font-size:7.5px!important;width:100%!important;
+    border-collapse:collapse!important;
+    table-layout:fixed!important
+  }
+  .impact-grid th{
+    padding:3px 2px!important;font-size:7px!important;
+    white-space:normal!important;word-break:break-word;
+    overflow:hidden
+  }
+  .impact-grid td{
+    padding:3px 2px!important;
+    white-space:nowrap!important;
+    overflow:hidden;font-size:7.5px!important
+  }
   .impact-grid tr{break-inside:avoid!important;page-break-inside:avoid!important}
   .impact-grid thead{break-after:avoid!important;page-break-after:avoid!important}
-  .months-val{font-size:7.5px!important;padding:1px 3px!important}
-  .impact-grid td[colspan] div:first-child{font-size:13px!important}
-  .impact-grid td[colspan] div:not(:first-child){font-size:7px!important;margin-top:1px!important}
+  .months-val{font-size:7px!important;padding:1px 3px!important}
+  .impact-grid td[colspan] div:first-child{font-size:12px!important}
+  .impact-grid td[colspan] div:not(:first-child){font-size:6.5px!important;margin-top:1px!important}
 
   /* ── ERP ── */
   .erp-section{
@@ -1065,10 +1079,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 
     <!-- IMPACT VIEW -->
     <div id="view-impact" class="hidden" style="margin-top:.85rem">
-      <div style="margin-bottom:.75rem">
-        <div style="font-size:15px;font-weight:700;color:var(--g900)" id="lbl-impact-title">📊 Inversión acumulada: contrato vs renovar año a año</div>
-        <div style="font-size:11px;color:var(--g400);margin-top:2px" id="lbl-impact-sub">Compara el costo total de cada plan multianual vs renovar anualmente durante 5 años</div>
-      </div>
       <div class="impact-grid" id="impact-grid"></div>
     </div>
 
@@ -2970,9 +2980,9 @@ function buildImpact(){
   const colW=`width:${Math.max(72,Math.floor(480/maxYrs))}px`;
 
   const colsHtml=`<colgroup>
-    <col style="width:155px">
-    ${Array.from({length:maxYrs},()=>`<col style="${colW}">`).join('')}
-    <col style="width:115px"><col style="width:95px"><col style="width:78px">
+    <col style="width:18%">
+    ${Array.from({length:maxYrs},()=>`<col style="width:${Math.floor(42/maxYrs)}%">`).join('')}
+    <col style="width:14%"><col style="width:12%"><col style="width:8%">
   </colgroup>`;
 
   const rowsHtml=activePlans.map(yrs=>{

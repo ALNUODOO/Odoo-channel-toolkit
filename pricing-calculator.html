@@ -911,7 +911,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
         <div style="background:#F0EBF4;border-bottom:1px solid #E8DFF0;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
           <span id="lbl-sh-infra-title" style="font-size:11px;font-weight:700;color:#714B67;display:flex;align-items:center;gap:6px">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#714B67" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-            Odoo.sh — Configuración de infraestructura
+            <span id="lbl-sh-infra-text">Odoo.sh — Configuración de infraestructura</span>
           </span>
           <span id="sh-inline-cost" style="font-size:11px;color:#714B67;font-weight:600"></span>
         </div>
@@ -960,7 +960,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
             <div class="adv-row">
               <span class="adv-lbl" id="lbl-validity">Vigencia</span>
               <div class="vig-wrap">
-                <input type="text" inputmode="numeric" pattern="[0-9]*" class="vig-in" id="vig-days" placeholder="—" oninput="this.value=this.value.replace(/[^0-9]/g,'');updateExpiry()" style="width:52px">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" class="vig-in" id="vig-days" placeholder="—" oninput="this.value=this.value.replace(/[^0-9]/g,'');updateExpiry();upd()" style="width:52px">
                 <div class="ep ep-none" id="exp-pill"><span id="lbl-no-date">Sin fecha</span></div>
               </div>
               <div style="display:flex;gap:3px;flex-wrap:wrap" id="vig-chips"></div>
@@ -1788,7 +1788,7 @@ function setLang(l){
     'lbl-show-erp':' '+t('show_erp'),
     'lbl-no-date':t('no_date'),
     'lbl-no-ded':t('no_dedicated'),
-    'lbl-sh-infra-title':t('sh_infra_title'),
+    'lbl-sh-infra-text':t('sh_infra_title'),
     'ded-limits':t('sh_ded_limits'),
     'client-placeholder':t('prop_client_placeholder'),
     'lbl-planes':t('plans_lbl'),
@@ -1843,6 +1843,9 @@ function setLang_apply(ids){
   if(inlineInput) inlineInput.placeholder=t('edit_client_ph');
   if(typeof buildRegionDropdown==='function') buildRegionDropdown();
   if(typeof buildUnifiedPlanChips==='function') buildUnifiedPlanChips();
+  // Refresh Odoo.sh panel labels if active
+  if(typeof checkDed==='function') checkDed();
+  if(typeof updateShSuggestions==='function'&&curHost==='sh') updateShSuggestions();
 }
 
 const PD={
@@ -3961,6 +3964,7 @@ function setVig(d){
   if(el){
     el.value=d;
     updateExpiry();
+    upd(); // refresh buildIntro urgency and chips
   }
   // Update active chip
   document.querySelectorAll('.vig-chip').forEach(ch=>{

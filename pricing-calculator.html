@@ -3221,7 +3221,7 @@ function upd(){
     // Tags
     let tags='';
     tags+=`<span class="tag ty1">★ ${t('desc_initial')}</span>`;
-    if(hasDisc)tags+=`<span class="tag tdisc">-${(c.disc*100).toFixed(1)}% adicional</span>`;
+    if(hasDisc)tags+=`<span class="tag tdisc">-${(c.disc*100).toFixed(1)}% ${t('additional_disc')}</span>`;
     if(y>1)tags+=`<span class="tag tfrz">🔒 ${t('price_frozen')}</span>`;
     if(infOn&&y>1)tags+=`<span class="tag tinf">${t('tag_7pct')}</span>`;
     if(y>=2&&stairOn[y])tags+=`<span class="tag" style="background:#EDE7F6;color:#5E35B1;border-color:#D1C4E9">📊 ${lang==='en'?'Stairs':lang==='fr'?'Escaliers':'Escaleras'}</span>`;

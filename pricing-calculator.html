@@ -176,7 +176,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .pc-sav b{display:block;font-size:14px;font-family:'DM Mono',monospace;margin-top:1px}
 
 /* Checklist */
-.fl-ttl{font-size:9px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--g300);margin:5px 0 3px}
+.fl-ttl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin:6px 0 4px}
 .fi{display:flex;align-items:flex-start;gap:5px;padding:2px 0}
 .fck{width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 .fck-y{background:#E8F5E9}
@@ -444,7 +444,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   .fs-title{font-size:14px!important;font-weight:700!important}
   .fs-sub{font-size:9px!important}
   .fs-badge{font-size:8px!important;padding:2px 6px!important}
-  .feat-group-label{font-size:8px!important;margin:8px 0 5px!important;break-after:avoid!important}
+  .feat-group-label{font-size:9px!important;font-weight:700!important;color:#714B67!important;margin:8px 0 5px!important;break-after:avoid!important}
   /* Single column — clean ordered list, no visual disorder */
   .feat-grid{
     display:flex!important;
@@ -526,18 +526,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .fs-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:1.5rem;flex-wrap:wrap}
 
 /* Group label */
-.feat-group-label{display:flex;align-items:center;gap:10px;margin:1.5rem 0 .85rem;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g400)}
-.feat-group-line{flex:1;height:1px;background:var(--g100)}
+.feat-group-label{display:flex;align-items:center;gap:10px;margin:1.5rem 0 .85rem;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p)}
+.feat-group-line{flex:1;height:1px;background:var(--g150,#E5E5E5)}
 
-/* Feature grid: 2 hero + 4 compact */
-.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:.5rem}
-.feat-card{background:white;border:1px solid var(--g100);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .15s}
+/* Feature list — single column, icon-left layout, no grid gaps */
+.feat-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:.5rem}
+.feat-card{background:white;border:1px solid var(--g100);border-radius:12px;padding:16px;display:flex;flex-direction:row;align-items:flex-start;gap:14px;transition:box-shadow .15s}
 .feat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);border-color:var(--g200)}
-.feat-hero{grid-column:span 2;flex-direction:row;align-items:flex-start;gap:14px;padding:18px}
-.feat-icon-wrap{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-hero{padding:18px}
+.feat-icon-wrap{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .feat-hero .feat-icon-wrap{width:46px;height:46px;border-radius:12px}
 .feat-content{flex:1}
-.feat-title{font-size:13px;font-weight:600;color:var(--g900);line-height:1.3;margin-bottom:4px}
+.feat-title{font-size:13.5px;font-weight:600;color:var(--g900);line-height:1.3;margin-bottom:4px}
 .feat-hero .feat-title{font-size:14px}
 .feat-desc{font-size:11.5px;color:var(--g500);line-height:1.5}
 .feat-hero .feat-desc{font-size:12px}
@@ -567,14 +567,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 
 /* Mobile */
 @media(max-width:768px){
-  .feat-grid{grid-template-columns:1fr 1fr}
-  .feat-hero{grid-column:span 2}
   .fmt-pillars{grid-template-columns:1fr}
   .feat-multiyear-banner{padding:20px}
 }
 @media(max-width:480px){
-  .feat-grid{grid-template-columns:1fr}
-  .feat-hero{flex-direction:column}
+  .feat-card{flex-direction:column}
 }
 
 /* ══ INLINE EDITING SYSTEM ══════════════════════════════════════════════ */
@@ -1118,7 +1115,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
       <div class="fs-hdr">
         <div style="flex:1">
           <div class="fs-title" id="lbl-features-title">Todo lo que tu empresa necesita. Un solo precio.</div>
-          <div class="fs-sub" id="fs-sub" style="margin-top:3px"><span id="lbl-fs-sub">Sin módulos adicionales de pago</span> · <span style="color:var(--g400);font-size:11px" id="lbl-fs-nosurprises">Sin extras. Sin sorpresas.</span></div>
+          <div class="fs-sub" id="fs-sub" style="margin-top:3px"><span id="lbl-fs-sub">Sin módulos adicionales de pago</span> · <span style="color:var(--g500);font-size:11px" id="lbl-fs-nosurprises">Sin extras. Sin sorpresas.</span></div>
         </div>
         <div class="fs-badge" id="fs-badge" style="font-size:12px;padding:6px 14px"><span id="lbl-fs-badge">✓ Todo incluido</span></div>
       </div>

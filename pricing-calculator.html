@@ -387,9 +387,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   .pc-pt{padding-top:4px!important;margin-top:3px!important}
 
   /* ── Impact table — scale to fit, no horizontal scroll ── */
-  #view-impact{margin-bottom:8px!important}
+  #view-impact{margin-bottom:14px!important}
   .impact-grid{break-inside:auto!important;page-break-inside:auto!important}
-  .impact-grid>div{border-radius:8px!important;overflow:hidden!important}
+  .impact-grid>div{border-radius:8px!important;overflow:hidden!important;border:1px solid #ddd!important}
   /* Remove horizontal scroll wrapper */
   .impact-grid>div>div[style*="overflow-x"]{overflow:visible!important;width:100%!important}
   .impact-grid table{
@@ -403,15 +403,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
     overflow:hidden
   }
   .impact-grid td{
-    padding:3px 2px!important;
-    white-space:nowrap!important;
+    padding:4px 3px!important;
     overflow:hidden;font-size:7.5px!important
   }
+  /* Plan name column: allow wrap, never truncate (e.g. "Máximo ahorro") */
+  .impact-grid td:first-child{white-space:normal!important}
+  .impact-grid td:first-child div{white-space:normal!important;word-break:break-word!important}
+  /* Other columns stay compact */
+  .impact-grid td:not(:first-child){white-space:nowrap!important}
   .impact-grid tr{break-inside:avoid!important;page-break-inside:avoid!important}
   .impact-grid thead{break-after:avoid!important;page-break-after:avoid!important}
   .months-val{font-size:7px!important;padding:1px 3px!important}
+  /* Contract cell: bigger total, more readable rate line */
   .impact-grid td[colspan] div:first-child{font-size:12px!important}
-  .impact-grid td[colspan] div:not(:first-child){font-size:6.5px!important;margin-top:1px!important}
+  .impact-grid td[colspan] div:not(:first-child){
+    font-size:7.5px!important;margin-top:2px!important;
+    white-space:normal!important;line-height:1.3!important
+  }
+  /* Footer note: clearer divider before next section */
+  .impact-grid+*{margin-top:6px!important}
+  .impact-grid>div>div:last-child{
+    border-top:1px solid #ddd!important;
+    padding:6px 12px!important;font-size:7px!important
+  }
 
   /* ── ERP ── */
   .erp-section{
@@ -2488,6 +2502,34 @@ window.addEventListener('beforeprint', ()=>{
     el.style.pageBreakInside='avoid';
   });
 
+  // ── Dynamic pagination: intro+block1 on page 1, block2+block3 on page 2, features on page 3 ──
+  const showPlans=document.getElementById('show-plans')?.checked;
+  const showImpact=document.getElementById('show-impact')?.checked;
+  const showErpChk=document.getElementById('show-erp')?.checked;
+
+  // Build ordered list of visible blocks (DOM order: plans, impact, erp)
+  const blocks=[];
+  if(showPlans) blocks.push(document.getElementById('view-plans'));
+  if(showImpact) blocks.push(document.getElementById('view-impact'));
+  if(showErpChk) blocks.push(document.getElementById('erp-section'));
+
+  // Reset any previous page-break inline styles
+  [document.getElementById('view-plans'),document.getElementById('view-impact'),document.getElementById('erp-section')].forEach(el=>{
+    if(el){el.style.removeProperty('break-before');el.style.removeProperty('page-break-before');}
+  });
+
+  // Block #2 (index 1) starts a new page; block #1 stays with intro
+  if(blocks[1]){
+    blocks[1].style.breakBefore='page';
+    blocks[1].style.pageBreakBefore='always';
+  }
+  // Features always starts its own new page (handled by CSS already, reinforce here)
+  const featSec=document.getElementById('features-sec');
+  if(featSec){
+    featSec.style.breakBefore='page';
+    featSec.style.pageBreakBefore='always';
+  }
+
   // Update print header with current data
   const cl=document.getElementById('client-name-inline')?.value||'';
   const pn=document.getElementById('print-client-name');
@@ -2519,6 +2561,11 @@ window.addEventListener('afterprint', ()=>{
   // Restore erp if we hid it
   const erp=document.getElementById('erp-section');
   if(erp) delete erp.dataset.printHide;
+  // Clean up dynamic page-break styles
+  ['view-plans','view-impact','erp-section','features-sec'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.style.removeProperty('break-before');el.style.removeProperty('page-break-before');}
+  });
 });
 // ══ END PRINT HANDLERS ══════════════════════════════════
 function getPT(totalUSD,rgn){
@@ -2980,8 +3027,8 @@ function buildImpact(){
   const colW=`width:${Math.max(72,Math.floor(480/maxYrs))}px`;
 
   const colsHtml=`<colgroup>
-    <col style="width:18%">
-    ${Array.from({length:maxYrs},()=>`<col style="width:${Math.floor(42/maxYrs)}%">`).join('')}
+    <col style="width:21%">
+    ${Array.from({length:maxYrs},()=>`<col style="width:${Math.floor(39/maxYrs)}%">`).join('')}
     <col style="width:14%"><col style="width:12%"><col style="width:8%">
   </colgroup>`;
 
@@ -3047,11 +3094,10 @@ function buildImpact(){
       <td style="padding:11px 12px 11px ${isRec?'10px':'12px'};border-bottom:0.5px solid var(--g100)">
         <div style="display:flex;align-items:flex-start;gap:7px">
           <div style="width:7px;height:7px;border-radius:50%;background:${isRec?'#714B67':'var(--g200)'};flex-shrink:0;margin-top:4px"></div>
-          <div>
-            <div style="font-size:13px;font-weight:600;color:${isRec?'#714B67':'var(--g800)'}">
-              ${PI[yrs].months}${isRec?`<span style="font-size:9px;padding:2px 7px;border-radius:20px;background:#714B67;color:white;font-weight:500;margin-left:6px;vertical-align:middle">${t('best_value')}</span>`:''}
-            </div>
-            <div style="font-size:10px;color:var(--g400);margin-top:2px">${PI[yrs].name}${discPct}</div>
+          <div style="min-width:0">
+            <div style="font-size:13px;font-weight:600;color:${isRec?'#714B67':'var(--g800)'};line-height:1.3">${PI[yrs].months}</div>
+            ${isRec?`<span style="font-size:8.5px;padding:2px 7px;border-radius:20px;background:#714B67;color:white;font-weight:500;display:inline-block;margin-top:3px;white-space:nowrap">${t('best_value')}</span>`:''}
+            <div style="font-size:10px;color:var(--g400);margin-top:3px">${PI[yrs].name}${discPct}</div>
           </div>
         </div>
       </td>

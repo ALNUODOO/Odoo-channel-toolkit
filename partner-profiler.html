@@ -77,7 +77,7 @@ body{padding-bottom:140px;font-family:'Segoe UI',system-ui,sans-serif;background
 .block-rf-pill{background:rgba(239,68,68,.35);color:#fecaca;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
 #progressBar{transition:width .5s ease}
 #globalProgressStrip{background:rgba(0,0,0,.15);border-top:1px solid rgba(255,255,255,.1)}
-.btn-locked{opacity:.4;cursor:not-allowed!important;pointer-events:none;filter:grayscale(.4)}
+.btn-locked{opacity:.55;filter:grayscale(.5);cursor:help}
 .role-pill-recruiter{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
 .role-pill-pm{background:#ede9fe;color:#5b21b6;border:1px solid #ddd6fe}
 .role-pill-ambos{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
@@ -1588,6 +1588,12 @@ function buildWeightSummaryHTML(){
 
 // ── PDF EXPORT ────────────────────────────────────────────────────
 document.getElementById('btnPDF').addEventListener('click',()=>{
+  // If the button is currently locked, do NOT silently no-op — tell the user exactly why.
+  if(document.getElementById('btnPDF').classList.contains('btn-locked')){
+    updateExportState(); // refresh the detail banners so they're current
+    document.getElementById('exportBlockerBanner').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
   const partner=document.getElementById('partnerName').value.trim(),pm=document.getElementById('partnerManager').value.trim();
   if(!partner||!pm){alert(L('alertNoData'));return;}
   const totalScore=document.getElementById('footerScore').textContent;
@@ -1646,15 +1652,51 @@ document.getElementById('btnPDF').addEventListener('click',()=>{
   const src=document.getElementById('pdfArea');
   src.classList.remove('hidden');
   isExportingPDF=true;
-  setTimeout(()=>{ isExportingPDF=false; }, 15000); // safety net in case .then/.catch never fire
-  html2pdf().set({margin:7,filename:`Qualification_${partner.replace(/\s+/g,'_')}_${new Date().toISOString().split('T')[0]}.pdf`,html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}})
-    .from(src).save()
-    .then(()=>{src.classList.add('hidden'); isExportingPDF=false;})
-    .catch(err=>{ console.error('PDF export failed:',err); alert(currentLang==='fr'?'Erreur lors de la génération du PDF. Veuillez réessayer.':currentLang==='en'?'PDF generation failed. Please try again.':'Error al generar el PDF. Intenta de nuevo.'); src.classList.add('hidden'); isExportingPDF=false; });
+  const safetyTimer=setTimeout(()=>{ isExportingPDF=false; }, 15000); // safety net in case .then/.catch never fire
+
+  // Defensive wrapper: html2pdf can sometimes throw synchronously or silently fail to
+  // reject its promise (e.g. canvas rendering edge cases). try/catch + finally guarantees
+  // the UI never gets stuck and the user always sees feedback either way.
+  try {
+    if (typeof html2pdf === 'undefined') {
+      throw new Error('html2pdf library not loaded');
+    }
+    html2pdf().set({
+      margin:7,
+      filename:`Qualification_${partner.replace(/\s+/g,'_')}_${new Date().toISOString().split('T')[0]}.pdf`,
+      html2canvas:{scale:2,useCORS:true,logging:false},
+      jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}
+    })
+      .from(src)
+      .save()
+      .then(()=>{
+        clearTimeout(safetyTimer);
+        src.classList.add('hidden');
+        isExportingPDF=false;
+      })
+      .catch(err=>{
+        clearTimeout(safetyTimer);
+        console.error('PDF export failed (promise rejected):',err);
+        alert(currentLang==='fr'?'Erreur lors de la génération du PDF. Veuillez réessayer.':currentLang==='en'?'PDF generation failed. Please try again.':'Error al generar el PDF. Intenta de nuevo.');
+        src.classList.add('hidden');
+        isExportingPDF=false;
+      });
+  } catch(syncErr) {
+    clearTimeout(safetyTimer);
+    console.error('PDF export failed (synchronous throw):',syncErr);
+    alert(currentLang==='fr'?'Erreur lors de la génération du PDF. Veuillez réessayer.':currentLang==='en'?'PDF generation failed. Please try again.':'Error al generar el PDF. Intenta de nuevo.');
+    src.classList.add('hidden');
+    isExportingPDF=false;
+  }
 });
 
 // ── EXCEL EXPORT ──────────────────────────────────────────────────
 document.getElementById('btnXLSX').addEventListener('click',()=>{
+  if(document.getElementById('btnXLSX').classList.contains('btn-locked')){
+    updateExportState();
+    document.getElementById('exportBlockerBanner').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
   const partner=document.getElementById('partnerName').value.trim(),pm=document.getElementById('partnerManager').value.trim();
   if(!partner||!pm){alert(L('alertNoData'));return;}
   const totalScore=document.getElementById('footerScore').textContent;

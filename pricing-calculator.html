@@ -313,12 +313,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 
   /* ── Page setup — hide browser URL header/footer ── */
   @page{
-    margin:10mm 12mm;
-    size:A4 portrait;
+    margin:10mm 14mm;
+    size:A4 landscape;
   }
   /* Chrome/Edge: suppress URL in header/footer */
   @page:first{margin-top:10mm}
-  html{font-size:11px;-webkit-print-color-adjust:exact}
+  html{font-size:11.5px;-webkit-print-color-adjust:exact}
   body{background:white!important;margin:0;padding:0}
   .page{padding:0;max-width:100%;width:100%}
   .content{gap:8px!important;display:flex!important;flex-direction:column!important}
@@ -362,8 +362,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   #view-plans{margin-bottom:8px!important}
   .plans-grid{
     display:grid!important;
-    grid-template-columns:repeat(auto-fit,minmax(110px,1fr))!important;
-    gap:5px!important
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr))!important;
+    gap:6px!important
   }
   .pc{
     break-inside:avoid!important;page-break-inside:avoid!important;
@@ -393,18 +393,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   /* Remove horizontal scroll wrapper */
   .impact-grid>div>div[style*="overflow-x"]{overflow:visible!important;width:100%!important}
   .impact-grid table{
-    font-size:7.5px!important;width:100%!important;
+    font-size:8.5px!important;width:100%!important;
     border-collapse:collapse!important;
     table-layout:fixed!important
   }
   .impact-grid th{
-    padding:3px 2px!important;font-size:7px!important;
+    padding:4px 3px!important;font-size:7.5px!important;
     white-space:normal!important;word-break:break-word;
     overflow:hidden
   }
   .impact-grid td{
-    padding:4px 3px!important;
-    overflow:hidden;font-size:7.5px!important
+    padding:5px 4px!important;
+    overflow:hidden;font-size:8.5px!important
   }
   /* Plan name column: allow wrap, never truncate (e.g. "Máximo ahorro") */
   .impact-grid td:first-child{white-space:normal!important}
@@ -445,11 +445,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   .fs-sub{font-size:9px!important}
   .fs-badge{font-size:8px!important;padding:2px 6px!important}
   .feat-group-label{font-size:9px!important;font-weight:700!important;color:#714B67!important;margin:8px 0 5px!important;break-after:avoid!important}
-  /* Single column — clean ordered list, no visual disorder */
+  /* Two columns — landscape has room, still ordered top-to-bottom-then-across won't apply since flex wraps */
   .feat-grid{
-    display:flex!important;
-    flex-direction:column!important;
-    gap:4px!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,1fr)!important;
+    gap:5px!important;
     break-inside:auto!important
   }
   .feat-card{

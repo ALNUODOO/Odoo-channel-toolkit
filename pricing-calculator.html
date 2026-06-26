@@ -305,7 +305,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .stair-tier-badge{font-size:9px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:20px;white-space:nowrap}
 .stair-input{width:60px;padding:3px 6px;border:1px solid var(--g200);border-radius:5px;font-size:12px;font-family:'DM Mono',monospace;text-align:center}
 .stair-input:focus{outline:none;border-color:var(--p)}
-.stair-input-lbl{font-size:10px;color:var(--g500);white-space:nowrap}
+.stair-input-over{border-color:#F59E0B!important;background:#FFFBEB!important}
+.stair-input-lbl{font-size:10px;color:var(--g600);white-space:nowrap}
 @page{margin:1cm;size:auto}
 @media print{
   /* ── Color accuracy ── */
@@ -339,7 +340,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   /* ── Visible sections ── */
   #view-plans:not(.hidden),
   #view-impact:not(.hidden),
-  #features-sec,
+  #features-sec:not(.hidden),
   #erp-section:not([data-print-hide]){
     display:block!important;visibility:visible!important;opacity:1!important
   }
@@ -526,21 +527,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .fs-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:1.5rem;flex-wrap:wrap}
 
 /* Group label */
-.feat-group-label{display:flex;align-items:center;gap:10px;margin:1.5rem 0 .85rem;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p)}
+.feat-group-label{display:flex;align-items:center;gap:10px;margin:1rem 0 .5rem;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p)}
 .feat-group-line{flex:1;height:1px;background:var(--g150,#E5E5E5)}
 
 /* Feature list — single column, icon-left layout, no grid gaps */
-.feat-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:.5rem}
-.feat-card{background:white;border:1px solid var(--g100);border-radius:12px;padding:16px;display:flex;flex-direction:row;align-items:flex-start;gap:14px;transition:box-shadow .15s}
+.feat-grid{display:flex;flex-direction:column;gap:4px;margin-bottom:.5rem}
+.feat-card{background:white;border:1px solid var(--g100);border-radius:10px;padding:10px 14px;display:flex;flex-direction:row;align-items:center;gap:12px;transition:box-shadow .15s}
 .feat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);border-color:var(--g200)}
-.feat-hero{padding:18px}
-.feat-icon-wrap{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.feat-hero .feat-icon-wrap{width:46px;height:46px;border-radius:12px}
+.feat-hero{padding:12px 14px}
+.feat-icon-wrap{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-hero .feat-icon-wrap{width:38px;height:38px;border-radius:10px}
 .feat-content{flex:1}
-.feat-title{font-size:13.5px;font-weight:600;color:var(--g900);line-height:1.3;margin-bottom:4px}
-.feat-hero .feat-title{font-size:14px}
-.feat-desc{font-size:11.5px;color:var(--g500);line-height:1.5}
-.feat-hero .feat-desc{font-size:12px}
+.feat-title{font-size:12.5px;font-weight:600;color:var(--g900);line-height:1.25;margin-bottom:2px}
+.feat-hero .feat-title{font-size:13px}
+.feat-desc{font-size:11px;color:var(--g500);line-height:1.4}
+.feat-hero .feat-desc{font-size:11.5px}
 
 /* Multi-year banner — section CLIMAX */
 .feat-multiyear-banner{background:linear-gradient(135deg,#4A2545 0%,#6B3D65 50%,#714B67 100%);border-radius:16px;padding:28px 32px;margin-bottom:2rem;color:white}
@@ -625,7 +626,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .pip-cycle:hover{background:#E1F5EE;border-color:var(--s)}
 
 /* Advanced button */
-.pip-adv{border-style:dashed;color:var(--g400);padding:4px 10px!important}
+.pip-adv{border-style:solid;border-color:var(--g200);color:var(--g700);font-weight:600;padding:4px 12px!important;background:white;transition:all .15s}
+.pip-adv:hover{border-color:var(--p);color:var(--p);background:var(--pp)}
 .pip-adv:hover{border-color:var(--g400);color:var(--g600);border-style:solid}
 
 /* Region dropdown */
@@ -654,7 +656,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .adv-panel-inner{padding:12px 14px;display:flex;flex-direction:row;gap:10px;flex-wrap:wrap;align-items:flex-start}
 .adv-step{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 14px;flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px}
 .adv-step-hdr{display:flex;align-items:center;gap:7px;margin-bottom:2px}
-.adv-step-num{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--g400);text-transform:uppercase;background:var(--g200);padding:2px 6px;border-radius:20px;white-space:nowrap}
+.adv-step-num{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:white;text-transform:uppercase;background:var(--p);padding:3px 8px;border-radius:20px;white-space:nowrap}
 .adv-step-title{font-size:11px;font-weight:700;color:var(--g700);white-space:nowrap}
 .adv-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .adv-lbl{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g400);white-space:nowrap;min-width:fit-content}
@@ -668,8 +670,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   background:white!important;color:var(--p)!important;font-weight:700!important;
 }
 .pip-host.pip-host-active svg,.pip-host.pip-active svg{stroke:var(--p)!important;}
-.pip-host:not(.pip-host-active):not(.pip-active){background:white;color:var(--g300);}
-.pip-host:not(.pip-host-active):not(.pip-active):hover{color:var(--p);}
+.pip-host:not(.pip-host-active):not(.pip-active){background:white;color:var(--g700);}
+.pip-host:not(.pip-host-active):not(.pip-active):hover{color:var(--p);background:var(--pp);}
 
 /* Progressive pills rows */
 .pip-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px;width:100%;}
@@ -682,15 +684,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .pip-plan:not(.pip-active){color:var(--g500)}
 
 /* Hosting badge (Annual only) */
-.pip-host-badge{font-size:8px;background:var(--g200);color:var(--g500);padding:1px 5px;border-radius:8px;margin-left:3px;font-weight:600;letter-spacing:.03em}
+.pip-host-badge{font-size:8px;background:var(--g300);color:white;padding:1px 5px;border-radius:8px;margin-left:3px;font-weight:600;letter-spacing:.03em}
 .pip-host.pip-host-active .pip-host-badge{background:rgba(255,255,255,.25);color:white}
 
 /* Unified plan chip with inline discount */
 .upc-wrap{display:flex;flex-direction:column;align-items:center;gap:3px}
 .upc-chip{min-width:52px;text-align:center}
-.upc-disc{display:flex;align-items:center;gap:1px;background:var(--g100);border-radius:8px;padding:2px 6px}
-.upc-input{width:44px;border:none;background:transparent;font-size:10px;font-weight:600;color:var(--p);outline:none;text-align:center;font-family:inherit}
-.upc-pct{font-size:10px;color:var(--g400);font-weight:500}
+.upc-disc{display:flex;align-items:center;gap:1px;background:var(--g150,#ECECEC);border:1px solid var(--g200);border-radius:8px;padding:3px 7px}
+.upc-input{width:44px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--p);outline:none;text-align:center;font-family:inherit}
+.upc-pct{font-size:11px;color:var(--g700);font-weight:600}
 
 /* Micro-label inside pill group */
 .pip-billing-group{padding-left:2px}
@@ -720,6 +722,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   <!-- Hidden inputs kept for JS compatibility -->
   <input type="checkbox" id="show-plans" checked onchange="toggleSection('plans',this.checked)" style="display:none">
   <input type="checkbox" id="show-impact" onchange="toggleSection('impact',this.checked)" style="display:none">
+  <input type="checkbox" id="show-features" checked onchange="toggleSection('features',this.checked)" style="display:none">
   <input type="checkbox" id="inf-chk" style="display:none">
   <button class="sb" id="bill-m" onclick="setBilling('monthly')" style="display:none"></button>
   <button class="sb" id="bill-a" onclick="setBilling('annual')" style="display:none"></button>
@@ -904,13 +907,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- Advanced settings -->
           <div class="pip pip-adv" id="pip-adv-btn" onclick="toggleAdvPanel()">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span id="pip-adv-lbl">⚙ Avanzado</span>
+            <span id="pip-adv-lbl">Avanzado</span>
           </div>
         </div>
 
         <!-- ROW 2: Hosting — only shows if Custom -->
         <div class="pip-row pip-row-hosting hidden" id="pip-row-hosting">
-          <div style="font-size:10px;color:var(--g400);font-weight:600;letter-spacing:.05em;align-self:center" id="pip-lbl-hosting-row">ALOJAMIENTO</div>
+          <div style="font-size:10px;color:var(--g600);font-weight:700;letter-spacing:.06em;align-self:center" id="pip-lbl-hosting-row">ALOJAMIENTO</div>
           <div class="pip-group">
             <!-- Online: always available for Custom -->
             <div class="pip pip-host pip-host-active" id="pip-host-online" onclick="setHostInline('online')">
@@ -945,21 +948,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end">
             <div class="adv-field">
               <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
-                Workers <span style="font-size:9px;color:var(--g300)">(máx 256)</span>
+                Workers <span style="font-size:9px;color:var(--g500)">(máx 256)</span>
                 <span id="wk-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
               </label>
               <input type="number" id="wk" min="1" max="256" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
             </div>
             <div class="adv-field">
               <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
-                Storage GB <span style="font-size:9px;color:var(--g300)">(máx 4096)</span>
+                Storage GB <span style="font-size:9px;color:var(--g500)">(máx 4096)</span>
                 <span id="gb-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
               </label>
               <input type="number" id="gb" min="1" max="4096" value="20" oninput="clampSh();checkDed();upd()" style="width:80px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
             </div>
             <div class="adv-field">
               <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
-                Stagings <span style="font-size:9px;color:var(--g300)">(máx 20)</span>
+                Stagings <span style="font-size:9px;color:var(--g500)">(máx 20)</span>
               </label>
               <input type="number" id="stg" min="0" max="20" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
             </div>
@@ -979,7 +982,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- STEP 01: Vigencia + Planes + Descuentos -->
           <div class="adv-step">
             <div class="adv-step-hdr">
-              <span class="adv-step-num">PASO 01</span>
+              <span class="adv-step-num" id="adv-step1-num">PASO 01</span>
               <span class="adv-step-title" id="adv-step1-title">Planes & Vigencia</span>
             </div>
             <div class="adv-row">
@@ -999,7 +1002,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- STEP 02: Vista + Cláusula 5.2 -->
           <div class="adv-step">
             <div class="adv-step-hdr">
-              <span class="adv-step-num">PASO 02</span>
+              <span class="adv-step-num" id="adv-step2-num">PASO 02</span>
               <span class="adv-step-title" id="adv-step2-title">Vista & Ajustes</span>
             </div>
             <div class="adv-row" style="gap:12px;align-items:center;flex-wrap:wrap">
@@ -1013,8 +1016,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
                 <span id="lbl-vimpact2">Impacto</span>
               </label>
               <label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer">
-                <input type="checkbox" id="adv-show-erp" checked onchange="document.getElementById('show-erp').checked=this.checked;document.getElementById('erp-section').style.display=this.checked?'block':'none'" style="accent-color:var(--s)">
+                <input type="checkbox" id="adv-show-erp" checked onchange="document.getElementById('show-erp').checked=this.checked;document.getElementById('erp-section').style.display=this.checked?'block':'none'" style="accent-color:var(--p)">
                 <span id="lbl-verp">ERP</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer">
+                <input type="checkbox" id="adv-show-features" checked onchange="toggleSection('features',this.checked);document.getElementById('show-features').checked=this.checked" style="accent-color:var(--p)">
+                <span id="lbl-vfeatures">Features</span>
               </label>
             </div>
             <div class="adv-row" style="gap:8px;align-items:center;flex-wrap:wrap">
@@ -1035,7 +1042,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- STEP 03: Términos de pago -->
           <div class="adv-step">
             <div class="adv-step-hdr">
-              <span class="adv-step-num">PASO 03</span>
+              <span class="adv-step-num" id="adv-step3-num">PASO 03</span>
               <span class="adv-step-title" id="adv-step3-title">Términos de pago</span>
             </div>
             <div style="font-size:10px;color:var(--g400);margin-bottom:2px" id="adv-step3-sub">Selecciona los planes donde quieres mostrar términos de pago:</div>
@@ -1045,7 +1052,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- STEP 04: Escaleras / Stairs -->
           <div class="adv-step" style="flex-basis:100%">
             <div class="adv-step-hdr">
-              <span class="adv-step-num">PASO 04</span>
+              <span class="adv-step-num" id="adv-step4-num">PASO 04</span>
               <span class="adv-step-title" id="adv-step4-title">Escaleras <span id="adv-step4-sub" style="font-size:9px;font-weight:400;color:var(--g400)">(Stairs) · Solo planes multianuales ≥ 24m</span></span>
             </div>
             <div id="stair-plans-container" style="display:flex;flex-wrap:wrap;gap:10px"></div>
@@ -1138,7 +1145,7 @@ var LANG={
     billing_ctx:'Comparativa',
     star_hint:'Marca con estrella el plan que quieres resaltar como recomendado',
     billing_monthly:'Mensual', billing_annual:'Anual',
-    view:'VISTA', view_plans:'Planes', view_impact:'Impacto',
+    view:'VISTA', view_plans:'Planes', view_impact:'Impacto', view_features:'Features',
     toggle_7:'+7% anual · cláusula 5.2',
     btn_copy:'Copiar', btn_pdf:'PDF',
     region:'REGIÓN', users:'USUARIOS', plan:'PLAN',
@@ -1293,6 +1300,7 @@ var LANG={
     page_title:'Planes de Odoo Enterprise',
     app_subtitle:'/ Calculadora',
     adv_step1:'Planes & Vigencia',
+    adv_step_num1:'PASO 01', adv_step_num2:'PASO 02', adv_step_num3:'PASO 03', adv_step_num4:'PASO 04',
     adv_step2:'Vista & Ajustes',
     adv_step3:'Términos de pago',
     adv_step4:'Escaleras',
@@ -1314,6 +1322,7 @@ var LANG={
     stair_users_lbl:'usu.',
     stair_month_lbl:'Mes',
     stair_title:'Escaleras · Despliegue escalonado',
+    stair_no_plans:'Activa planes multianuales (24m+) en el Paso 01 para configurar escaleras.',
     sh_annual_lbl:'Anual:',
     sh_monthly_lbl:'Mensual:',
     sh_suggest_txt:'Valores sugeridos para',
@@ -1334,7 +1343,7 @@ var LANG={
     edit_users:'usuarios',
     edit_plan_label:'Plan',
     edit_hosting_label:'Alojamiento',
-    edit_advanced:'⚙ Configuración avanzada',
+    edit_advanced:'Avanzado',
     edit_advanced_close:'Cerrar',
     edit_client_ph:'Nombre del cliente...',
     feat_no_modules_sub:'Sin módulos. Sin extras. Sin sorpresas.',
@@ -1345,7 +1354,7 @@ var LANG={
     billing_ctx:'Comparison',
     star_hint:'Click the star to mark a plan as recommended',
     billing_monthly:'Monthly', billing_annual:'Annual',
-    view:'VIEW', view_plans:'Plans', view_impact:'Impact',
+    view:'VIEW', view_plans:'Plans', view_impact:'Impact', view_features:'Features',
     toggle_7:'+7% annual · clause 5.2',
     btn_copy:'Copy', btn_pdf:'PDF',
     region:'REGION', users:'USERS', plan:'PLAN',
@@ -1500,6 +1509,7 @@ var LANG={
     page_title:'Odoo Enterprise Plans',
     app_subtitle:'/ Calculator',
     adv_step1:'Plans & Validity',
+    adv_step_num1:'STEP 01', adv_step_num2:'STEP 02', adv_step_num3:'STEP 03', adv_step_num4:'STEP 04',
     adv_step2:'View & Settings',
     adv_step3:'Payment terms',
     adv_step4:'Stairs',
@@ -1521,6 +1531,7 @@ var LANG={
     stair_users_lbl:'users',
     stair_month_lbl:'Month',
     stair_title:'Stairs · Staggered deployment',
+    stair_no_plans:'Enable multi-year plans (24m+) in Step 01 to configure stairs.',
     sh_annual_lbl:'Annual:',
     sh_monthly_lbl:'Monthly:',
     sh_suggest_txt:'Suggested values for',
@@ -1541,7 +1552,7 @@ var LANG={
     edit_users:'users',
     edit_plan_label:'Plan',
     edit_hosting_label:'Hosting',
-    edit_advanced:'⚙ Advanced settings',
+    edit_advanced:'Advanced',
     edit_advanced_close:'Close',
     edit_client_ph:'Client name...',
     feat_no_modules_sub:'No modules. No add-ons. No surprises.',
@@ -1553,7 +1564,7 @@ var LANG={
     billing_ctx:'Comparatif',
     star_hint:'Cliquez sur l\'étoile pour marquer un plan comme recommandé',
     billing_monthly:'Mensuel', billing_annual:'Annuel',
-    view:'VUE', view_plans:'Plans', view_impact:'Impact',
+    view:'VUE', view_plans:'Plans', view_impact:'Impact', view_features:'Fonctionnalités',
     toggle_7:'+7% annuel · clause 5.2',
     btn_copy:'Copier', btn_pdf:'PDF',
     region:'RÉGION', users:'UTILISATEURS', plan:'PLAN',
@@ -1708,6 +1719,7 @@ var LANG={
     page_title:'Plans Odoo Enterprise',
     app_subtitle:'/ Calculateur',
     adv_step1:'Plans & Validité',
+    adv_step_num1:'ÉTAPE 01', adv_step_num2:'ÉTAPE 02', adv_step_num3:'ÉTAPE 03', adv_step_num4:'ÉTAPE 04',
     adv_step2:'Vue & Paramètres',
     adv_step3:'Conditions de paiement',
     adv_step4:'Escaliers',
@@ -1729,6 +1741,7 @@ var LANG={
     stair_users_lbl:'util.',
     stair_month_lbl:'Mois',
     stair_title:'Escaliers · Déploiement échelonné',
+    stair_no_plans:'Activez les plans pluriannuels (24m+) à l\'Étape 01 pour configurer les escaliers.',
     sh_annual_lbl:'Annuel :',
     sh_monthly_lbl:'Mensuel :',
     sh_suggest_txt:'Valeurs suggérées pour',
@@ -1749,7 +1762,7 @@ var LANG={
     edit_users:'utilisateurs',
     edit_plan_label:'Plan',
     edit_hosting_label:'Hébergement',
-    edit_advanced:'⚙ Paramètres avancés',
+    edit_advanced:'Avancé',
     edit_advanced_close:'Fermer',
     edit_client_ph:'Nom du client...',
     feat_no_modules_sub:'Sans modules. Sans extras. Sans surprises.',
@@ -1793,9 +1806,14 @@ function setLang(l){
     'lbl-fs-badge':t('features_all'),
     'lbl-vplanes2':t('view_plans'),
     'lbl-vimpact2':t('view_impact'),
+    'lbl-vfeatures':t('view_features'),
     'lbl-verp':'ERP',
     'lbl-7pct2':t('lbl_7pct_compound'),
     'adv-step1-title':t('adv_step1'),
+    'adv-step1-num':t('adv_step_num1'),
+    'adv-step2-num':t('adv_step_num2'),
+    'adv-step3-num':t('adv_step_num3'),
+    'adv-step4-num':t('adv_step_num4'),
     'adv-step2-title':t('adv_step2'),
     'adv-step3-title':t('adv_step3'),
     'adv-step3-sub':t('select_plans_pt'),
@@ -1867,6 +1885,8 @@ function setLang_apply(ids){
   // Refresh Odoo.sh panel labels if active
   if(typeof checkDed==='function') checkDed();
   if(typeof updateShSuggestions==='function'&&curHost==='sh') updateShSuggestions();
+  // Refresh stairs panel (Step 04) so its hardcoded strings reflect new language
+  if(typeof buildStairUI==='function') buildStairUI(true);
 }
 
 const PD={
@@ -2000,7 +2020,6 @@ function setHost(h,el){
   curHost=h;
   document.querySelectorAll('.hm').forEach(b=>b.classList.remove('on'));
   el.classList.add('on');
-  document.getElementById('sh-bar').classList.toggle('hidden',h!=='sh');
   const shInline=document.getElementById('sh-bar-inline');
   if(shInline) shInline.classList.toggle('hidden',h!=='sh');
   // Sync inline pills
@@ -2037,6 +2056,9 @@ function toggleInf(){
 function toggleSection(section,show){
   if(section==='plans'){
     document.getElementById('view-plans').classList.toggle('hidden',!show);
+  } else if(section==='features'){
+    const el=document.getElementById('features-sec');
+    if(el) el.classList.toggle('hidden',!show);
   } else {
     const el=document.getElementById('view-impact');
     el.classList.toggle('hidden',!show);
@@ -2098,7 +2120,7 @@ function buildUnifiedPlanChips(){
               setDisc(${y},parseFloat(this.value)||0)"
             onclick="event.stopPropagation()"
             style="width:44px" placeholder="0" title="${t('max')} ${DMAX[y]}%">
-          <span class="upc-pct">% <span style="font-size:9px;color:var(--g400)">(máx ${DMAX[y]})</span></span>
+          <span class="upc-pct">% <span style="font-size:9px;color:var(--g500)">(máx ${DMAX[y]})</span></span>
         </div>`:''}
       </div>`;
     }).join('')}
@@ -2355,20 +2377,20 @@ function validateStairs(yrs, totalUsers){
 }
 
 // Build the PASO 04 stair UI for all active multiyear plans
-function buildStairUI(){
+function buildStairUI(forceFull=false){
   const container = document.getElementById('stair-plans-container');
   if(!container) return;
   const u = parseInt(document.getElementById('unum')?.value)||10;
   const multiPlans = [...visPlans].filter(y => y >= 2).sort((a,b)=>a-b);
 
   if(multiPlans.length === 0){
-    container.innerHTML = '<span style="font-size:11px;color:var(--g400)">Activa planes multianuales (24m+) en el Paso 01 para configurar escaleras.</span>';
+    container.innerHTML = `<span style="font-size:11px;color:var(--g500)">${t('stair_no_plans')}</span>`;
     return;
   }
 
   // Check if the container already has the right plan panels — if so, just update dynamic parts
   const existingPlans = [...container.querySelectorAll('[data-stair-plan]')].map(el=>parseInt(el.dataset.stairPlan));
-  const needsFullRebuild = JSON.stringify(existingPlans) !== JSON.stringify(multiPlans);
+  const needsFullRebuild = forceFull || JSON.stringify(existingPlans) !== JSON.stringify(multiPlans);
 
   if(needsFullRebuild){
     buildStairUIFull(container, multiPlans, u);
@@ -2377,7 +2399,7 @@ function buildStairUI(){
     multiPlans.forEach(y => {
       const activeTiers = (y>=4) ? (stairTiers[y]||1) : 1;
       const s = stairs[y].slice(0, activeTiers);
-      const stairSum = s.reduce((sum,t)=>sum+(parseInt(t.users)||0),0);
+      const stairSum = s.reduce((sum,tier)=>sum+(parseInt(tier.users)||0),0);
       const t0Users = Math.max(0, u - stairSum);
       const t0El = container.querySelector(`[data-t0-count="${y}"]`);
       if(t0El) t0El.textContent = t0Users;
@@ -2400,7 +2422,7 @@ function buildStairUIFull(container, multiPlans, u){
     const activeTiers = (y>=4) ? (stairTiers[y]||1) : 1; // 48m/60m can choose 1 or 2
     const s = stairs[y];
     const warns = isOn ? validateStairs(y, u) : [];
-    const stairSum = s.slice(0,activeTiers).reduce((sum,t)=>sum+(parseInt(t.users)||0),0);
+    const stairSum = s.slice(0,activeTiers).reduce((sum,tier)=>sum+(parseInt(tier.users)||0),0);
     const t0Users = Math.max(0, u - stairSum);
 
     const tierSelector = (y>=4&&isOn) ? `
@@ -2420,11 +2442,11 @@ function buildStairUIFull(container, multiPlans, u){
           onchange="stairs[${y}][${i}].users=parseInt(this.value)||0;buildStairUI();upd()"
           style="width:65px">
         <span class="stair-input-lbl">usu · mes</span>
-        <input type="text" inputmode="numeric" class="stair-input" value="${tier.month}"
+        <input type="text" inputmode="numeric" class="stair-input ${parseInt(tier.month)>lim.maxMonth?'stair-input-over':''}" value="${tier.month}"
           placeholder="mes"
-          onchange="let v=Math.min(${lim.maxMonth},Math.max(2,parseInt(this.value)||2));stairs[${y}][${i}].month=v;this.value=v;buildStairUI();upd()"
-          style="width:50px">
-        <span class="stair-input-lbl" style="color:var(--g300)">(${t('stair_max_month')} ${lim.maxMonth})</span>
+          onchange="let v=Math.max(2,parseInt(this.value)||2);stairs[${y}][${i}].month=v;this.value=v;buildStairUI();upd()"
+          style="width:50px${parseInt(tier.month)>lim.maxMonth?';border-color:#F59E0B;background:#FFFBEB':''}">
+        <span class="stair-input-lbl" style="color:var(--g500)">(${t('stair_max_month')} ${lim.maxMonth})</span>
       </div>`).join('');
 
     return `<div class="stair-adv-plan" style="min-width:260px;flex:1" data-stair-plan="${y}">
@@ -2552,6 +2574,13 @@ window.addEventListener('beforeprint', ()=>{
   const erpVisible=document.getElementById('show-erp')?.checked;
   const erp=document.getElementById('erp-section');
   if(erp&&!erpVisible) erp.dataset.printHide='1';
+  // Features section: respect its toggle state
+  const featuresVisible=document.getElementById('show-features')?.checked;
+  const featSecEl=document.getElementById('features-sec');
+  if(featSecEl){
+    if(featuresVisible) featSecEl.classList.remove('hidden');
+    else featSecEl.classList.add('hidden');
+  }
 });
 
 window.addEventListener('afterprint', ()=>{
@@ -3081,7 +3110,7 @@ function buildImpact(){
       } else if(yr>yrs){
         cells+=`<td style="padding:9px 6px;text-align:center;background:#FAFAF9;border-left:0.5px solid var(--g100)">
           <div style="font-size:11px;font-weight:500;color:var(--g600);font-family:'DM Mono',monospace">${fN(renCosts[yr-1],cur)}</div>
-          <div style="font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--g300);margin-top:2px">${t('impact_renovating')}</div>
+          <div style="font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin-top:2px">${t('impact_renovating')}</div>
           ${renBreakdown(yr)}
         </td>`;
       }
@@ -3385,189 +3414,8 @@ function upd(){
   buildFeatures();
   buildStairUI();
   if(document.getElementById('show-impact')?.checked)buildImpact();
-  if(document.getElementById('show-inv-table')?.checked)buildInvTable();
   // Update inline pills
   if(typeof updateAllPips==='function') updateAllPips();
-}
-
-// ══ INVESTMENT TABLE ══════════════════════════════════════
-function toggleInvTable(){
-  const cb=document.getElementById('show-inv-table');
-  const sec=document.getElementById('inv-table-section');
-  if(!cb||!sec) return;
-  sec.classList.toggle('hidden',!cb.checked);
-  if(cb.checked) buildInvTable();
-}
-
-function buildInvTable(){
-  const reg=document.getElementById('region').value;
-  const u=parseInt(document.getElementById('unum').value)||1;
-  const d=PD[reg]; if(!d) return;
-  const cur=d.cur;
-  const plan=curPlan==='Standard'?d.S:d.C;
-  const isAnn=billing==='annual';
-  const shm=shCost(true);
-
-  // Rows = contract durations (only selected plans + always show mensual ref)
-  const contractRows=[
-    {label:t('billing_monthly')+' ('+t('impact_ref_sub').split('·')[0].trim()+')',yrs:0,isMo:true},
-    ...[1,2,3,4,5].filter(y=>visPlans.has(y)).map(y=>({
-      label:PI[y].months,yrs:y,isMo:false
-    }))
-  ];
-
-  // Columns = Year 1 through Year 5 (annual renewal accumulations)
-  const maxYrs=5;
-  const yrCols=[1,2,3,4,5];
-
-  // Find recommended year
-  const recY=erpPlanOverride>0&&visPlans.has(erpPlanOverride)?erpPlanOverride:
-    ([...visPlans].filter(y=>y>0).map(y=>{
-      const cc=calcP(y,plan,u,0,true);
-      return{y,saving:cc.saving};
-    }).reduce((a,b)=>b.saving>a.saving?b:a,{y:0,saving:-Infinity})).y;
-
-  // Annual renewal cost per year (with +7% if infOn)
-  // Year 1 = Y1 price, Year 2 = Y2 base, Year 3+ = Y2 * 1.07^(yr-2) if infOn
-  function annualRenewalCost(yr){
-    const shAnn=curHost==='sh'?shm*12:0;
-    let lic;
-    if(yr===1) lic=plan.ann.y1*u*12;
-    else if(yr===2) lic=plan.ann.y2*u*12;
-    else lic=plan.ann.y2*u*12*(infOn?Math.pow(1+infRate/100,yr-2):1);
-    return lic+shAnn;
-  }
-  function monthlyRenewalCost(yr){
-    const shMo=curHost==='sh'?shm*12:0;
-    let lic;
-    if(yr===1) lic=plan.mon.y1*u*12;
-    else if(yr===2) lic=plan.mon.y2*u*12;
-    else lic=plan.mon.y2*u*12*(infOn?Math.pow(1+infRate/100,yr-2):1);
-    return lic+shMo;
-  }
-
-  // Max saving for color scale
-  let maxSaving=0;
-  contractRows.filter(r=>!r.isMo).forEach(row=>{
-    const cc=calcP(row.yrs,plan,u,0,isAnn);
-    // Compare vs annual renewals for same period
-    let annTotal=0;
-    for(let yr=1;yr<=row.yrs;yr++) annTotal+=annualRenewalCost(yr);
-    const sv=annTotal-cc.total;
-    if(sv>maxSaving)maxSaving=sv;
-  });
-
-  // Build header
-  let html=`<thead>
-    <tr>
-      <th rowspan="2" style="text-align:left;padding:8px 12px;background:var(--g50);border:1px solid var(--g200);font-weight:600;color:var(--g700);vertical-align:middle;white-space:nowrap">Plazo</th>
-      <th colspan="${maxYrs}" style="text-align:center;padding:6px 10px;background:var(--g50);border:1px solid var(--g200);font-weight:600;color:var(--g600);font-size:11px">Renovaciones anuales acumuladas</th>
-      <th rowspan="2" style="text-align:center;padding:8px 10px;background:var(--g50);border:1px solid var(--g200);font-weight:600;color:var(--g600);white-space:nowrap;vertical-align:middle;font-size:11px">${t('impact_col_total')}<br><span style='font-weight:400;color:var(--g400)'>${t('impact_col_total_sub')}</span></th>
-      <th rowspan="2" style="text-align:center;padding:8px 10px;background:var(--g50);border:1px solid var(--g200);font-weight:600;color:#059669;white-space:nowrap;vertical-align:middle;font-size:11px">Ahorro vs<br>mensual</th>
-    </tr>
-    <tr>
-      ${yrCols.map(yr=>`<th style="text-align:center;padding:5px 8px;background:var(--g50);border:1px solid var(--g200);font-weight:500;color:var(--g500);font-size:10px">${t("yr")} ${yr}</th>`).join('')}
-    </tr>
-  </thead>`;
-
-  html+='<tbody>';
-
-  contractRows.forEach(row=>{
-    const isRec=row.yrs===recY&&!row.isMo;
-    const contractCalc=row.isMo?null:calcP(row.yrs,plan,u,0,isAnn);
-    const contractTotal=contractCalc?contractCalc.total:0;
-
-    // Compute annual renewal totals up to each year
-    let runningAnnual=0;
-    let runningMonthly=0;
-
-    // Total for this contract period via monthly
-    let moTotalPeriod=0;
-    if(!row.isMo){
-      for(let yr=1;yr<=row.yrs;yr++) moTotalPeriod+=monthlyRenewalCost(yr);
-    }
-
-    // Saving vs monthly
-    const vsMo=row.isMo?0:moTotalPeriod-contractTotal;
-    const mesesGratis=vsMo>0?(vsMo/(plan.mon.y2*u)).toFixed(1):'';
-
-    // Saving vs annual renewals for color
-    let annTotalPeriod=0;
-    if(!row.isMo) for(let yr=1;yr<=row.yrs;yr++) annTotalPeriod+=annualRenewalCost(yr);
-    const savVsAnn=row.isMo?0:annTotalPeriod-contractTotal;
-    const intensity=maxSaving>0?savVsAnn/maxSaving:0;
-
-    html+=`<tr>
-      <td style="padding:8px 12px;border:1px solid ${isRec?'#017E84':'var(--g200)'};background:${isRec?'rgba(1,126,132,.04)':row.isMo?'var(--g50)':'white'};font-weight:${isRec?'700':'500'};color:${isRec?'#017E84':row.isMo?'var(--g500)':'var(--g800)'};white-space:nowrap;${isRec?'border-left-width:3px':''}">
-        ${isRec?'<span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:#017E84;margin-right:5px;vertical-align:middle"></span>':''}
-        ${row.label}${row.isMo?'':` <span style="font-size:9px;color:var(--g400);font-weight:400">${lang==='fr'?'contrat':'contrato'}</span>`}
-      </td>`;
-
-    // Year columns
-    yrCols.forEach(yr=>{
-      const isOnDiag=!row.isMo&&yr===row.yrs; // diagonal = contract covers exactly this many years
-      const isBeyond=!row.isMo&&yr>row.yrs;   // beyond contract duration
-      const isBeforeContract=!row.isMo&&yr<row.yrs; // renewal years within contract
-
-      let cellContent='', bg='white', textCol='var(--g900)', border='var(--g200)', bw='1px';
-
-      if(row.isMo){
-        // Monthly reference row
-        runningMonthly+=monthlyRenewalCost(yr);
-        bg='var(--g50)'; textCol='var(--g500)';
-        cellContent=`<div style="font-weight:500;color:${textCol}">${fN(runningMonthly,cur)}</div><div style="font-size:9px;color:var(--g400);margin-top:1px">acumulado</div>`;
-      } else if(isOnDiag){
-        // Contract total on diagonal
-        bg=intensity>0.5?'rgba(1,126,132,.15)':intensity>0.2?'rgba(1,126,132,.08)':'rgba(1,126,132,.04)';
-        textCol=intensity>0.5?'#085041':'#017E84';
-        border=isRec?'#017E84':'#01A8B0';
-        bw=isRec?'2px':'1px';
-        cellContent=`<div style="font-weight:700;color:${textCol}">${fN(contractTotal,cur)}</div>
-          ${mesesGratis?`<div style="font-size:9px;color:#059669;margin-top:2px">≈ ${mesesGratis}m gratis</div>`:''}`;
-      } else if(isBeforeContract){
-        // Annual renewal cost accumulating up to contract start
-        runningAnnual+=annualRenewalCost(yr);
-        bg='var(--g100)'; textCol='var(--g400)';
-        cellContent=`<div style="font-weight:500;color:${textCol};font-size:11px">${fN(runningAnnual,cur)}</div><div style="font-size:9px;color:var(--g400);margin-top:1px">${t('impact_renovating')}</div>`;
-      } else {
-        // Beyond contract
-        bg='var(--g50)'; textCol='var(--g300)';
-        cellContent=`<div style="color:${textCol};font-size:11px">—</div>`;
-      }
-
-      html+=`<td style="padding:7px 9px;border:${bw} solid ${border};background:${bg};text-align:center">${cellContent}</td>`;
-    });
-
-    // Investment total column
-    const invTotal=row.isMo?monthlyRenewalCost(5)*5:contractTotal; // approx for monthly
-    if(row.isMo){
-      html+=`<td style="padding:7px 9px;border:1px solid var(--g200);background:var(--g50);text-align:center">
-        <div style="font-size:10px;color:var(--g400)">variable</div></td>`;
-    } else {
-      html+=`<td style="padding:7px 9px;border:1px solid ${isRec?'#017E84':'var(--g200)'};background:${isRec?'rgba(1,126,132,.04)':'white'};text-align:center;${isRec?'border-width:2px':''}">
-        <div style="font-weight:700;color:${isRec?'#017E84':'var(--g800)'}">${fN(contractTotal,cur)}</div></td>`;
-    }
-
-    // Ahorro vs mensual column
-    if(row.isMo){
-      html+=`<td style="padding:7px 9px;border:1px solid var(--g200);background:var(--g50);text-align:center">
-        <div style="font-size:10px;color:var(--g400)">—</div></td>`;
-    } else {
-      html+=`<td style="padding:7px 9px;border:1px solid var(--g200);background:${vsMo>0?'rgba(5,150,105,.07)':'white'};text-align:center">
-        <div style="font-weight:700;color:${vsMo>0?'#059669':'var(--g400)'}">${vsMo>0?'+'+fN(vsMo,cur):fN(vsMo,cur)}</div>
-        ${mesesGratis&&vsMo>0?`<div style="font-size:9px;color:#059669;margin-top:1px">${mesesGratis} meses</div>`:''}
-      </td>`;
-    }
-
-    html+='</tr>';
-  });
-
-  html+='</tbody>';
-  const invTable=document.getElementById('inv-table');
-  if(invTable) invTable.innerHTML=html;
-  const invSub=document.getElementById('inv-subtitle');
-  if(invSub) invSub.textContent=
-    `${u} ${t('users').toLowerCase().replace(/es$/,'').replace(/s$/,'')}${u>1?'s':''} · Plan ${curPlan==='Standard'?t('plan_std'):t('plan_custom')} · ${reg}${infOn?' · '+t('inf_label'):''}`;
 }
 
 // ══ COPY ════════════════════════════════════════════════

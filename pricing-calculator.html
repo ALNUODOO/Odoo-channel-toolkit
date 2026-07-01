@@ -3398,9 +3398,7 @@ function upd(){
             <svg width="9" height="9" viewBox="0 0 12 12" fill="none" style="flex-shrink:0;margin-top:2px"><path d="M2 6l3 3 5-5" stroke="${isRec?'#017E84':'#6B7280'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="ft">${f.tkey?t(f.t):f.t}</span>
           </div>`).join('')}
-          ${checks.filter(f=>!f.y).length>0?`<div class="fi pc-feat-unavail">
-            <span class="ft dim" style="font-size:9.5px;color:var(--g300)">+ ${checks.filter(f=>!f.y).length} ${lang==='fr'?'avec plan personnalisé':lang==='en'?'with custom plan':'con plan personalizado'}</span>
-          </div>`:''}
+          ${checks.filter(f=>!f.y).length>0?'':''}
         </div>
         ${ptHtml}
         ${y>=2?buildStairDiagram(y,plan,u,cur,c.disc):''}

@@ -2438,12 +2438,12 @@ function buildStairUIFull(container, multiPlans, u){
       <div class="stair-tier-row">
         <span class="stair-tier-badge ${tierColors[i+1]}">Tier ${i+1}</span>
         <input type="text" inputmode="numeric" class="stair-input" value="${tier.users}"
-          placeholder="usu"
+          placeholder="${t('stair_users_lbl')}"
           onchange="stairs[${y}][${i}].users=parseInt(this.value)||0;buildStairUI();upd()"
           style="width:65px">
-        <span class="stair-input-lbl">usu · mes</span>
+        <span class="stair-input-lbl">${t('stair_users_lbl')} · ${t('stair_month_lbl').toLowerCase()}</span>
         <input type="text" inputmode="numeric" class="stair-input ${parseInt(tier.month)>lim.maxMonth?'stair-input-over':''}" value="${tier.month}"
-          placeholder="mes"
+          placeholder="${t('stair_month_lbl')}"
           onchange="let v=Math.max(2,parseInt(this.value)||2);stairs[${y}][${i}].month=v;this.value=v;buildStairUI();upd()"
           style="width:50px${parseInt(tier.month)>lim.maxMonth?';border-color:#F59E0B;background:#FFFBEB':''}">
         <span class="stair-input-lbl" style="color:var(--g500)">(${t('stair_max_month')} ${lim.maxMonth})</span>

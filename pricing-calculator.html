@@ -3415,7 +3415,10 @@ function upd(){
             </div>
           </div>
           <div class="pc-total-big" style="color:${isRec?'var(--s)':'var(--g900)'}">${fN(displayTotal,cur)}</div>
-          <div class="pc-per-user-inline">${sc?(u+' '+t('edit_users')+' · '+(lang==='en'?'staggered deployment':lang==='fr'?'déploiement échelonné':'despliegue escalonado')):(fN(c.avgRate,cur)+' '+t('per_user_month'))}${curHost==='sh'?' · '+shLabel:''}</div>
+          ${sc?`<div class="pc-per-user-inline">${u} ${t('edit_users')} · ${lang==='en'?'staggered deployment':lang==='fr'?'déploiement échelonné':'despliegue escalonado'}${curHost==='sh'?' · '+shLabel:''}</div>`
+            :y<=1?`<div class="pc-per-user-inline">${fN(c.avgRate,cur)} ${t('per_user_month')}${curHost==='sh'?' · '+shLabel:''}</div>`
+            :curHost==='sh'?`<div class="pc-per-user-inline">${shLabel}</div>`
+            :''}
           ${displaySaving>0?`
           <div class="pc-savings-block">
             <div class="pc-savings-months">

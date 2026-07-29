@@ -969,6 +969,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
             <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:2px">
               <div id="ded-badge" class="db db-ok"><span id="lbl-no-ded">Servidor compartido</span></div>
               <div id="ded-limits" style="font-size:9px;color:var(--g400)">Dedicado: &gt;8 workers · &gt;512 GB · &gt;20 stagings</div>
+              <!-- Manual dedicated toggle — only shown when auto thresholds not met -->
+              <div id="manual-ded-wrap" style="display:none;margin-top:6px">
+                <label style="display:flex;align-items:center;gap:6px;font-size:11px;cursor:pointer;color:var(--g700)">
+                  <input type="checkbox" id="manual-ded-chk" onchange="manualDed=this.checked;checkDed();upd()" style="accent-color:var(--p)">
+                  <span id="lbl-manual-ded">Forzar servidor dedicado</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Manual dedicated warning banner -->
+          <div id="manual-ded-banner" style="display:none;margin-top:10px;padding:10px 12px;background:#FFF3E0;border:1px solid #FB8C00;border-radius:8px">
+            <div style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#E65100;margin-bottom:4px" id="lbl-manual-ded-title">Servidor dedicado activado manualmente</div>
+                <div style="font-size:11px;color:#BF360C;line-height:1.5" id="lbl-manual-ded-body">Esta configuración no cumple los umbrales automáticos (&gt;8 workers, &gt;512 GB o &gt;20 stagings). Un servidor dedicado sin los requerimientos mínimos puede afectar el rendimiento de la base de datos. <strong>Se recomienda ampliamente crear un Presales Ticket interno y recibir confirmación antes de compartir esta propuesta con el cliente.</strong></div>
+              </div>
             </div>
           </div>
           <div id="sh-cost-val" style="margin-top:10px;font-size:12px;font-weight:600;color:var(--p)">—</div>
@@ -1225,6 +1242,9 @@ var LANG={
     impact_col_total_sub:'contrato + renovaciones',
     impact_saves:'Ahorras vs',
     impact_months:'Meses sin costo',
+    impact_saves_months:'Ahorras · Meses sin costo',
+    impact_avg_user:'Promedio / usuario',
+    impact_avg_sub:'lic · sh',
     impact_ref:'Renovando año a año',
     impact_ref_sub:'sin contrato · referencia',
     impact_renovating:'renovando',
@@ -1339,6 +1359,9 @@ var LANG={
     sh_shared:'Servidor compartido',
     sh_ded_limits:'Dedicado: &gt;8 workers · &gt;512 GB · &gt;20 stagings',
     sh_suggested:'sugerido:',
+    sh_manual_ded:'Forzar servidor dedicado',
+    sh_manual_ded_title:'Servidor dedicado activado manualmente',
+    sh_manual_ded_body:'Esta configuración no cumple los umbrales automáticos (&gt;8 workers, &gt;512 GB o &gt;20 stagings). Un servidor dedicado sin los requerimientos mínimos puede afectar el rendimiento de la base de datos. <strong>Se recomienda ampliamente crear un Presales Ticket interno y recibir confirmación antes de compartir esta propuesta con el cliente.</strong>',
     sh_suggested_gb:'sugerido: {n} GB',
     additional_disc:'adicional',
     max_lbl:'máx',
@@ -1441,6 +1464,9 @@ var LANG={
     impact_col_total_sub:'contract + renewals',
     impact_saves:'You save vs',
     impact_months:'Free months',
+    impact_saves_months:'You save · Free months',
+    impact_avg_user:'Avg / user',
+    impact_avg_sub:'lic · sh',
     impact_ref:'Renewing year by year',
     impact_ref_sub:'no contract · benchmark',
     impact_renovating:'renewing',
@@ -1555,6 +1581,9 @@ var LANG={
     sh_shared:'Shared server',
     sh_ded_limits:'Dedicated: &gt;8 workers · &gt;512 GB · &gt;20 stagings',
     sh_suggested:'suggested:',
+    sh_manual_ded:'Force dedicated server',
+    sh_manual_ded_title:'Dedicated server manually enabled',
+    sh_manual_ded_body:'This configuration does not meet the automatic thresholds (&gt;8 workers, &gt;512 GB or &gt;20 stagings). A dedicated server without meeting minimum requirements may negatively impact database performance. <strong>It is strongly recommended to create an internal Presales Ticket and receive confirmation before sharing this proposal with the client.</strong>',
     sh_suggested_gb:'suggested: {n} GB',
     additional_disc:'additional',
     max_lbl:'max',
@@ -1658,6 +1687,9 @@ var LANG={
     impact_col_total_sub:'contrat + renouvellements',
     impact_saves:'Vous économisez vs',
     impact_months:'Mois offerts',
+    impact_saves_months:'Économies · Mois offerts',
+    impact_avg_user:'Moy. / utilisateur',
+    impact_avg_sub:'lic · sh',
     impact_ref:'Renouvellement annuel',
     impact_ref_sub:'sans contrat · référence',
     impact_renovating:'renouvellement',
@@ -1772,6 +1804,9 @@ var LANG={
     sh_shared:'Serveur partagé',
     sh_ded_limits:'Dédié : &gt;8 workers · &gt;512 Go · &gt;20 stagings',
     sh_suggested:'suggéré :',
+    sh_manual_ded:'Forcer serveur dédié',
+    sh_manual_ded_title:'Serveur dédié activé manuellement',
+    sh_manual_ded_body:'Cette configuration ne remplit pas les seuils automatiques (&gt;8 workers, &gt;512 Go ou &gt;20 stagings). Un serveur dédié sans les prérequis minimaux peut affecter les performances de la base de données. <strong>Il est fortement recommandé de créer un Presales Ticket interne et d\'obtenir une confirmation avant de partager cette proposition avec le client.</strong>',
     sh_suggested_gb:'suggéré : {n} Go',
     additional_disc:'supplémentaire',
     max_lbl:'max',
@@ -1849,6 +1884,9 @@ function setLang(l){
     'lbl-no-date':t('no_date'),
     'lbl-no-ded':t('no_dedicated'),
     'lbl-sh-infra-text':t('sh_infra_title'),
+    'lbl-manual-ded':t('sh_manual_ded'),
+    'lbl-manual-ded-title':t('sh_manual_ded_title'),
+    'lbl-manual-ded-body':t('sh_manual_ded_body'),
     'ded-limits':t('sh_ded_limits'),
     'client-placeholder':t('prop_client_placeholder'),
     'lbl-planes':t('plans_lbl'),
@@ -1870,6 +1908,7 @@ function setLang_apply(ids){
     const el=document.getElementById(id);
     if(!el)return;
     if(el.placeholder!==undefined&&el.tagName==='INPUT')el.placeholder=txt;
+    else if(id==='lbl-manual-ded-body'||id==='ded-limits')el.innerHTML=txt;
     else el.textContent=txt;
   });
   // Update plan std/custom buttons
@@ -2010,7 +2049,7 @@ function getPTRules(){
 }
 
 // ══ STATE ══════════════════════════════════════════════
-let curPlan='Standard',curHost='online',curDed=false,billing='monthly';
+let curPlan='Standard',curHost='online',curDed=false,manualDed=false,billing='monthly';
 let discs={2:0,3:0,4:0,5:0};
 let visPlans=new Set([1,3,5]); // default: 12, 36, 60 meses Plan mensual (0) NOT default
 let infOn=false,infRate=7,view='plans',ptTargetPlans=new Set(),ptSelectedTerm={},erpPlanOverride=-1; // ptSelectedTerm[yrs] = chosen term label
@@ -2075,18 +2114,32 @@ function clampSh(){
   c('wk',256);c('gb',4096);c('stg',20);
 }
 function checkDed(){
-  if(curHost!=='sh'){curDed=false;return;}
+  if(curHost!=='sh'){curDed=false;manualDed=false;return;}
   const wk=parseInt(document.getElementById('wk')?.value)||1;
   const gb=parseInt(document.getElementById('gb')?.value)||1;
   const stg=parseInt(document.getElementById('stg')?.value)||0;
-  curDed=(wk>8||gb>512||stg>20);
+  const autoDed=(wk>8||gb>512||stg>20);
+  // If auto thresholds met, always dedicated regardless of manual
+  if(autoDed) manualDed=false;
+  curDed=autoDed||manualDed;
+
   const b=document.getElementById('ded-badge');
   const limHint=document.getElementById('ded-limits');
+  const manualWrap=document.getElementById('manual-ded-wrap');
+  const manualChk=document.getElementById('manual-ded-chk');
+  const manualBanner=document.getElementById('manual-ded-banner');
+
   if(b){
     b.textContent=curDed?t('sh_dedicated'):t('sh_shared');
     b.className='db '+(curDed?'db-hot':'db-ok');
   }
-  if(limHint) limHint.style.display=curDed?'none':'block';
+  // Show limits hint only when not dedicated
+  if(limHint) limHint.style.display=curDed&&!manualDed?'none':autoDed?'none':'block';
+  // Show manual toggle only when auto thresholds NOT met
+  if(manualWrap) manualWrap.style.display=autoDed?'none':'block';
+  if(manualChk) manualChk.checked=manualDed;
+  // Show warning banner only when manually forced dedicated
+  if(manualBanner) manualBanner.style.display=manualDed?'block':'none';
 }
 function toggleInf(){
   infOn=!infOn;
@@ -3094,9 +3147,9 @@ function buildImpact(){
   const colW=`width:${Math.max(72,Math.floor(480/maxYrs))}px`;
 
   const colsHtml=`<colgroup>
-    <col style="width:21%">
-    ${Array.from({length:maxYrs},()=>`<col style="width:${Math.floor(39/maxYrs)}%">`).join('')}
-    <col style="width:14%"><col style="width:12%"><col style="width:8%">
+    <col style="width:19%">
+    ${Array.from({length:maxYrs},()=>`<col style="width:${Math.floor(37/maxYrs)}%">`).join('')}
+    <col style="width:13%"><col style="width:9%"><col style="width:10%">
   </colgroup>`;
 
   const rowsHtml=activePlans.map(yrs=>{
@@ -3114,6 +3167,13 @@ function buildImpact(){
     const stairNote=sc?` · ${t('stair_title').split('·')[0].trim()}`:'';
     const cCol=isRec?'#714B67':'#017E84';
     const fontSize=yrs>=4?'20px':yrs===3?'18px':'16px';
+
+    // Avg / user based on 5-year total (contract + renewals) for fair comparison across plans
+    const licInvTotal = invTotal - (curHost==='sh'?shm*12*maxYrs:0);
+    const shInvTotal = curHost==='sh'?shm*12*maxYrs:0;
+    const licAvg = licInvTotal/(u*12*maxYrs);
+    const shAvg = curHost==='sh'?shInvTotal/(u*12*maxYrs):0;
+    const totalAvg = licAvg+shAvg;
 
     // Sh totals for breakdown
     const shAnnual=curHost==='sh'?shm*12:0; // fixed, no inflation
@@ -3173,11 +3233,15 @@ function buildImpact(){
         <div style="font-size:13px;font-weight:600;color:${isRec?'#714B67':'var(--g800)'};font-family:'DM Mono',monospace">${fN(invTotal,cur)}</div>
         ${yrs<maxYrs?`<div style="font-size:9px;color:var(--g400);margin-top:2px;line-height:1.3">${fN(cCost,cur)} cto<br>+${fN(renAcc[maxYrs-1]-renAcc[yrs-1],cur)} ren.</div>`:'<div style="font-size:9px;color:var(--g400);margin-top:2px">$0 ren.</div>'}
       </td>
-      <td style="padding:9px 12px;text-align:right;border-bottom:0.5px solid var(--g100)">
-        <div style="font-size:13px;font-weight:600;color:${saving>0?'#059669':'var(--g400)'};font-family:'DM Mono',monospace">${saving>0?'+'+fN(saving,cur):fN(saving,cur)}</div>
+      <td style="padding:9px 10px;text-align:right;border-left:1px solid var(--g150,#EBEBEB);background:var(--g50);border-bottom:0.5px solid var(--g100)">
+        <div style="font-size:12px;font-weight:600;color:#059669;font-family:'DM Mono',monospace">${saving>0?'+'+fN(saving,cur):'—'}</div>
+        ${saving>0?`<span style="font-size:10px;font-weight:600;color:#059669;background:#ECFDF5;padding:2px 7px;border-radius:20px;display:inline-block;margin-top:4px">${meses}m</span>`:''}
       </td>
-      <td style="padding:9px 12px;text-align:right;border-bottom:0.5px solid var(--g100)">
-        ${saving>0?`<span style="font-size:11px;font-weight:600;color:#059669;background:#ECFDF5;padding:3px 9px;border-radius:20px;display:inline-block">${meses}m</span>`:'<span style="color:var(--g300)">—</span>'}
+      <td style="padding:9px 10px;text-align:right;border-bottom:0.5px solid var(--g100)">
+        ${saving>0?`
+        <div style="font-size:12px;font-weight:600;color:var(--g700);font-family:'DM Mono',monospace">${fN(totalAvg,cur)}</div>
+        <div style="font-size:8px;color:var(--g400);margin-top:3px;line-height:1.4">${fN(licAvg,cur)} lic${curHost==='sh'?`<br>${fN(shAvg,cur)} sh`:''}</div>`
+        :'<span style="color:var(--g300)">—</span>'}
       </td>
     </tr>`;
   }).join('');
@@ -3202,7 +3266,10 @@ function buildImpact(){
       <div style="font-size:13px;font-weight:700;color:#C62828;font-family:'DM Mono',monospace">${fN(totalRenewing,cur)}</div>
       <div style="font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#C62828;margin-top:2px">${t('impact_reference')}</div>
     </td>
-    <td colspan="2" style="padding:9px 12px;text-align:center">
+    <td colspan="1" style="padding:9px 10px;text-align:right;border-left:1px solid var(--g150,#EBEBEB);background:var(--g50)">
+      <span style="font-size:10px;color:var(--g400)">—</span>
+    </td>
+    <td style="padding:9px 10px;text-align:right">
       <span style="font-size:10px;color:var(--g400)">—</span>
     </td>
   </tr>`;
@@ -3240,8 +3307,8 @@ function buildImpact(){
             <th style="${thSt};text-align:left;padding-left:14px">${t('plan')}</th>
             ${Array.from({length:maxYrs},(_,i)=>`<th style="${thSt};text-align:center">${t('yr')} ${i+1}</th>`).join('')}
             <th style="${thSt};text-align:right;background:var(--g50);border-left:1px solid var(--g200)">${t('impact_col_total')}<br><span style="font-weight:400;font-size:9px;color:var(--g400);text-transform:none;letter-spacing:0">${t('impact_col_total_sub')}</span></th>
-            <th style="${thSt};text-align:right;color:#059669">${t('impact_saves').toUpperCase()}<br><span style="font-weight:400;font-size:9px;text-transform:none;letter-spacing:0">${modeLabel}</span></th>
-            <th style="${thSt};text-align:right;color:#059669">${t('impact_months').toUpperCase()}</th>
+            <th style="${thSt};text-align:right;color:#059669;border-left:1px solid var(--g200);background:var(--g50)">${t('impact_saves').toUpperCase()}<br><span style="font-weight:400;font-size:9px;text-transform:none;letter-spacing:0;color:var(--g400)">${t('impact_months')}</span></th>
+            <th style="${thSt};text-align:right;color:var(--g600)">${t('impact_avg_user')}<br><span style="font-weight:400;font-size:9px;text-transform:none;letter-spacing:0;color:var(--g400)">${t('impact_avg_sub')}</span></th>
           </tr>
         </thead>
         <tbody>${rowsHtml}${refRow}</tbody>
@@ -3416,7 +3483,7 @@ function upd(){
           </div>
           <div class="pc-total-big" style="color:${isRec?'var(--s)':'var(--g900)'}">${fN(displayTotal,cur)}</div>
           ${sc?`<div class="pc-per-user-inline">${u} ${t('edit_users')} · ${lang==='en'?'staggered deployment':lang==='fr'?'déploiement échelonné':'despliegue escalonado'}${curHost==='sh'?' · '+shLabel:''}</div>`
-            :y<=1?`<div class="pc-per-user-inline">${fN(c.avgRate,cur)} ${t('per_user_month')}${curHost==='sh'?' · '+shLabel:''}</div>`
+            :isMo?`<div class="pc-per-user-inline">${fN(c.avgRate,cur)} ${t('per_user_month')}${curHost==='sh'?' · '+shLabel:''}</div>`
             :curHost==='sh'?`<div class="pc-per-user-inline">${shLabel}</div>`
             :''}
           ${displaySaving>0?`
@@ -3868,6 +3935,7 @@ function setHostInline(h){
   if(curPlan==='Standard'&&h!=='online') return;
   if(h==='onprem'&&billing!=='annual') return;
   curHost=h;
+  if(h!=='sh'){manualDed=false;}
   if(h==='sh') initShDefaults();
   upd();
   updateAllPips();

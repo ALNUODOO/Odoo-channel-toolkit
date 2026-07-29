@@ -1184,6 +1184,13 @@ var LANG={
     no_7_inc:'Sin incremento anual de precio', studio:'Odoo Studio',
     multicompany:'Multiempresa', api_access:'API completa + acceso al código',
     pt_title:'Término de pago', pt_select:'Selecciona un término de pago',
+    pt_upon_receipt:'Al recibir',
+    pt_50_net30:'50% ahora, 50% NET30',
+    pt_50_net45:'50% ahora, 50% NET45',
+    pt_50_net60:'50% ahora, 50% NET60',
+    pt_40_30_30:'40% ahora, 30% NET30, 30% NET60',
+    pt_50_25_25:'50% ahora, 25% NET30, 25% NET60',
+    pt_over_net60:'Más de NET60 (requiere aprobación gerencia)',
     pt_approval:'Requiere aprobación de gerencia — solo visible para el comercial',
     expiry_valid:'Propuesta válida hasta el', expiry_expires:'Esta propuesta vence el',
     expiry_days_left:'días restantes', expiry_act_soon:'— ¡Actúa pronto!',
@@ -1393,6 +1400,13 @@ var LANG={
     no_7_inc:'No annual price increase', studio:'Odoo Studio',
     multicompany:'Multi-company', api_access:'Full API + source code access',
     pt_title:'Payment term', pt_select:'Select a payment term',
+    pt_upon_receipt:'Upon receipt',
+    pt_50_net30:'50% now, 50% NET30',
+    pt_50_net45:'50% now, 50% NET45',
+    pt_50_net60:'50% now, 50% NET60',
+    pt_40_30_30:'40% now, 30% NET30, 30% NET60',
+    pt_50_25_25:'50% now, 25% NET30, 25% NET60',
+    pt_over_net60:'Over NET60 (requires management approval)',
     pt_approval:'Requires management approval — visible to sales rep only',
     expiry_valid:'Proposal valid until', expiry_expires:'This proposal expires on',
     expiry_days_left:'days left', expiry_act_soon:'— Act now!',
@@ -1603,6 +1617,13 @@ var LANG={
     no_7_inc:'Sans augmentation annuelle', studio:'Odoo Studio',
     multicompany:'Multi-société', api_access:'API complète + accès au code source',
     pt_title:'Condition de paiement', pt_select:'Sélectionner une condition de paiement',
+    pt_upon_receipt:'À réception',
+    pt_50_net30:'50% maintenant, 50% NET30',
+    pt_50_net45:'50% maintenant, 50% NET45',
+    pt_50_net60:'50% maintenant, 50% NET60',
+    pt_40_30_30:'40% maintenant, 30% NET30, 30% NET60',
+    pt_50_25_25:'50% maintenant, 25% NET30, 25% NET60',
+    pt_over_net60:'Plus de NET60 (nécessite approbation de la direction)',
     pt_approval:"Nécessite l'approbation de la direction — visible uniquement pour le commercial",
     expiry_valid:'Proposition valable jusqu\'au', expiry_expires:'Cette proposition expire le',
     expiry_days_left:'jours restants', expiry_act_soon:'— Agissez vite !',
@@ -1887,6 +1908,8 @@ function setLang_apply(ids){
   if(typeof updateShSuggestions==='function'&&curHost==='sh') updateShSuggestions();
   // Refresh stairs panel (Step 04) so its hardcoded strings reflect new language
   if(typeof buildStairUI==='function') buildStairUI(true);
+  // Refresh payment terms dropdown options
+  if(typeof upd==='function') upd();
 }
 
 const PD={
@@ -1956,18 +1979,35 @@ function PI_get(y){
 const PI=new Proxy({},{get:(obj,y)=>{const n=parseInt(y);return isNaN(n)?undefined:PI_get(n);}});
 const COL_REC='#017E84';   // teal Odoo — recommended card
 const COL_GRAY='#8F8F8F';  // gray Odoo — non-recommended cards
-const PT_RULES={
-  latam:[
-    {maxUSD:15000,t:[{l:'Al recibir',def:true},{l:'50% ahora, 50% NET30'}]},
-    {maxUSD:25000,t:[{l:'Al recibir',def:true},{l:'50% ahora, 50% NET30'},{l:'50% ahora, 50% NET45'},{l:'50% ahora, 50% NET60'},{l:'40% ahora, 30% NET30, 30% NET60'},{l:'50% ahora, 25% NET30, 25% NET60'}]},
-    {maxUSD:Infinity,t:[{l:'Al recibir',def:true},{l:'50% ahora, 50% NET30'},{l:'50% ahora, 50% NET45'},{l:'50% ahora, 50% NET60'},{l:'40% ahora, 30% NET30, 30% NET60'},{l:'50% ahora, 25% NET30, 25% NET60'},{l:'Más de NET60 (requiere aprobación gerencia)',sp:true}]}
-  ],
-  northam:[
-    {maxUSD:50000,t:[{l:'Al recibir',def:true},{l:'50% ahora, 50% NET30'}]},
-    {maxUSD:70000,t:[{l:'Al recibir',def:true},{l:'50% ahora, 50% NET30'},{l:'50% ahora, 50% NET45'},{l:'50% ahora, 50% NET60'},{l:'40% ahora, 30% NET30, 30% NET60'},{l:'50% ahora, 25% NET30, 25% NET60'}]},
-    {maxUSD:Infinity,t:[{l:'Al recibir',def:true},{l:'50% ahora, 50% NET30'},{l:'50% ahora, 50% NET45'},{l:'50% ahora, 50% NET60'},{l:'40% ahora, 30% NET30, 30% NET60'},{l:'50% ahora, 25% NET30, 25% NET60'},{l:'Más de NET60 (requiere aprobación gerencia)',sp:true}]}
-  ]
-};
+function getPTRules(){
+  const T=[
+    {k:'pt_upon_receipt',def:true},
+    {k:'pt_50_net30'},
+    {k:'pt_50_net45'},
+    {k:'pt_50_net60'},
+    {k:'pt_40_30_30'},
+    {k:'pt_50_25_25'},
+    {k:'pt_over_net60',sp:true}
+  ];
+  // Map to labelled objects, sp=special (approval required)
+  const all=T.map(x=>({l:t(x.k),def:x.def||false,sp:x.sp||false}));
+  const s2=all.slice(0,2); // up to 2 terms
+  const s6=all.slice(0,6); // up to 6 terms
+  const s7=all;             // all 7 including special
+
+  return{
+    latam:[
+      {maxUSD:15000, t:s2},
+      {maxUSD:25000, t:s6},
+      {maxUSD:Infinity, t:s7}
+    ],
+    northam:[
+      {maxUSD:50000, t:s2},
+      {maxUSD:70000, t:s6},
+      {maxUSD:Infinity, t:s7}
+    ]
+  };
+}
 
 // ══ STATE ══════════════════════════════════════════════
 let curPlan='Standard',curHost='online',curDed=false,billing='monthly';
@@ -2595,6 +2635,7 @@ window.addEventListener('afterprint', ()=>{
 });
 // ══ END PRINT HANDLERS ══════════════════════════════════
 function getPT(totalUSD,rgn){
+  const PT_RULES=getPTRules();
   const rules=PT_RULES[rgn]||PT_RULES.northam;
   for(const r of rules)if(totalUSD<=r.maxUSD)return r.t;
   return rules[rules.length-1].t;

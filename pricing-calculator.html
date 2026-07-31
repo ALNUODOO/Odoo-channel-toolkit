@@ -309,6 +309,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .stair-input-lbl{font-size:10px;color:var(--g600);white-space:nowrap}
 @page{margin:1cm;size:auto}
 @media print{
+  #ph-pills-row{display:flex!important;}
   /* ── Color accuracy ── */
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box}
 
@@ -372,15 +373,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   }
   .pc.rec{box-shadow:0 0 0 2px #017E84!important}
   .pcb{padding:8px 10px!important;-webkit-print-color-adjust:exact!important}
-  .pcb-months{font-size:8px!important}
-  .pcb-name{font-size:10px!important}
+  .pcb-months{font-size:9px!important;letter-spacing:.05em}
+  .pcb-name{font-size:13px!important;font-weight:700!important}
   .pc-ph{padding:7px 9px 5px!important}
-  .pc-total-big{font-size:15px!important}
-  .pc-per-user-inline{font-size:8.5px!important}
-  .pc-savings-block{padding:4px 6px!important;font-size:8.5px!important;gap:3px!important}
-  .pc-feats{gap:1px!important;margin-bottom:4px!important}
-  .pc-feat{font-size:8px!important}
-  .tag{font-size:7.5px!important;padding:1px 4px!important}
+  .pc-total-big{font-size:20px!important;font-weight:700!important}
+  .pc-savings-block{padding:5px 8px!important}
+  .pc-savings-months{font-size:11px!important}
+  .pc-savings-amount{font-size:9px!important;color:#059669!important;opacity:1!important}
+  .pc-saving-num{font-size:11px!important}
+  .tag{font-size:7.5px!important;padding:2px 6px!important}
   .stair-diagram{break-inside:avoid;page-break-inside:avoid;padding:7px 9px!important}
   .stair-month,.stair-users-lbl,.stair-tier-lbl{font-size:7px!important}
   .stair-users{font-size:9px!important}
@@ -485,12 +486,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 /* Savings hero block */
 .pc-savings-block{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:8px 11px;margin-top:10px}
 .pc-savings-months{display:flex;align-items:flex-start;gap:5px;font-size:14px;font-weight:700;color:#059669;line-height:1.2}
-.pc-savings-amount{font-size:10.5px;color:#6EE7B7;margin-top:3px;font-weight:500}
+.pc-savings-amount{font-size:10.5px;color:#059669;margin-top:3px;font-weight:500;opacity:.8}
 
 /* Rec card savings block gets stronger green */
 .pc.rec .pc-savings-block{background:rgba(5,150,105,.08);border-color:rgba(5,150,105,.2)}
 .pc.rec .pc-savings-months{color:#047857}
-.pc.rec .pc-savings-amount{color:#059669}
+.pc.rec .pc-savings-amount{color:#047857;opacity:.8}
 
 /* Feature divider */
 .pc-feat-divider{height:1px;background:var(--g100);margin:0 0 10px}
@@ -656,8 +657,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .adv-panel-inner{padding:12px 14px;display:flex;flex-direction:row;gap:10px;flex-wrap:wrap;align-items:flex-start}
 .adv-step{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 14px;flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px}
 .adv-step-hdr{display:flex;align-items:center;gap:7px;margin-bottom:2px}
+/* ── STEP STATES ── */
 .adv-step-num{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:white;text-transform:uppercase;background:var(--p);padding:3px 8px;border-radius:20px;white-space:nowrap}
+.adv-step-num.step-pending{background:var(--g300);color:white}
+.adv-step-num.step-done{background:#059669;color:white}
 .adv-step-title{font-size:11px;font-weight:700;color:var(--g700);white-space:nowrap}
+.adv-step-title.step-pending{color:var(--g400)}
+/* Required/Optional badges */
+.step-badge{font-size:8px;font-weight:600;padding:2px 6px;border-radius:10px;letter-spacing:.04em;text-transform:uppercase;margin-left:4px}
+.step-badge-req{background:#EDE9FE;color:#6D28D9}
+.step-badge-opt{background:var(--g100);color:var(--g500);position:relative;cursor:default}
+/* Tooltip */
+.step-badge-opt .step-tooltip{
+  display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--g900);color:white;font-size:9px;font-weight:500;padding:5px 8px;
+  border-radius:6px;white-space:nowrap;pointer-events:none;z-index:100;letter-spacing:0;text-transform:none
+}
+.step-badge-opt .step-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--g900)}
+.step-badge-opt:hover .step-tooltip{display:block}
+/* Progress bar */
+.adv-progress{padding:10px 14px 0;border-bottom:1px solid var(--g100);margin-bottom:0}
+.adv-progress-bar{display:flex;gap:4px;margin-bottom:6px}
+.adv-progress-seg{flex:1;height:3px;border-radius:3px;background:var(--g200);transition:background .3s}
+.adv-progress-seg.done{background:#059669}
+.adv-progress-seg.active{background:var(--p)}
+.adv-progress-label{font-size:10px;color:var(--g500);font-weight:500;margin-bottom:8px}
+.adv-progress-label.all-done{color:#059669;font-weight:600}
 .adv-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .adv-lbl{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g400);white-space:nowrap;min-width:fit-content}
 .adv-field{display:flex;flex-direction:column;gap:3px}
@@ -858,158 +883,169 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           onblur="this.parentNode.classList.remove('editing')">
       </div>
       <div class="ph-hr"></div>
-      <div class="ph-pills" id="ph-pills-row" style="margin-bottom:.75rem"></div>
-      <!-- Inline config pills -->
-      <div class="ph-inline-pills" id="ph-inline-pills">
-
-        <!-- ROW 1: Always visible — Billing + Plan + Users + Region -->
-        <div class="pip-row" id="pip-row-1">
-
-          <!-- Step 1: Billing comparison — micro-label inline -->
-          <div class="pip-group pip-billing-group">
-            <span class="pip-micro-label" id="lbl-billing-ctx">Comparativa</span>
-            <div class="pip pip-billing pip-active" id="pip-monthly" onclick="setBilling('monthly');updateBillingPips()">
-              <span id="pip-lbl-monthly">Mensual</span>
-            </div>
-            <div class="pip pip-billing" id="pip-annual" onclick="setBilling('annual');updateBillingPips()">
-              <span id="pip-lbl-annual">Anual</span>
-            </div>
-          </div>
-
-                    <!-- Step 2: Plan type -->
-          <div class="pip-group">
-            <div class="pip pip-plan pip-active" id="pip-std" onclick="setPlanInline('Standard')">
-              <span id="pip-lbl-std">Estándar</span>
-            </div>
-            <div class="pip pip-plan" id="pip-cus" onclick="setPlanInline('Custom')">
-              <span id="pip-lbl-cus">Personalizado</span>
-            </div>
-          </div>
-
-          <!-- Step 3: Users -->
-          <div class="pip pip-users" id="pip-users" onclick="focusPipInput('pip-users-input')">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <input type="text" inputmode="numeric" pattern="[0-9]*" id="pip-users-input" value="10"
-              oninput="this.value=this.value.replace(/[^0-9]/g,'');document.getElementById('unum').value=this.value;checkDed();if(curHost==='sh')updateShSuggestions();upd()"
-              onclick="event.stopPropagation()"
-              style="width:44px;border:none;background:transparent;font-size:12px;font-weight:600;color:inherit;font-family:inherit;outline:none;text-align:center">
-            <span id="pip-lbl-users">usuarios</span>
-          </div>
-
-          <!-- Step 4: Region -->
-          <div class="pip pip-select" id="pip-region" onclick="togglePipDropdown('pip-region-dd');event.stopPropagation()">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            <span id="pip-region-val">North America ($)</span>
-            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-            <div class="pip-dd" id="pip-region-dd" onclick="event.stopPropagation()"></div>
-          </div>
-
-          <!-- Advanced settings -->
+      <div class="ph-pills" id="ph-pills-row" style="margin-bottom:.75rem;display:none"></div>
+      <!-- Configure proposal button only -->
+      <div class="ph-inline-pills np" id="ph-inline-pills">
+        <div class="pip-row" style="justify-content:center">
           <div class="pip pip-adv" id="pip-adv-btn" onclick="toggleAdvPanel()">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span id="pip-adv-lbl">Avanzado</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span id="pip-adv-lbl">Configurar propuesta</span>
           </div>
-        </div>
-
-        <!-- ROW 2: Hosting — only shows if Custom -->
-        <div class="pip-row pip-row-hosting hidden" id="pip-row-hosting">
-          <div style="font-size:10px;color:var(--g600);font-weight:700;letter-spacing:.06em;align-self:center" id="pip-lbl-hosting-row">ALOJAMIENTO</div>
-          <div class="pip-group">
-            <!-- Online: always available for Custom -->
-            <div class="pip pip-host pip-host-active" id="pip-host-online" onclick="setHostInline('online')">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
-              Online
-            </div>
-            <div class="pip pip-host" id="pip-host-onprem" onclick="setHostInline('onprem')" style="position:relative">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-              <span id="pip-lbl-onprem-txt">On-Premise</span>
-              <span class="pip-host-badge" id="pip-onprem-badge">Anual</span>
-            </div>
-            <div class="pip pip-host" id="pip-host-sh" onclick="setHostInline('sh')">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-              Odoo.sh
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ── ODOO.SH INLINE CARD ── shown/hidden by setHostInline -->
-      <div id="sh-bar-inline" class="hidden" style="margin-top:8px;background:var(--g0,white);border:1px solid var(--g200);border-radius:12px;overflow:hidden">
-        <div style="background:#F0EBF4;border-bottom:1px solid #E8DFF0;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-          <span id="lbl-sh-infra-title" style="font-size:11px;font-weight:700;color:#714B67;display:flex;align-items:center;gap:6px">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#714B67" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-            <span id="lbl-sh-infra-text">Odoo.sh — Configuración de infraestructura</span>
-          </span>
-          <span id="sh-inline-cost" style="font-size:11px;color:#714B67;font-weight:600"></span>
-        </div>
-        <div style="padding:12px 14px">
-          <div id="sh-suggest" style="font-size:10px;color:var(--g500);background:#F9F5FB;border-radius:6px;padding:5px 9px;margin-bottom:10px;display:none"></div>
-          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end">
-            <div class="adv-field">
-              <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
-                Workers <span style="font-size:9px;color:var(--g500)">(máx 256)</span>
-                <span id="wk-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
-              </label>
-              <input type="number" id="wk" min="1" max="256" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
-            </div>
-            <div class="adv-field">
-              <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
-                Storage GB <span style="font-size:9px;color:var(--g500)">(máx 4096)</span>
-                <span id="gb-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
-              </label>
-              <input type="number" id="gb" min="1" max="4096" value="20" oninput="clampSh();checkDed();upd()" style="width:80px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
-            </div>
-            <div class="adv-field">
-              <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
-                Stagings <span style="font-size:9px;color:var(--g500)">(máx 20)</span>
-              </label>
-              <input type="number" id="stg" min="0" max="20" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
-            </div>
-            <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:2px">
-              <div id="ded-badge" class="db db-ok"><span id="lbl-no-ded">Servidor compartido</span></div>
-              <div id="ded-limits" style="font-size:9px;color:var(--g400)">Dedicado: &gt;8 workers · &gt;512 GB · &gt;20 stagings</div>
-              <!-- Manual dedicated toggle — only shown when auto thresholds not met -->
-              <div id="manual-ded-wrap" style="display:none;margin-top:6px">
-                <label style="display:flex;align-items:center;gap:6px;font-size:11px;cursor:pointer;color:var(--g700)">
-                  <input type="checkbox" id="manual-ded-chk" onchange="manualDed=this.checked;checkDed();upd()" style="accent-color:var(--p)">
-                  <span id="lbl-manual-ded">Forzar servidor dedicado</span>
-                </label>
-              </div>
-            </div>
-          </div>
-          <!-- Manual dedicated warning banner -->
-          <div id="manual-ded-banner" style="display:none;margin-top:10px;padding:10px 12px;background:#FFF3E0;border:1px solid #FB8C00;border-radius:8px">
-            <div style="display:flex;align-items:flex-start;gap:8px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              <div>
-                <div style="font-size:12px;font-weight:700;color:#E65100;margin-bottom:4px" id="lbl-manual-ded-title">Servidor dedicado activado manualmente</div>
-                <div style="font-size:11px;color:#BF360C;line-height:1.5" id="lbl-manual-ded-body">Esta configuración no cumple los umbrales automáticos (&gt;8 workers, &gt;512 GB o &gt;20 stagings). Un servidor dedicado sin los requerimientos mínimos puede afectar el rendimiento de la base de datos. <strong>Se recomienda ampliamente crear un Presales Ticket interno y recibir confirmación antes de compartir esta propuesta con el cliente.</strong></div>
-              </div>
-            </div>
-          </div>
-          <div id="sh-cost-val" style="margin-top:10px;font-size:12px;font-weight:600;color:var(--p)">—</div>
         </div>
       </div>
-
-      <!-- Advanced panel (hidden by default) -->
       <div class="adv-panel hidden" id="adv-panel">
-        <div class="adv-panel-inner">
+        <!-- Progress bar -->
+        <div class="adv-progress" id="adv-progress">
+          <div class="adv-progress-bar">
+            <div class="adv-progress-seg done" id="prog-seg-0"></div>
+            <div class="adv-progress-seg" id="prog-seg-1"></div>
+            <div class="adv-progress-seg" id="prog-seg-2"></div>
+          </div>
+          <div class="adv-progress-label" id="adv-progress-label">0/3 pasos completados</div>
+        </div>
+        <div class="adv-panel-inner" id="adv-panel-inner">
+          <!-- ═══ PASO 01: Base configuration ═══ -->
+          <div class="adv-step" style="flex-basis:100%">
+            <div class="adv-step-hdr">
+              <span class="adv-step-num" id="adv-step0-num">PASO 01</span>
+              <span class="adv-step-title" id="adv-step0-title"> <span class="step-badge step-badge-req" id="adv-step0-title-badge">Requerido</span>Configuración base</span>
+            </div>
+            <div style="font-size:10px;color:var(--g500);margin-bottom:14px;line-height:1.4" id="adv-step0-desc">Define el tipo de facturación, el plan, los usuarios, el pricelist, el alojamiento y la vigencia de la propuesta.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;margin-bottom:14px">
+              <div>
+                <div class="adv-lbl" style="margin-bottom:6px" id="adv-lbl-billing">Facturación</div>
+                <div class="pip-group pip-billing-group">
+                  <div class="pip pip-billing pip-active" id="pip-monthly" onclick="setBilling('monthly');updateBillingPips()"><span id="pip-lbl-monthly">Mensual</span></div>
+                  <div class="pip pip-billing" id="pip-annual" onclick="setBilling('annual');updateBillingPips()"><span id="pip-lbl-annual">Anual</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="adv-lbl" style="margin-bottom:6px" id="adv-lbl-plan">Plan</div>
+                <div class="pip-group">
+                  <div class="pip pip-plan pip-active" id="pip-std" onclick="setPlanInline('Standard')"><span id="pip-lbl-std">Estándar</span></div>
+                  <div class="pip pip-plan" id="pip-cus" onclick="setPlanInline('Custom')"><span id="pip-lbl-cus">Personalizado</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="adv-lbl" style="margin-bottom:6px" id="adv-lbl-users2">Usuarios</div>
+                <div class="pip pip-users" id="pip-users" onclick="focusPipInput('pip-users-input')">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                  <input type="text" inputmode="numeric" pattern="[0-9]*" id="pip-users-input" value="10"
+                    oninput="this.value=this.value.replace(/[^0-9]/g,'');document.getElementById('unum').value=this.value;checkDed();if(curHost==='sh')updateShSuggestions();upd()"
+                    onclick="event.stopPropagation()"
+                    style="width:44px;border:none;background:transparent;font-size:12px;font-weight:600;color:inherit;font-family:inherit;outline:none;text-align:center">
+                  <span id="pip-lbl-users">usuarios</span>
+                </div>
+              </div>
+              <div>
+                <div class="adv-lbl" style="margin-bottom:6px" id="adv-lbl-pricelist2">Pricelist</div>
+                <div class="pip pip-select" id="pip-region" onclick="togglePipDropdown('pip-region-dd');event.stopPropagation()">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                  <span id="pip-region-val">North America ($)</span>
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                  <div class="pip-dd" id="pip-region-dd" onclick="event.stopPropagation()"></div>
+                </div>
+              </div>
+              <div>
+                <div class="adv-lbl" style="margin-bottom:6px" id="pip-lbl-hosting-row">Alojamiento</div>
+                <div class="pip-group" id="pip-row-hosting">
+                  <div class="pip pip-host pip-host-active" id="pip-host-online" onclick="setHostInline('online')">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>Online
+                  </div>
+                  <div class="pip pip-host" id="pip-host-onprem" onclick="setHostInline('onprem')">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                    <span id="pip-lbl-onprem-txt">On-Premise</span>
+                    <span class="pip-host-badge" id="pip-onprem-badge">Anual</span>
+                  </div>
+                  <div class="pip pip-host" id="pip-host-sh" onclick="setHostInline('sh')">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Odoo.sh
+                  </div>
+                </div>
+              </div>
+              <div style="width:100%">
+                <div class="adv-lbl" style="margin-bottom:6px" id="lbl-validity-hdr">Vigencia</div>
+                <div class="adv-row">
+                  <div class="vig-wrap">
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" class="vig-in" id="vig-days" placeholder="—" oninput="this.value=this.value.replace(/[^0-9]/g,'');updateExpiry();upd()" style="width:52px">
+                    <div class="ep ep-none" id="exp-pill"><span id="lbl-no-date">Sin fecha</span></div>
+                  </div>
+                  <div style="display:flex;gap:3px;flex-wrap:wrap" id="vig-chips"></div>
+                </div>
+              </div>
+            </div>
+            <!-- Odoo.sh Infrastructure card (shown when hosting=sh) --><!-- ── ODOO.SH INLINE CARD ── shown/hidden by setHostInline -->
+            <div id="sh-bar-inline" class="hidden" style="margin-top:8px;background:var(--g0,white);border:1px solid var(--g200);border-radius:12px;overflow:hidden">
+              <div style="background:#F0EBF4;border-bottom:1px solid #E8DFF0;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+                <span id="lbl-sh-infra-title" style="font-size:11px;font-weight:700;color:#714B67;display:flex;align-items:center;gap:6px">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#714B67" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                        <span id="lbl-sh-infra-text">Odoo.sh — Configuración de infraestructura</span>
+                </span>
+                <span id="sh-inline-cost" style="font-size:11px;color:#714B67;font-weight:600"></span>
+              </div>
+              <div style="padding:12px 14px">
+                <div id="sh-suggest" style="font-size:10px;color:var(--g500);background:#F9F5FB;border-radius:6px;padding:5px 9px;margin-bottom:10px;display:none"></div>
+                <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end">
+                        <div class="adv-field">
+                          <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
+                            Workers <span style="font-size:9px;color:var(--g500)">(máx 256)</span>
+                            <span id="wk-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
+                          </label>
+                          <input type="number" id="wk" min="1" max="256" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
+                        </div>
+                        <div class="adv-field">
+                          <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
+                            Storage GB <span style="font-size:9px;color:var(--g500)">(máx 4096)</span>
+                            <span id="gb-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
+                          </label>
+                          <input type="number" id="gb" min="1" max="4096" value="20" oninput="clampSh();checkDed();upd()" style="width:80px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
+                        </div>
+                        <div class="adv-field">
+                          <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
+                            Stagings <span style="font-size:9px;color:var(--g500)">(máx 20)</span>
+                          </label>
+                          <input type="number" id="stg" min="0" max="20" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:2px">
+                          <div id="ded-badge" class="db db-ok"><span id="lbl-no-ded">Servidor compartido</span></div>
+                          <div id="ded-limits" style="font-size:9px;color:var(--g400)">Dedicado: &gt;8 workers · &gt;512 GB · &gt;20 stagings</div>
+                          <!-- Manual dedicated toggle — only shown when auto thresholds not met -->
+                          <div id="manual-ded-wrap" style="display:none;margin-top:6px">
+                            <label style="display:flex;align-items:center;gap:6px;font-size:11px;cursor:pointer;color:var(--g700)">
+                                    <input type="checkbox" id="manual-ded-chk" onchange="manualDed=this.checked;checkDed();upd()" style="accent-color:var(--p)">
+                                    <span id="lbl-manual-ded">Forzar servidor dedicado</span>
+                            </label>
+                          </div>
+                        </div>
+                </div>
+                <!-- Manual dedicated warning banner -->
+                <div id="manual-ded-banner" style="display:none;margin-top:10px;padding:10px 12px;background:#FFF3E0;border:1px solid #FB8C00;border-radius:8px">
+                        <div style="display:flex;align-items:flex-start;gap:8px">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                          <div>
+                            <div style="font-size:12px;font-weight:700;color:#E65100;margin-bottom:4px" id="lbl-manual-ded-title">Servidor dedicado activado manualmente</div>
+                            <div style="font-size:11px;color:#BF360C;line-height:1.5" id="lbl-manual-ded-body">Esta configuración no cumple los umbrales automáticos (&gt;8 workers, &gt;512 GB o &gt;20 stagings). Un servidor dedicado sin los requerimientos mínimos puede afectar el rendimiento de la base de datos. <strong>Se recomienda ampliamente crear un Presales Ticket interno y recibir confirmación antes de compartir esta propuesta con el cliente.</strong></div>
+                          </div>
+                        </div>
+                </div>
+                <div id="sh-cost-val" style="margin-top:10px;font-size:12px;font-weight:600;color:var(--p)">—</div>
+              </div>
+            </div>
+
+            <!-- Advanced panel (hidden by default) -->
+          </div>
+
+          <!-- Separator -->
+          <div style="flex-basis:100%;height:1px;background:var(--g150,#E8E8E8);margin:4px 0"></div>
+
 
           <!-- STEP 01: Vigencia + Planes + Descuentos -->
           <div class="adv-step">
             <div class="adv-step-hdr">
-              <span class="adv-step-num" id="adv-step1-num">PASO 01</span>
-              <span class="adv-step-title" id="adv-step1-title">Planes & Vigencia</span>
+              <span class="adv-step-num" id="adv-step1-num">PASO 02</span>
+              <span class="adv-step-title" id="adv-step1-title"> <span class="step-badge step-badge-req" id="adv-step1-title-badge">Requerido</span>Planes & Descuento</span>
             </div>
-            <div class="adv-row">
-              <span class="adv-lbl" id="lbl-validity">Vigencia</span>
-              <div class="vig-wrap">
-                <input type="text" inputmode="numeric" pattern="[0-9]*" class="vig-in" id="vig-days" placeholder="—" oninput="this.value=this.value.replace(/[^0-9]/g,'');updateExpiry();upd()" style="width:52px">
-                <div class="ep ep-none" id="exp-pill"><span id="lbl-no-date">Sin fecha</span></div>
-              </div>
-              <div style="display:flex;gap:3px;flex-wrap:wrap" id="vig-chips"></div>
-            </div>
+            <div style="font-size:10px;color:var(--g500);margin-bottom:10px;line-height:1.4" id="adv-step1-desc">Selecciona los planes a mostrar y define los descuentos adicionales.</div>
+
             <div class="adv-row" style="flex-wrap:wrap;gap:8px;align-items:center">
               <span class="adv-lbl" id="lbl-planes">Planes + descuento</span>
               <div id="adv-plans-unified"></div>
@@ -1019,9 +1055,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- STEP 02: Vista + Cláusula 5.2 -->
           <div class="adv-step">
             <div class="adv-step-hdr">
-              <span class="adv-step-num" id="adv-step2-num">PASO 02</span>
-              <span class="adv-step-title" id="adv-step2-title">Vista & Ajustes</span>
+              <span class="adv-step-num" id="adv-step2-num">PASO 03</span>
+              <span class="adv-step-title" id="adv-step2-title"> <span class="step-badge step-badge-req" id="adv-step2-title-badge">Requerido</span>Vista & Ajustes</span>
             </div>
+            <div style="font-size:10px;color:var(--g500);margin-bottom:10px;line-height:1.4" id="adv-step2-desc">¿Qué secciones mostrar al cliente? ¿Aplica incremento anual por cláusula 5.2?</div>
             <div class="adv-row" style="gap:12px;align-items:center;flex-wrap:wrap">
               <span class="adv-lbl" id="adv-view-lbl">Vista</span>
               <label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer">
@@ -1059,9 +1096,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- STEP 03: Términos de pago -->
           <div class="adv-step">
             <div class="adv-step-hdr">
-              <span class="adv-step-num" id="adv-step3-num">PASO 03</span>
-              <span class="adv-step-title" id="adv-step3-title">Términos de pago</span>
+              <span class="adv-step-num" id="adv-step3-num">PASO 04</span>
+              <span class="adv-step-title" id="adv-step3-title"> <span class="step-badge step-badge-opt" id="adv-step3-title-badge">Opcional ⓘ<span class="step-tooltip" id="step3-tooltip">Para pagos en parcialidades o diferidos</span></span>Términos de pago</span>
             </div>
+            <div style="font-size:10px;color:var(--g500);margin-bottom:8px;line-height:1.4" id="adv-step3-desc">¿El cliente tiene condiciones de pago especiales o escalonadas?</div>
             <div style="font-size:10px;color:var(--g400);margin-bottom:2px" id="adv-step3-sub">Selecciona los planes donde quieres mostrar términos de pago:</div>
             <div class="chips" id="adv-pt-chips"></div>
           </div>
@@ -1069,9 +1107,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
           <!-- STEP 04: Escaleras / Stairs -->
           <div class="adv-step" style="flex-basis:100%">
             <div class="adv-step-hdr">
-              <span class="adv-step-num" id="adv-step4-num">PASO 04</span>
-              <span class="adv-step-title" id="adv-step4-title">Escaleras <span id="adv-step4-sub" style="font-size:9px;font-weight:400;color:var(--g400)">(Stairs) · Solo planes multianuales ≥ 24m</span></span>
+              <span class="adv-step-num" id="adv-step4-num">PASO 05</span>
+              <span class="adv-step-title" id="adv-step4-title"> <span class="step-badge step-badge-opt" id="adv-step4-title-badge">Opcional ⓘ<span class="step-tooltip" id="step4-tooltip">Para clientes que arrancan con menos usuarios</span></span>Escaleras <span id="adv-step4-sub" style="font-size:9px;font-weight:400;color:var(--g400)">(Stairs) · Solo planes multianuales ≥ 24m</span></span>
             </div>
+            <div style="font-size:10px;color:var(--g500);margin-bottom:10px;line-height:1.4" id="adv-step4-desc">¿El cliente arranca con menos usuarios de los que necesitará? Configura el despliegue escalonado.</div>
             <div id="stair-plans-container" style="display:flex;flex-wrap:wrap;gap:10px"></div>
           </div>
           <!-- ERP plan selector (hidden, kept for JS compat) -->
@@ -1159,7 +1198,7 @@ function t(key){return LANG[lang]?.[key]||LANG['es'][key]||key;}
 var LANG={
   es:{
     billing:'FACTURACIÓN',
-    billing_ctx:'Comparativa',
+    billing_ctx:'Tipo de facturación',
     star_hint:'Marca con estrella el plan que quieres resaltar como recomendado',
     billing_monthly:'Mensual', billing_annual:'Anual',
     view:'VISTA', view_plans:'Planes', view_impact:'Impacto', view_features:'Features',
@@ -1326,8 +1365,26 @@ var LANG={
     lbl_7pct_compound:'% anual compuesto',
     page_title:'Planes de Odoo Enterprise',
     app_subtitle:'/ Calculadora',
-    adv_step1:'Planes & Vigencia',
-    adv_step_num1:'PASO 01', adv_step_num2:'PASO 02', adv_step_num3:'PASO 03', adv_step_num4:'PASO 04',
+    adv_lbl_billing:'Facturación',
+    adv_lbl_plan:'Plan',
+    adv_lbl_pricelist:'Pricelist',
+    adv_lbl_users:'Usuarios',
+    adv_lbl_hosting:'Alojamiento',
+    step_required:'Requerido',
+    step_optional:'Opcional',
+    step_tooltip3:'Para pagos en parcialidades o diferidos',
+    step_tooltip5:'Para planes corporativos con despliegue por fases',
+    progress_label:'{{n}}/3 pasos completados',
+    progress_done:'✓ Propuesta lista para compartir',
+    adv_step0:'Configuración base',
+    adv_step0_desc:'Define el tipo de facturación, el plan, los usuarios, el pricelist, el alojamiento y la vigencia de la propuesta.',
+    adv_step_num0_key:'PASO 01',
+    adv_step1:'Planes & Descuento',
+    adv_step1_desc:'Selecciona los planes corporativos a mostrar y define los descuentos adicionales.',
+    adv_step2_desc:'¿Qué secciones mostrar al cliente? ¿Aplica incremento anual por cláusula 5.2?',
+    adv_step3_desc:'¿El cliente tiene condiciones de pago especiales o escalonadas?',
+    adv_step4_desc:'¿El cliente arranca con menos usuarios de los que necesitará? Configura el despliegue escalonado.',
+    adv_step_num0:'PASO 01', adv_step_num1:'PASO 02', adv_step_num2:'PASO 03', adv_step_num3:'PASO 04', adv_step_num4:'PASO 05',
     adv_step2:'Vista & Ajustes',
     adv_step3:'Términos de pago',
     adv_step4:'Escaleras',
@@ -1373,7 +1430,7 @@ var LANG={
     edit_users:'usuarios',
     edit_plan_label:'Plan',
     edit_hosting_label:'Alojamiento',
-    edit_advanced:'Avanzado',
+    edit_advanced:'Configurar propuesta',
     edit_advanced_close:'Cerrar',
     edit_client_ph:'Nombre del cliente...',
     feat_no_modules_sub:'Sin módulos. Sin extras. Sin sorpresas.',
@@ -1381,7 +1438,7 @@ var LANG={
   },
   en:{
     billing:'BILLING',
-    billing_ctx:'Comparison',
+    billing_ctx:'Billing type',
     star_hint:'Click the star to mark a plan as recommended',
     billing_monthly:'Monthly', billing_annual:'Annual',
     view:'VIEW', view_plans:'Plans', view_impact:'Impact', view_features:'Features',
@@ -1548,8 +1605,25 @@ var LANG={
     lbl_7pct_compound:'% annual compound',
     page_title:'Odoo Enterprise Plans',
     app_subtitle:'/ Calculator',
-    adv_step1:'Plans & Validity',
-    adv_step_num1:'STEP 01', adv_step_num2:'STEP 02', adv_step_num3:'STEP 03', adv_step_num4:'STEP 04',
+    adv_lbl_billing:'Billing',
+    adv_lbl_plan:'Plan',
+    adv_lbl_pricelist:'Pricelist',
+    adv_lbl_users:'Users',
+    adv_lbl_hosting:'Hosting',
+    step_required:'Required',
+    step_optional:'Optional',
+    step_tooltip3:'For partial or deferred payments',
+    step_tooltip5:'For corporate plans with phased deployment',
+    progress_label:'{{n}}/3 steps completed',
+    progress_done:'✓ Proposal ready to share',
+    adv_step0:'Base configuration',
+    adv_step0_desc:'Set the billing type, plan, number of users, pricelist, hosting and proposal validity.',
+    adv_step1:'Plans & Discount',
+    adv_step1_desc:'Select which corporate plans to show and define any additional discounts.',
+    adv_step2_desc:'Which sections to show the client? Does clause 5.2 annual increase apply?',
+    adv_step3_desc:'Does the client have special or staggered payment conditions?',
+    adv_step4_desc:'Is the client starting with fewer users than they will eventually need?',
+    adv_step_num0:'STEP 01', adv_step_num1:'STEP 02', adv_step_num2:'STEP 03', adv_step_num3:'STEP 04', adv_step_num4:'STEP 05',
     adv_step2:'View & Settings',
     adv_step3:'Payment terms',
     adv_step4:'Stairs',
@@ -1595,7 +1669,7 @@ var LANG={
     edit_users:'users',
     edit_plan_label:'Plan',
     edit_hosting_label:'Hosting',
-    edit_advanced:'Advanced',
+    edit_advanced:'Configure proposal',
     edit_advanced_close:'Close',
     edit_client_ph:'Client name...',
     feat_no_modules_sub:'No modules. No add-ons. No surprises.',
@@ -1604,7 +1678,7 @@ var LANG={
 
   fr:{
     billing:'FACTURATION',
-    billing_ctx:'Comparatif',
+    billing_ctx:'Type de facturation',
     star_hint:'Cliquez sur l\'étoile pour marquer un plan comme recommandé',
     billing_monthly:'Mensuel', billing_annual:'Annuel',
     view:'VUE', view_plans:'Plans', view_impact:'Impact', view_features:'Fonctionnalités',
@@ -1771,8 +1845,25 @@ var LANG={
     lbl_7pct_compound:'% annuel composé',
     page_title:'Plans Odoo Enterprise',
     app_subtitle:'/ Calculateur',
-    adv_step1:'Plans & Validité',
-    adv_step_num1:'ÉTAPE 01', adv_step_num2:'ÉTAPE 02', adv_step_num3:'ÉTAPE 03', adv_step_num4:'ÉTAPE 04',
+    adv_lbl_billing:'Facturation',
+    adv_lbl_plan:'Plan',
+    adv_lbl_pricelist:'Liste de prix',
+    adv_lbl_users:'Utilisateurs',
+    adv_lbl_hosting:'Hébergement',
+    step_required:'Requis',
+    step_optional:'Optionnel',
+    step_tooltip3:'Pour les paiements partiels ou différés',
+    step_tooltip5:'Pour les plans d\'entreprise avec déploiement progressif',
+    progress_label:'{{n}}/3 étapes complétées',
+    progress_done:'✓ Proposition prête à partager',
+    adv_step0:'Configuration de base',
+    adv_step0_desc:"Définissez le type de facturation, le plan, le nombre d'utilisateurs, la liste de prix, l'hébergement et la validité de la proposition.",
+    adv_step1:'Plans & Remise',
+    adv_step1_desc:'Sélectionnez les plans d\'entreprise à afficher et définissez les remises additionnelles.',
+    adv_step2_desc:"Quelles sections afficher au client ? La clause 5.2 de hausse annuelle s'applique-t-elle ?",
+    adv_step3_desc:'Le client a-t-il des conditions de paiement spéciales ou échelonnées ?',
+    adv_step4_desc:"Le client démarre-t-il avec moins d'utilisateurs qu'il n'en aura besoin ?",
+    adv_step_num0:'ÉTAPE 01', adv_step_num1:'ÉTAPE 02', adv_step_num2:'ÉTAPE 03', adv_step_num3:'ÉTAPE 04', adv_step_num4:'ÉTAPE 05',
     adv_step2:'Vue & Paramètres',
     adv_step3:'Conditions de paiement',
     adv_step4:'Escaliers',
@@ -1818,7 +1909,7 @@ var LANG={
     edit_users:'utilisateurs',
     edit_plan_label:'Plan',
     edit_hosting_label:'Hébergement',
-    edit_advanced:'Avancé',
+    edit_advanced:'Configurer la proposition',
     edit_advanced_close:'Fermer',
     edit_client_ph:'Nom du client...',
     feat_no_modules_sub:'Sans modules. Sans extras. Sans surprises.',
@@ -1837,6 +1928,11 @@ function setLang(l){
     'lbl-7pct':t('toggle_7'),'lbl-region':t('region'),
     'lbl-users':t('users'),'lbl-plan':t('plan'),
     'lbl-hosting':t('hosting'),'lbl-company':t('company'),
+    'adv-step1-desc':t('adv_step1_desc'),
+    'adv-step2-desc':t('adv_step2_desc'),
+    'adv-step3-desc':t('adv_step3_desc'),
+    'adv-step4-desc':t('adv_step4_desc'),
+    'lbl-validity-hdr':t('validity'),
     'lbl-validity':t('validity'),'lbl-pt':t('pt_label'),
     'copy-lbl':t('btn_copy'),'pdf-lbl':t('btn_pdf'),
     'lbl-smart-warn':t('plan_smart_warning'),
@@ -1865,6 +1961,14 @@ function setLang(l){
     'lbl-vfeatures':t('view_features'),
     'lbl-verp':'ERP',
     'lbl-7pct2':t('lbl_7pct_compound'),
+    'adv-step0-num':t('adv_step_num0'),
+    'adv-step0-title':t('adv_step0'),
+    'adv-step0-desc':t('adv_step0_desc'),
+    'adv-lbl-billing':t('adv_lbl_billing'),
+    'adv-lbl-plan':t('adv_lbl_plan'),
+    'adv-lbl-pricelist2':t('adv_lbl_pricelist'),
+    'adv-lbl-users2':t('adv_lbl_users'),
+    'pip-lbl-hosting-row':t('adv_lbl_hosting'),
     'adv-step1-title':t('adv_step1'),
     'adv-step1-num':t('adv_step_num1'),
     'adv-step2-num':t('adv_step_num2'),
@@ -1949,6 +2053,7 @@ function setLang_apply(ids){
   if(typeof buildStairUI==='function') buildStairUI(true);
   // Refresh payment terms dropdown options
   if(typeof upd==='function') upd();
+  if(typeof updateProgress==='function') updateProgress();
 }
 
 const PD={
@@ -2591,6 +2696,53 @@ function buildStairDiagram(yrs, plan, totalUsers, cur, disc){
   </div>`;
 }
 
+// ══ STEP PROGRESS ═══════════════════════════════════════
+function updateProgress(){
+  const s0done=true;
+  const s1done=[...visPlans].some(y=>y>=2);
+  const s2done=!!(document.getElementById('show-plans')?.checked||
+               document.getElementById('show-impact')?.checked||
+               document.getElementById('show-erp')?.checked||
+               document.getElementById('show-features')?.checked);
+  const doneCount=[s0done,s1done,s2done].filter(Boolean).length;
+  const allDone=doneCount===3;
+
+  [s0done,s1done,s2done].forEach((done,i)=>{
+    const seg=document.getElementById('prog-seg-'+i);
+    if(seg) seg.className='adv-progress-seg'+(done?' done':'');
+  });
+
+  const lbl=document.getElementById('adv-progress-label');
+  if(lbl){
+    lbl.textContent=allDone?t('progress_done'):t('progress_label').replace('{{n}}',doneCount);
+    lbl.className='adv-progress-label'+(allDone?' all-done':'');
+  }
+
+  [{numId:'adv-step0-num',titleId:'adv-step0-title',done:s0done},
+   {numId:'adv-step1-num',titleId:'adv-step1-title',done:s1done},
+   {numId:'adv-step2-num',titleId:'adv-step2-title',done:s2done}
+  ].forEach(({numId,titleId,done})=>{
+    const num=document.getElementById(numId);
+    const title=document.getElementById(titleId);
+    if(num) num.className='adv-step-num'+(done?' step-done':'');
+    if(title) title.className='adv-step-title'+(done?'':' step-pending');
+  });
+
+  ['adv-step0-title-badge','adv-step1-title-badge','adv-step2-title-badge'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.firstChild.textContent=t('step_required')+' ';
+  });
+  const opt3=document.getElementById('adv-step3-title-badge');
+  const opt4=document.getElementById('adv-step4-title-badge');
+  if(opt3) opt3.firstChild.textContent=t('step_optional')+' ⓘ';
+  if(opt4) opt4.firstChild.textContent=t('step_optional')+' ⓘ';
+  const tt3=document.getElementById('step3-tooltip');
+  const tt4=document.getElementById('step4-tooltip');
+  if(tt3) tt3.textContent=t('step_tooltip3');
+  if(tt4) tt4.textContent=t('step_tooltip5');
+}
+// ══ END STEP PROGRESS ═══════════════════════════════════
+
 // ══ PRINT HANDLERS ══════════════════════════════════════
 window.addEventListener('beforeprint', ()=>{
   // Build impact only if the rep has it checked
@@ -2739,20 +2891,20 @@ function buildIntro(){
   let body='';
   if(lang==='en'){
     body=`This proposal covers <strong>${u} user${u>1?'s':''}</strong> on <strong>${planLabel} plan</strong> via <strong>${hostLabel}</strong>.`;
-    if(hasMulti) body+=` Multi-year pricing is negotiated directly — these rates are not available on odoo.com. Your price is frozen from the moment you sign.`;
-    if(hasMulti) body+=` A multi-year contract isn't just a discount — it's Odoo committing to you. Your price, your rate, your conditions: guaranteed for as long as you need.`;
+    if(hasMulti) body+=` Corporate plans are negotiated directly with Odoo — these rates are not available on odoo.com. Your price is frozen from the moment you sign.`;
+    if(hasMulti) body+=` A corporate plan isn't just a discount — it's Odoo committing to you. Your price, your rate, your conditions: guaranteed for as long as you need.`;
     if(stairActive) body+=` With staggered deployment, you only pay for each user group when they go live — the launch price applies to all users in the contract.`;
     if(infOn) body+=` Clause 5.2 scenario included: +${infRate}% compound annual increase from year 3.`;
   } else if(lang==='fr'){
     body=`Cette proposition couvre <strong>${u} utilisateur${u>1?'s':''}</strong> sur le plan <strong>${planLabel}</strong> via <strong>${hostLabel}</strong>.`;
-    if(hasMulti) body+=` Les tarifs pluriannuels sont négociés directement — ils ne sont pas disponibles sur odoo.com. Votre tarif est bloqué dès la signature.`;
-    if(hasMulti) body+=` Un contrat pluriannuel n'est pas qu'une remise — c'est Odoo qui s'engage envers vous. Votre tarif, votre taux, vos conditions : garantis aussi longtemps que vous en avez besoin.`;
+    if(hasMulti) body+=` Les plans d'entreprise sont négociés directement avec Odoo — ils ne sont pas disponibles sur odoo.com. Votre tarif est bloqué dès la signature.`;
+    if(hasMulti) body+=` Un plan d'entreprise n'est pas qu'une remise — c'est Odoo qui s'engage envers vous. Votre tarif, votre taux, vos conditions : garantis aussi longtemps que vous en avez besoin.`;
     if(stairActive) body+=` Avec le déploiement échelonné, vous ne payez chaque groupe d'utilisateurs qu'à leur activation — le tarif de lancement s'applique à l'ensemble du contrat.`;
     if(infOn) body+=` Scénario avec clause 5.2 : +${infRate}% de hausse annuelle composée à partir de l'an 3.`;
   } else {
     body=`Esta propuesta contempla <strong>${u} usuario${u>1?'s':''}</strong> en plan <strong>${planLabel}</strong> bajo alojamiento <strong>${hostLabel}</strong>.`;
-    if(hasMulti) body+=` Las condiciones multianuales son negociadas directamente — no están disponibles en odoo.com. Tu precio queda congelado desde el momento en que firmas.`;
-    if(hasMulti) body+=` Un contrato multianual no es solo un descuento — es Odoo comprometiéndose contigo. Tu precio, tu tasa, tus condiciones: blindados por el tiempo que necesites.`;
+    if(hasMulti) body+=` Los planes corporativos son negociados directamente con Odoo — no están disponibles en odoo.com. Tu precio queda congelado desde el momento en que firmas.`;
+    if(hasMulti) body+=` Un plan corporativo no es solo un descuento — es Odoo comprometiéndose contigo. Tu precio, tu tasa, tus condiciones: blindados por el tiempo que necesites.`;
     if(stairActive) body+=` Con despliegue escalonado, solo pagas por cada grupo de usuarios cuando entran en producción — el precio de lanzamiento aplica a todos los usuarios del contrato.`;
     if(infOn) body+=` Escenario con cláusula 5.2: +${infRate}% de incremento anual compuesto a partir del año 3.`;
   }
@@ -2825,10 +2977,10 @@ function buildIntro(){
     } else {
       // P4: multiyear only
       urgency=lang==='en'
-        ?`Multi-year pricing is negotiated directly with Odoo — these rates and conditions are not available on odoo.com or through self-service renewal.`
+        ?`Corporate plans are negotiated directly with Odoo — these rates and conditions are not available on odoo.com or through self-service renewal.`
         :lang==='fr'
         ?`Les tarifs pluriannuels sont négociés directement avec Odoo — ces conditions ne sont pas disponibles sur odoo.com ni via le renouvellement en libre-service.`
-        :`Los precios multianuales se negocian directamente con Odoo — estas condiciones no están disponibles en odoo.com ni a través de la renovación en autoservicio.`;
+        :`Los planes corporativos se negocian directamente con Odoo — estas condiciones no están disponibles en odoo.com ni a través de la renovación en autoservicio.`;
     }
   }
 
@@ -3521,6 +3673,7 @@ function upd(){
   autoSetErpRegion(reg);
   buildIntro();
   buildFeatures();
+  updateProgress();
   buildStairUI();
   if(document.getElementById('show-impact')?.checked)buildImpact();
   // Update inline pills

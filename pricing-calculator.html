@@ -9,6 +9,7 @@ DOCTYPE html>
 <style>
 :root{
   --p:#714B67;--pl:#9B6E8E;--pp:#F5EFF3;
+  --s:#017E84;
   --g:#017E84;--gl:#E6F5F5;
   --c0:#52525B;--c1:#017E84;--c2:#2980B9;--c3:#714B67;--c4:#8E44AD;--c5:#D4891A;
   --g50:#FAFAFA;--g100:#F4F4F5;--g200:#E4E4E7;--g300:#D4D4D8;--g400:#A1A1AA;--g500:#71717A;--g600:#52525B;--g700:#3F3F46;--g800:#27272A;--g900:#18181B;
@@ -140,8 +141,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .pc-ph{padding:14px 16px 12px}
 /* Strike (tachado inline) */
 .pc-strike-wrap{position:relative;display:inline-block}
-.pc-strike{font-size:13px;font-weight:500;color:var(--g400);font-family:'DM Mono',monospace}
-.pc-strike-line{position:absolute;left:-1px;right:-1px;top:50%;height:1.5px;background:rgba(220,38,38,.5);transform:translateY(-50%) rotate(-5deg);pointer-events:none}
+.pc-strike{font-size:16px;font-weight:500;color:var(--g400);font-family:'DM Mono',monospace;letter-spacing:-.01em}
+.pc-strike-line{position:absolute;left:-2px;right:-2px;top:50%;height:2px;background:rgba(220,38,38,.45);transform:translateY(-50%) rotate(-4deg);pointer-events:none;border-radius:1px}
 /* Total — big hero */
 .pc-total-big{font-size:40px;font-weight:800;line-height:1;font-family:'Inter',sans-serif;color:var(--g900);letter-spacing:-.02em}
 /* Per user secondary */
@@ -159,22 +160,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .tmax{background:#FEF9C3;color:#92400E}
 .tstair{background:#F1F5F9;color:#475569}
 
-.pcls{border-top:1px solid var(--g100);padding-top:6px;margin-bottom:6px}
-.pcl{display:flex;justify-content:space-between;align-items:center;padding:1px 0}
-.pcl span:first-child{font-size:10px;color:var(--g500)}
-.pcl span:last-child{font-size:10px;font-weight:600;color:var(--g800);font-family:'DM Mono',monospace}
-.pc-tot{display:flex;justify-content:space-between;align-items:center;padding:7px 9px;border-radius:6px;margin-bottom:5px;color:white}
-.pc-tot span:first-child{font-size:10px;font-weight:600}
-.pc-tot span:last-child{font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
-.pc-sav{text-align:center;padding:5px 4px;border-radius:6px;font-size:10px;font-weight:600;background:#E8F5E9;color:#2E7D32;margin-bottom:6px}
-.pc-sav b{display:block;font-size:14px;font-family:'DM Mono',monospace;margin-top:1px}
 
 /* Checklist */
 .fl-ttl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin:6px 0 4px}
 .fi{display:flex;align-items:flex-start;gap:5px;padding:2px 0}
-.fck{width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.fck-y{background:#E8F5E9}
-.fck-n{background:var(--g100)}
 .ft{font-size:11px;color:var(--g700);line-height:1.35}
 .ft.dim{color:var(--g300);text-decoration:line-through}
 
@@ -270,7 +259,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .stair-timeline{position:relative;display:flex;align-items:flex-start;gap:0;margin-bottom:12px;overflow:visible;padding-top:4px}
 .stair-node{display:flex;flex-direction:column;align-items:center;position:relative;flex:1;min-width:60px}
 .stair-dot{width:10px;height:10px;border-radius:50%;background:var(--p);flex-shrink:0;z-index:2;position:relative;margin-bottom:5px;margin-top:2px}
-.stair-dot-t{background:var(--s)}
 .stair-line{position:absolute;top:22px;left:50%;right:-50%;height:2px;background:var(--g200);z-index:0}
 .stair-node:last-child .stair-line{display:none}
 .stair-month{font-size:9px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
@@ -280,10 +268,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .stair-t0{background:var(--pp);color:var(--p)}
 .stair-t1{background:var(--gl);color:var(--g)}
 .stair-t2{background:#FFF3E0;color:#E65100}
-.stair-summary{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;background:var(--g50);border-radius:8px;margin-top:6px}
-.stair-sum-item{font-size:10px;color:var(--g600)}
-.stair-sum-save{font-size:11px;font-weight:700;color:#059669}
-.stair-warn{display:flex;align-items:center;gap:5px;font-size:10px;color:#92400E;background:#FFF8E1;border:1px solid #FDE68A;border-radius:6px;padding:5px 8px;margin-top:6px}
 
 /* adv step stair panel */
 .stair-adv-plan{border:1px solid var(--g200);border-radius:8px;padding:10px 12px;background:white;display:flex;flex-direction:column;gap:8px}
@@ -495,7 +479,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .pc.rec .pcb{padding:18px 16px}
 
 /* Remove old per-user (now inline) */
-.pc-per-user{display:none}
 
 /* Mobile responsive */
 @media(max-width:640px){
@@ -796,7 +779,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
     </select>
   </div>
   <div class="cf"><label id="lbl-users">Usuarios</label>
-    <input type="number" id="unum" min="1" max="9999" value="10" oninput="if(lu>0&&(parseInt(this.value)||0)<1){this.value=1;var pi=document.getElementById('pip-users-input');if(pi)pi.value=1;}checkDed();upd()" style="width:75px">
+    <input type="number" id="unum" min="1" max="9999" value="10" oninput="if(lu>0&&(parseInt(this.value)||0)<1){this.value=1;var pi=document.getElementById('pip-users-input');if(pi)pi.value=1;}checkDed();upd();buildStairUI()" style="width:75px">
   </div>
   <div class="cf"><label id="lbl-plan">Plan</label>
     <div class="cseg">
@@ -812,7 +795,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
     </div>
   </div>
   <div class="cf"><label id="lbl-company">Empresa</label>
-    <input type="text" id="client-name" placeholder="Nombre del cliente" id="client-placeholder" oninput="upd()" style="min-width:130px">
+    <input type="text" id="client-name" placeholder="Nombre del cliente" oninput="upd()" style="min-width:130px">
   </div>
   <div class="cf"><label id="lbl-erp-compare">Comparativa ERP</label>
     <div style="display:flex;flex-direction:column;gap:5px;margin-top:2px">
@@ -913,7 +896,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
                 <div class="pip pip-users" id="pip-users" onclick="focusPipInput('pip-users-input')">
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                   <input type="text" inputmode="numeric" pattern="[0-9]*" id="pip-users-input" value="10"
-                    oninput="this.value=this.value.replace(/[^0-9]/g,'');if(lu>0&&(parseInt(this.value)||0)<1)this.value=1;document.getElementById('unum').value=this.value;checkDed();if(curHost==='sh')updateShSuggestions();upd()"
+                    oninput="this.value=this.value.replace(/[^0-9]/g,'');if(lu>0&&(parseInt(this.value)||0)<1)this.value=1;document.getElementById('unum').value=this.value;checkDed();if(curHost==='sh')updateShSuggestions();upd();buildStairUI()"
                     onclick="event.stopPropagation()"
                     style="width:44px;border:none;background:transparent;font-size:12px;font-weight:600;color:inherit;font-family:inherit;outline:none;text-align:center">
                   <span id="pip-lbl-users">usuarios</span>
@@ -925,7 +908,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
                   <div class="pip pip-users" id="pip-light-users" onclick="focusPipInput('pip-lu-input');event.stopPropagation()" style="cursor:text">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>
                     <input type="text" inputmode="numeric" pattern="[0-9]*" id="pip-lu-input" value="0"
-                      oninput="this.value=this.value.replace(/[^0-9]/g,'');lu=parseInt(this.value)||0;if(lu>0){var un=document.getElementById('unum');if(un&&(parseInt(un.value)||0)<1){un.value=1;var pi=document.getElementById('pip-users-input');if(pi)pi.value=1;}}if(curHost==='sh')updateShSuggestions();upd()"
+                      oninput="this.value=this.value.replace(/[^0-9]/g,'');lu=parseInt(this.value)||0;if(lu>0){var un=document.getElementById('unum');if(un&&(parseInt(un.value)||0)<1){un.value=1;var pi=document.getElementById('pip-users-input');if(pi)pi.value=1;}}if(curHost==='sh')updateShSuggestions();upd();buildStairUI()"
                       onclick="event.stopPropagation()"
                       style="width:44px;border:none;background:transparent;font-size:12px;font-weight:600;color:inherit;font-family:inherit;outline:none;text-align:center">
                     <span id="pip-lbl-light">light users</span>
@@ -985,20 +968,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
                             Workers <span style="font-size:9px;color:var(--g500)">(máx 256)</span>
                             <span id="wk-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
                           </label>
-                          <input type="number" id="wk" min="1" max="256" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
+                          <input type="number" id="wk" min="1" max="256" value="1" oninput="shManualOverride=true;clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
                         </div>
                         <div class="adv-field">
                           <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
                             Storage GB <span style="font-size:9px;color:var(--g500)">(máx 4096)</span>
                             <span id="gb-suggest" style="font-size:9px;color:#714B67;font-weight:600;background:#F0EBF4;padding:1px 6px;border-radius:8px;display:none"></span>
                           </label>
-                          <input type="number" id="gb" min="1" max="4096" value="20" oninput="clampSh();checkDed();upd()" style="width:80px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
+                          <input type="number" id="gb" min="1" max="4096" value="20" oninput="shManualOverride=true;clampSh();checkDed();upd()" style="width:80px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
                         </div>
                         <div class="adv-field">
                           <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g500)">
                             Stagings <span style="font-size:9px;color:var(--g500)">(máx 20)</span>
                           </label>
-                          <input type="number" id="stg" min="0" max="20" value="1" oninput="clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
+                          <input type="number" id="stg" min="0" max="20" value="1" oninput="shManualOverride=true;clampSh();checkDed();upd()" style="width:70px;padding:5px 8px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;text-align:center">
                         </div>
                         <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:2px">
                           <div id="ded-badge" class="db db-ok"><span id="lbl-no-ded">Servidor compartido</span></div>
@@ -2031,7 +2014,6 @@ function setLang(l){
     'lbl-manual-ded-title':t('sh_manual_ded_title'),
     'lbl-manual-ded-body':t('sh_manual_ded_body'),
     'ded-limits':t('sh_ded_limits'),
-    'client-placeholder':t('prop_client_placeholder'),
     'lbl-planes':t('plans_lbl'),
     'lbl-add-disc':t('add_disc'),
     'chip-mensual':t('billing_monthly'),
@@ -2197,6 +2179,7 @@ function getPTRules(){
 
 // ══ STATE ══════════════════════════════════════════════
 let curPlan='Standard',curHost='online',curDed=false,manualDed=false,billing='monthly';
+let shManualOverride=false;
 let lu=0; // light users — flat rate, no discounts ever
 let discs={2:0,3:0,4:0,5:0};
 let visPlans=new Set([1,3,5]); // default: 12, 36, 60 meses Plan mensual (0) NOT default
@@ -2225,7 +2208,7 @@ const STAIR_LIMITS={2:{maxTiers:1,maxMonth:6},3:{maxTiers:1,maxMonth:9},4:{maxTi
 // ══ INIT ═══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
   try{
-    buildChips();buildPtChips();buildDiscFields();renderErp();upd();
+    buildChips();buildPtChips();buildDiscFields();renderErp();upd();buildStairUI();
     updateBillingPips();
     // Force sync users pill after upd()
     const pipU=document.getElementById('pip-users-input');
@@ -2253,6 +2236,7 @@ function setPlan(p,el){
 }
 function setHost(h,el){
   if(curPlan==='Standard'&&h!=='online')return;
+  if(h==='sh') shManualOverride=false; // reset so suggestion auto-fills on first load
   curHost=h;
   document.querySelectorAll('.hm').forEach(b=>b.classList.remove('on'));
   el.classList.add('on');
@@ -2297,11 +2281,6 @@ function checkDed(){
   if(manualChk) manualChk.checked=manualDed;
   // Show warning banner only when manually forced dedicated
   if(manualBanner) manualBanner.style.display=manualDed?'block':'none';
-}
-function toggleInf(){
-  infOn=!infOn;
-  document.getElementById('inf-chk').checked=infOn;
-  upd();
 }
 function toggleSection(section,show){
   if(section==='plans'){
@@ -2391,7 +2370,7 @@ function togglePlan(y){
     ptTargetPlans.delete(y);
     delete ptSelectedTerm[y];
   } else visPlans.add(y);
-  buildChips();buildPtChips();buildDiscFields();renderErp();upd();
+  buildChips();buildPtChips();buildDiscFields();renderErp();upd();buildStairUI();
 }
 
 // ══ DISC FIELDS ════════════════════════════════════════
@@ -2692,6 +2671,19 @@ function validateStairs(yrs, totalUsers){
 }
 
 // Build the PASO 04 stair UI for all active multiyear plans
+function toggleStair(y, checked){
+  stairOn[y] = checked;
+  // Show/hide the pre-rendered content without full DOM rebuild
+  const card = document.querySelector('[data-stair-plan="'+y+'"]');
+  if(card){
+    const body = card.querySelector('.stair-adv-body');
+    const placeholder = card.querySelector('.stair-adv-placeholder');
+    if(body) body.style.display = checked ? '' : 'none';
+    if(placeholder) placeholder.style.display = checked ? 'none' : '';
+  }
+  upd();
+}
+
 function buildStairUI(forceFull=false){
   const container = document.getElementById('stair-plans-container');
   if(!container) return;
@@ -2710,7 +2702,7 @@ function buildStairUI(forceFull=false){
 function buildStairUIFull(container, multiPlans, u){
   const planLabels = {2:t('plan_24'),3:t('plan_36'),4:t('plan_48'),5:t('plan_60')};
   const hasLight = lu > 0;
-  const rebuildCall = `buildStairUIFull(document.getElementById('stair-plans-container'),[...visPlans].filter(y=>y>=2).sort((a,b)=>a-b),parseInt(document.getElementById('unum')?.value)||10)`;
+  const rebuildCall = `buildStairUI()`;
 
   container.innerHTML = multiPlans.map(y => {
     const lim = STAIR_LIMITS[y];
@@ -2915,11 +2907,12 @@ function buildStairUIFull(container, multiPlans, u){
       <div class="stair-adv-plan-hdr">
         <span class="stair-adv-plan-lbl">${planLabels[y]}</span>
         <label class="stair-toggle">
-          <input type="checkbox" ${isOn?'checked':''} onchange="stairOn[${y}]=this.checked;${rebuildCall};upd()">
+          <input type="checkbox" ${isOn?'checked':''} onchange="toggleStair(${y},this.checked)">
           <span class="stair-slider"></span>
         </label>
       </div>
-      ${isOn ? `${batchSelector}${rosterTable}` : `<span style="font-size:10px;color:var(--g400)">${t('stair_activate')}</span>`}
+      <div class="stair-adv-body" style="display:${isOn?'':'none'}">${batchSelector}${rosterTable}</div>
+      <span class="stair-adv-placeholder" style="font-size:10px;color:var(--g400);display:${isOn?'none':''}">${t('stair_activate')}</span>
     </div>`;
   }).join('');
 }
@@ -3968,7 +3961,7 @@ function upd(){
             : c.mesesAhorrados>0 ? c.mesesAhorrados.toFixed(1) : null;
           const stairMesesGratis = mesesNum ? `${mesesNum} ${t('months_free')}` : mesesGratis;
           return `
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
             <div class="pc-strike-wrap">
               <span class="pc-strike">${displayNorm}</span>
               <div class="pc-strike-line"></div>
@@ -4026,64 +4019,11 @@ function upd(){
   buildIntro();
   buildFeatures();
   updateProgress();
-  buildStairUI();
   if(document.getElementById('show-impact')?.checked)buildImpact();
   // Update inline pills
   if(typeof updateAllPips==='function') updateAllPips();
 }
 
-// ══ COPY ════════════════════════════════════════════════
-function copyProposal(){
-  const d=PD[document.getElementById('region').value];
-  const u=parseInt(document.getElementById('unum').value)||1;
-  const cur=d.cur,plan=curPlan==='Standard'?d.S:d.C,shm=shMon();
-  const isAnn=billing==='annual';
-  const cl=document.getElementById('client-name').value||'—';
-  const sorted=[...visPlans].sort((a,b)=>a-b);
-  const calcs=sorted.map(y=>calcP(y,plan,u,shm,isAnn));
-  const hl=curHost==='online'?'Online':curHost==='onprem'?'On-Premise':'Odoo.sh';
-  const copyLabels={
-    title:    {es:'PROPUESTA ODOO ENTERPRISE',      en:'ODOO ENTERPRISE PROPOSAL',          fr:'PROPOSITION ODOO ENTERPRISE'},
-    client:   {es:'Cliente',                         en:'Client',                             fr:'Client'},
-    region:   {es:'Región',                          en:'Region',                             fr:'Région'},
-    plan:     {es:'Plan',                            en:'Plan',                               fr:'Plan'},
-    users:    {es:'Usuarios',                        en:'Users',                              fr:'Utilisateurs'},
-    billing:  {es:'Facturación',                     en:'Billing',                            fr:'Facturation'},
-    ann:      {es:'Anual',                           en:'Annual',                             fr:'Annuel'},
-    mo:       {es:'Mensual',                         en:'Monthly',                            fr:'Mensuel'},
-    hosting:  {es:'Alojamiento',                     en:'Hosting',                            fr:'Hébergement'},
-    inf7:     {es:'⚠️ +7% compuesto anual aplicado', en:'⚠️ +7% annual compound applied',     fr:'⚠️ +7% annuel composé appliqué'},
-    saving:   {es:'Ahorro total',                    en:'Total savings',                      fr:'Économies totales'},
-    disc:     {es:'★ Descuento inicial primer año incluido en planes anuales.','en':'★ First-year discount included in annual plans.','fr':'★ Remise première année incluse dans les plans annuels.'},
-    frozen:   {es:'🔒 Precio fijo durante todo el contrato multianual.','en':'🔒 Price frozen throughout the multi-year contract.','fr':'🔒 Tarif garanti pendant toute la durée du contrat pluriannuel.'},
-    no7:      {es:'🛡️ Sin incremento anual del 7% (aplica solo en contratos multianuales).','en':'🛡️ No annual 7% price hike (applies to multi-year contracts only).','fr':'🛡️ Sans hausse de prix annuelle de 7% (contrats pluriannuels uniquement).'},
-    notax:    {es:'Precios no incluyen IVA.',         en:'Prices do not include VAT.',         fr:'Prix hors TVA.'},
-    clause:   {es:'Cláusula 5.2',                   en:'Clause 5.2',                         fr:'Clause 5.2'},
-  };
-  const lbl=k=>copyLabels[k][lang]||copyLabels[k]['es'];
-  let txt=[
-    `${lbl('title')}\n${'═'.repeat(36)}`,
-    `${lbl('client')}: ${cl}`,
-    `${lbl('region')}: ${document.getElementById('region').value}`,
-    `${lbl('plan')}: ${curPlan==='Standard'?t('plan_std'):t('plan_custom')}`,
-    `${lbl('users')}: ${u}`,
-    ...(lu>0?[`${lang==='en'?'Light Users':lang==='fr'?'Utilisateurs légers':'Light Users'}: ${lu} (${lang==='en'?'flat rate, no discounts':lang==='fr'?'tarif fixe, sans remises':'tarifa fija, sin descuentos'})`]:[]),
-    `${lbl('billing')}: ${isAnn?lbl('ann'):lbl('mo')}`,
-    `${lbl('hosting')}: ${hl}`,
-    infOn?lbl('inf7'):'','─'.repeat(36)
-  ];
-  calcs.forEach(c=>{
-    const inf=PI[c.yrs];
-    txt.push(`${inf.icon} ${inf.name} (${c.yrs===0?t('billing_monthly'):c.yrs*12+' '+t('plan_12').split(' ')[1]}): ${fN(c.total,cur)}${c.saving>0?' · '+lbl('saving')+': '+fN(c.saving,cur):''}`)
-  });
-  txt.push('─'.repeat(36),
-    lbl('disc'), lbl('frozen'), lbl('no7'), lbl('notax'),
-    `${lbl('clause')}: https://www.odoo.com/documentation/19.0/legal/terms/enterprise.html#renewal-charges`);
-  navigator.clipboard.writeText(txt.filter(Boolean).join('\n')).then(()=>{
-    const b=document.querySelector('.hbtn-g');const o=b.innerHTML;
-    b.textContent='¡Copiado!';setTimeout(()=>b.innerHTML=o,2000);
-  });
-}
 
 // ── ERP COMPARISON DATA ──────────────────────────────────────────────────────
 var ERP_DATA={
@@ -4314,15 +4254,6 @@ function togglePlan_inline(){
   updateAllPips();
 }
 
-function cycleHost_inline(){
-  const hosts=curPlan==='Standard'?['online']:['online','onprem','sh'];
-  const icons={online:'☁️',onprem:'🖥️',sh:'⚙️'};
-  const next=hosts[(hosts.indexOf(curHost)+1)%hosts.length];
-  const htab=document.getElementById('htab-'+next);
-  if(htab) setHost(next,htab);
-  updateAllPips();
-}
-
 function updateBillingPips(){
   const isAnn=billing==='annual';
   document.getElementById('pip-monthly')?.classList.toggle('pip-active',!isAnn);
@@ -4446,7 +4377,7 @@ function setHostInline(h){
   if(h==='onprem'&&billing!=='annual') return;
   curHost=h;
   if(h!=='sh'){manualDed=false;}
-  if(h==='sh') initShDefaults();
+  if(h==='sh'){shManualOverride=false;initShDefaults();}
   upd();
   updateAllPips();
 }
@@ -4474,12 +4405,14 @@ function updateShSuggestions(){
   const wkHint=document.getElementById('wk-suggest');
   const gbHint=document.getElementById('gb-suggest');
   const suggest=document.getElementById('sh-suggest');
-  // Auto-fill fields with suggested values
-  const wkEl=document.getElementById('wk');
-  const gbEl=document.getElementById('gb');
-  if(wkEl) wkEl.value=sugWk;
-  if(gbEl) gbEl.value=sugGb;
-  clampSh();checkDed();
+  // Auto-fill fields only if user hasn't manually edited them
+  if(!shManualOverride){
+    const wkEl=document.getElementById('wk');
+    const gbEl=document.getElementById('gb');
+    if(wkEl) wkEl.value=sugWk;
+    if(gbEl) gbEl.value=sugGb;
+    clampSh();checkDed();
+  }
   if(wkHint){wkHint.textContent=t('sh_suggested')+' '+sugWk;wkHint.style.display='inline';}
   if(gbHint){gbHint.textContent=t('sh_suggested_gb').replace('{n}',sugGb);gbHint.style.display='inline';}
   if(suggest){

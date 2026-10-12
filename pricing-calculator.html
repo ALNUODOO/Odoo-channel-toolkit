@@ -2594,13 +2594,10 @@ function calcStairs(yrs, plan, totalUsers, disc){
       const monthsUsed = totalMonths - startMonth + 1;
       if(monthsUsed <= 0) return;
 
-      // Light: flat rate monthly = lightRate/12, but inflates from year 2
-      // We sum month by month to handle mid-year entry + inflation correctly
+      // Light inside a contract: price is FROZEN, no inflation ever
       let ltCost = 0;
       for(let m = startMonth; m <= totalMonths; m++){
-        const yr = Math.ceil(m / 12);
-        const factor = infOn && yr >= 2 ? Math.pow(1 + infRate/100, yr - 1) : 1;
-        ltCost += (lightRate / 12) * lt.luUsers * factor;
+        ltCost += (lightRate / 12) * lt.luUsers;
       }
       lightTotal += ltCost;
       // Tag onto tier calcs for diagram
@@ -2617,15 +2614,8 @@ function calcStairs(yrs, plan, totalUsers, disc){
 
   // Compare vs no stairs (all users from day 1) — includes full light cost (no stairs)
   const noStair = calcP(yrs, plan, totalUsers, 0, true);
-  // No-stair light cost = full lu for all months
-  let lightNoStair = 0;
-  if(lu > 0 && lightRate > 0){
-    for(let yr = 1; yr <= yrs; yr++){
-      const factor = infOn && yr >= 2 ? Math.pow(1 + infRate/100, yr - 1) : 1;
-      lightNoStair += lightRate * lu * 12 * factor;
-    }
-    lightNoStair = lightNoStair; // already per-year totals
-  }
+  // No-stair light cost = full lu for all months, frozen (still inside contract)
+  let lightNoStair = lu > 0 && lightRate > 0 ? lightRate * lu * 12 * yrs : 0;
   const saving = (noStair.total + lightNoStair) - total;
 
   return {total, totalNoStair: noStair.total + lightNoStair, saving, tiers: tierCalcs, licTotal, shTotal, lightTotal, disc: d};
@@ -2741,7 +2731,7 @@ function buildStairUIFull(container, multiPlans, u){
     const luOverflow = hasLight && luLast < 0;
 
     // ── batch selector (only for plans ≥ 48m) ──
-    const batchSelector = (y>=4&&isOn) ? `
+    const batchSelector = (y>=4) ? `
       <div style="display:flex;align-items:center;gap:4px;margin-bottom:8px">
         <span style="font-size:9px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.07em;margin-right:2px">${t('stair_count_lbl')}</span>
         <button onclick="stairTiers[${y}]=1;${rebuildCall};upd()"
@@ -2754,39 +2744,32 @@ function buildStairUIFull(container, multiPlans, u){
     // Columns: Label | Initial (editable) | Batch1 (editable, if activeTiers>1) | ... | BatchN (computed) | Total
     // Month inputs live in <thead> for each batch column
 
-    // thead cells for each batch column
+    // Helper: month input cell for a given store (stairs or stairsLight) and row color
+    const monthCell = (store, storeKey, i, accentBorder, accentColor) => {
+      const m = parseInt(store[i]?.month)||2;
+      const over = m > lim.maxMonth;
+      return `<td style="padding:6px 3px;text-align:center;vertical-align:middle">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <input type="text" inputmode="numeric" value="${m}"
+            style="width:44px;padding:3px 4px;border:1.5px solid ${over?'var(--warn,#B45309)':accentBorder};border-radius:6px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;text-align:center;background:${over?'var(--warn-bg,#FFFBEB)':'var(--bg,white)'};color:${over?'var(--warn,#B45309)':accentColor}"
+            onchange="let v=Math.max(2,parseInt(this.value)||2);${storeKey}[${y}][${i}].month=v;this.value=v;${rebuildCall};upd()">
+          <span style="font-size:7.5px;color:${over?'var(--warn,#B45309)':'var(--g400)'};font-weight:${over?'600':'400'};white-space:nowrap">m${i+1} · máx ${lim.maxMonth}</span>
+        </div>
+      </td>`;
+    };
+
+    // Header: Label | Initial | Batch cols (one per tier, no month here) | Total
     let thBatches = '';
     for(let i=0; i<activeTiers; i++){
-      const isLast = (i === activeTiers-1);
-      const tierMonth = parseInt(s[i]?.month)||2;
-      const monthOver = tierMonth > lim.maxMonth;
-      if(isLast){
-        // computed column — show month as editable (month still matters for pricing) but mark computed
-        thBatches += `
-          <th style="padding:0 3px 8px;text-align:center;border-bottom:1.5px solid var(--g200)">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
-              <span style="font-size:9px;font-weight:600;color:var(--g400);letter-spacing:.06em;text-transform:uppercase">${t('stair_month_lbl')}</span>
-              <input type="text" inputmode="numeric" value="${tierMonth}"
-                style="width:48px;padding:3px 5px;border:1.5px solid ${monthOver?'var(--warn,#B45309)':'var(--g200)'};border-radius:6px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;text-align:center;background:${monthOver?'var(--warn-bg,#FFFBEB)':'var(--bg,white)'};color:${monthOver?'var(--warn,#B45309)':'var(--g900)'}"
-                onchange="let v=Math.max(2,parseInt(this.value)||2);stairs[${y}][${i}].month=v;stairsLight[${y}][${i}].month=v;this.value=v;${rebuildCall};upd()">
-              <span style="font-size:8px;color:${monthOver?'var(--warn,#B45309)':'var(--g400)'};font-weight:${monthOver?'600':'400'};white-space:nowrap">${t('stair_max_month')} ${lim.maxMonth}</span>
-            </div>
-          </th>`;
-      } else {
-        thBatches += `
-          <th style="padding:0 3px 8px;text-align:center;border-bottom:1.5px solid var(--g200)">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
-              <span style="font-size:9px;font-weight:600;color:var(--g400);letter-spacing:.06em;text-transform:uppercase">${t('stair_month_lbl')}</span>
-              <input type="text" inputmode="numeric" value="${tierMonth}"
-                style="width:48px;padding:3px 5px;border:1.5px solid ${monthOver?'var(--warn,#B45309)':'var(--g200)'};border-radius:6px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;text-align:center;background:${monthOver?'var(--warn-bg,#FFFBEB)':'var(--bg,white)'};color:${monthOver?'var(--warn,#B45309)':'var(--g900)'}"
-                onchange="let v=Math.max(2,parseInt(this.value)||2);stairs[${y}][${i}].month=v;stairsLight[${y}][${i}].month=v;this.value=v;${rebuildCall};upd()">
-              <span style="font-size:8px;color:${monthOver?'var(--warn,#B45309)':'var(--g400)'};font-weight:${monthOver?'600':'400'};white-space:nowrap">${t('stair_max_month')} ${lim.maxMonth}</span>
-            </div>
-          </th>`;
-      }
+      thBatches += `<th style="padding:0 3px 8px;text-align:center;border-bottom:1.5px solid var(--g200)">
+        <span style="font-size:9px;font-weight:600;color:var(--g400);letter-spacing:.06em;text-transform:uppercase">Batch ${i+1}</span>
+      </th>
+      <th style="padding:0 3px 8px;text-align:center;border-bottom:1.5px solid var(--g200)">
+        <span style="font-size:9px;font-weight:600;color:var(--g400);letter-spacing:.06em;text-transform:uppercase">${t('stair_month_lbl')}</span>
+      </th>`;
     }
 
-    // Users row cells
+    // Users row cells (qty + month per batch, interleaved)
     let tdUserBatches = '';
     for(let i=0; i<activeTiers; i++){
       const isLast = (i === activeTiers-1);
@@ -2794,16 +2777,17 @@ function buildStairUIFull(container, multiPlans, u){
         const val = uLast;
         const isErr = val < 0;
         tdUserBatches += `<td style="padding:6px 3px;text-align:center;vertical-align:middle">
-          <span style="display:inline-block;width:48px;padding:3px 5px;border:1.5px dashed ${isErr?'rgba(198,40,40,.3)':'rgba(113,75,103,.25)'};border-radius:6px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;text-align:center;color:${isErr?'var(--err,#C62828)':'var(--p)'};background:${isErr?'var(--err-bg,#FFEBEE)':'var(--pp)'}">${val}</span>
+          <span style="display:inline-block;width:44px;padding:3px 4px;border:1.5px dashed ${isErr?'rgba(198,40,40,.3)':'rgba(113,75,103,.25)'};border-radius:6px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;text-align:center;color:${isErr?'var(--err,#C62828)':'var(--p)'};background:${isErr?'var(--err-bg,#FFEBEE)':'var(--pp)'}">${val}</span>
         </td>`;
       } else {
         const val = parseInt(s[i]?.users)||0;
         tdUserBatches += `<td style="padding:6px 3px;text-align:center;vertical-align:middle">
           <input type="text" inputmode="numeric" value="${val}"
-            style="width:48px;padding:3px 5px;border:1.5px solid var(--g200);border-radius:6px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;text-align:center;background:var(--bg,white);color:var(--g900)"
+            style="width:44px;padding:3px 4px;border:1.5px solid var(--g200);border-radius:6px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;text-align:center;background:var(--bg,white);color:var(--g900)"
             onchange="stairs[${y}][${i}].users=parseInt(this.value)||0;${rebuildCall};upd()">
         </td>`;
       }
+      tdUserBatches += monthCell(s, 'stairs', i, 'rgba(113,75,103,.3)', 'var(--p)');
     }
 
     // Light row cells (only if hasLight)
@@ -2825,6 +2809,7 @@ function buildStairUIFull(container, multiPlans, u){
               onchange="stairsLight[${y}][${i}].users=parseInt(this.value)||0;${rebuildCall};upd()">
           </td>`;
         }
+        tdLightBatches += monthCell(sl, 'stairsLight', i, 'rgba(1,126,132,.3)', 'var(--g)');
       }
     }
 
@@ -2834,8 +2819,12 @@ function buildStairUIFull(container, multiPlans, u){
     const anyOverflow = uOverflow || luOverflow;
     const monthWarns = [];
     for(let i=0; i<activeTiers; i++){
-      const m = parseInt(s[i]?.month)||2;
-      if(m > lim.maxMonth) monthWarns.push(`Batch ${i+1} · ${t('stair_month_lbl').toLowerCase()} ${m} ${t('stair_warn_month')} ${lim.maxMonth})`);
+      const mu = parseInt(s[i]?.month)||2;
+      if(mu > lim.maxMonth) monthWarns.push(`Users Batch ${i+1} · ${t('stair_month_lbl').toLowerCase()} ${mu} ${t('stair_warn_month')} ${lim.maxMonth})`);
+      if(hasLight){
+        const ml = parseInt(sl[i]?.month)||2;
+        if(ml > lim.maxMonth) monthWarns.push(`Light Batch ${i+1} · ${t('stair_month_lbl').toLowerCase()} ${ml} ${t('stair_warn_month')} ${lim.maxMonth})`);
+      }
     }
 
     const bannerRows = `
@@ -3573,8 +3562,8 @@ function buildImpact(){
     const cc=calcP(yrs,plan,u,0,isAnn);
     // Use stair cost if stairs active for this plan
     const sc=stairOn[yrs]?calcStairs(yrs,plan,u,cc.disc):null;
-    // Light users cost — sc.lightTotal when stairs active, else full light for all years
-    const lightContractTotal = sc ? sc.lightTotal : Array.from({length:yrs},(_,i)=>lightCostForYear(i+1)).reduce((a,b)=>a+b,0);
+    // Light users cost — sc.lightTotal when stairs active, else flat (frozen, no inflation inside contract)
+    const lightContractTotal = sc ? sc.lightTotal : impLightBase*yrs;
     const cCost=sc?sc.total:(cc.total+lightContractTotal);
     const invTotal=cCost+(yrs<maxYrs?renAcc[maxYrs-1]-renAcc[yrs-1]:0);
     const saving=totalRenewing-invTotal;
@@ -3924,7 +3913,8 @@ function upd(){
     const normTotal=isMo?fN(plan.mon.y2*u+(curHost==='sh'?shCost(false):0)+lightNormTotal,cur):fN(c.baseRef+lightNormTotal,cur);
     // Pre-compute displaySaving % for badge (mirrors logic inside price block IIFE)
     const _scPre = y>=2&&stairOn[y] ? calcStairs(y,plan,u,c.disc) : null;
-    const _lcPre = _scPre ? _scPre.lightTotal : (isMo ? lightTotalMo : Array.from({length:y},(_,i)=>{const f=infOn&&(i+1)>=2?Math.pow(1+infRate/100,(i+1)-1):1;return lightTotal*f;}).reduce((a,b)=>a+b,0));
+    // Light inside contract is frozen — no inflation
+    const _lcPre = _scPre ? _scPre.lightTotal : (isMo ? lightTotalMo : lightTotal*y);
     const _dtPre = _scPre ? _scPre.total : (c.total + _lcPre);
     const _dsPre = _scPre ? _scPre.saving : c.saving;
     const displaySavingPct = _dtPre>0&&_dsPre>0 ? Math.round(_dsPre/(_dtPre+_dsPre)*100) : 0;
@@ -3948,10 +3938,8 @@ function upd(){
         ${(()=>{
           const sc = y>=2&&stairOn[y] ? calcStairs(y,plan,u,c.disc) : null;
           // Light users cost — when stairs active, sc.lightTotal already includes it
-          const lightContractCost = sc ? sc.lightTotal : (isMo ? lightTotalMo : Array.from({length:y},(_,i)=>{
-            const factor=infOn&&(i+1)>=2?Math.pow(1+infRate/100,(i+1)-1):1;
-            return lightTotal*factor;
-          }).reduce((a,b)=>a+b,0));
+          // Light contract cost is FROZEN — no inflation inside the contract
+          const lightContractCost = sc ? sc.lightTotal : (isMo ? lightTotalMo : lightTotal*y);
           const displayTotal = sc ? sc.total : (c.total + lightContractCost);
           const displaySaving = sc ? sc.saving : c.saving;
           const displayNorm = normTotal;

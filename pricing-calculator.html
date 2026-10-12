@@ -714,7 +714,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   <div class="hsp"></div>
   <!-- Hidden inputs kept for JS compatibility -->
   <input type="checkbox" id="show-plans" checked onchange="toggleSection('plans',this.checked)" style="display:none">
-  <input type="checkbox" id="show-impact" checked onchange="toggleSection('impact',this.checked)" style="display:none">
+  <input type="checkbox" id="show-impact" onchange="toggleSection('impact',this.checked)" style="display:none">
   <input type="checkbox" id="show-features" checked onchange="toggleSection('features',this.checked)" style="display:none">
   <input type="checkbox" id="inf-chk" style="display:none">
   <button class="sb" id="bill-m" onclick="setBilling('monthly')" style="display:none"></button>
@@ -1044,7 +1044,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
                 <span id="lbl-vplanes2">Planes</span>
               </label>
               <label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer">
-                <input type="checkbox" id="adv-show-impact" checked onchange="toggleSection('impact',this.checked);document.getElementById('show-impact').checked=this.checked" style="accent-color:var(--p)">
+                <input type="checkbox" id="adv-show-impact" onchange="toggleSection('impact',this.checked);document.getElementById('show-impact').checked=this.checked" style="accent-color:var(--p)">
                 <span id="lbl-vimpact2">Tabla</span>
               </label>
               <label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer">
@@ -3629,8 +3629,9 @@ function buildImpact(){
           ?t('stair_title').split('·')[1]?.trim()||''
           :fN(cc.avgRate,cur)+' '+t('per_user_month')+discPct;
         const hasContractLight=lu>0&&impLightBase>0;
-        const contractLight=hasContractLight?Array.from({length:yrs},(_,i)=>lightCostForYear(i+1)).reduce((a,b)=>a+b,0):0;
-        const contractLicOnly=(sc?sc.licTotal:cc.total); // regular users only (no light)
+        // Light inside contract is frozen — flat, no inflation
+        const contractLight=hasContractLight?impLightBase*yrs:0;
+        const contractLicOnly=(sc?sc.licTotal:cc.licTotal); // lic only (sh shown separately)
         const hasAnyBreakdown=curHost==='sh'||hasContractLight;
         const shBreakdown=hasAnyBreakdown
           ?(()=>{
@@ -3960,7 +3961,7 @@ function upd(){
             <div style="font-size:11px;color:var(--g400);font-weight:500;white-space:nowrap">${isMo?t('per_month'):''}</div>
           </div>
           ${(()=>{
-            const userTotal = sc ? sc.licTotal : c.total;
+            const userTotal = sc ? sc.licTotal : c.licTotal;
             const hasExtras = (lu>0&&lightRate>0) || curHost==='sh' || !!sc;
             if(!hasExtras) return '';
             const staggered = sc ? ` · ${lang==='en'?'staggered':lang==='fr'?'échelonné':'escalonado'}` : '';

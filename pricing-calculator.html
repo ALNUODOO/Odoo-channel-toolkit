@@ -103,7 +103,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .ctitle{font-size:22px;font-weight:700;color:var(--g900)}
 .csub{font-size:12px;color:var(--g400);margin-top:2px}
 /* Proposal header */
-.proposal-hdr{text-align:center;padding:2.25rem 2rem 1.75rem;background:white;border:0.5px solid var(--g200);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:1rem}
+.proposal-hdr{text-align:left;padding:1.5rem 2rem 1.25rem;background:white;border:0.5px solid var(--g200);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:1rem}
 .ph-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--g400);margin-bottom:.5rem}
 .ph-product{font-size:14px;font-weight:700;color:var(--p);margin-bottom:1.1rem;display:flex;align-items:center;justify-content:center;gap:7px}
 .ph-dot{width:7px;height:7px;border-radius:50%;background:var(--p);display:inline-block;opacity:.5}
@@ -250,6 +250,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .intro-body{font-size:13px;color:var(--g600);line-height:1.6;margin-bottom:12px}
 .intro-body strong{color:var(--g800);font-weight:600}
 .intro-urgency{font-size:12px;color:var(--p);font-weight:600;padding:8px 12px;background:var(--pp);border-radius:8px;display:inline-block;margin-bottom:4px}
+.intro-note{display:flex;align-items:flex-start;gap:7px;margin-top:10px;padding:8px 12px;background:var(--g50);border-left:2.5px solid var(--g300);border-radius:0 6px 6px 0;font-size:11.5px;color:var(--g500);line-height:1.5}
 .intro-chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px 22px;border-top:0.5px solid var(--g100);background:var(--g50)}
 .intro-chip{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--g200);background:white;font-size:11px;font-weight:500;color:var(--g600);white-space:nowrap}
 .intro-chip svg{flex-shrink:0;opacity:.7}
@@ -339,6 +340,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   .intro-top{padding:10px 14px 8px!important}
   .intro-chips{padding:5px 14px!important;gap:3px!important}
   .intro-chip{font-size:8.5px!important;padding:2px 6px!important}
+  .intro-note{font-size:8px!important;padding:4px 8px!important;margin-top:6px!important}
+  #ph-expiry-badge span{font-size:9px!important;padding:2px 8px!important}
 
   /* ── Plans grid ── */
   #view-plans{margin-bottom:8px!important}
@@ -421,6 +424,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 
   /* ── Features — always new page, single column for clean order ── */
   #features-sec{break-before:page!important;page-break-before:always!important;margin-bottom:8px!important}
+  /* Main blocks: avoid cutting mid-section, but don't force page breaks */
+  #view-plans,#view-impact,#erp-section{break-inside:avoid;page-break-inside:avoid}
   .fs-title{font-size:14px!important;font-weight:700!important}
   .fs-sub{font-size:9px!important}
   .fs-badge{font-size:8px!important;padding:2px 6px!important}
@@ -434,18 +439,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   }
   .feat-card{
     break-inside:avoid!important;page-break-inside:avoid!important;
-    padding:7px 10px!important;border-radius:6px!important;
+    padding:6px 8px!important;border-radius:5px!important;
     display:flex!important;flex-direction:row!important;
-    align-items:flex-start!important;gap:8px!important
+    align-items:flex-start!important;gap:6px!important
   }
-  .feat-card-icon{width:26px!important;height:26px!important;border-radius:5px!important;flex-shrink:0!important}
-  .feat-card-icon svg{width:13px!important;height:13px!important}
-  .feat-card-title{font-size:9.5px!important;font-weight:600!important;margin-bottom:1px!important}
-  .feat-card-desc{font-size:8.5px!important;line-height:1.35!important}
-  /* Hero cards same style as compact */
-  .feat-card.feat-hero{
-    break-inside:avoid!important;page-break-inside:avoid!important
-  }
+  .feat-chip-check{font-size:11px!important}
+  .feat-title{font-size:9.5px!important;font-weight:600!important;margin-bottom:1px!important}
+  .feat-desc{font-size:8.5px!important;line-height:1.3!important}
   .host-band{break-inside:avoid;page-break-inside:avoid;padding:8px 10px!important}
   .host-band-title{font-size:10px!important}
   .host-band-sub{font-size:8.5px!important}
@@ -499,18 +499,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .feat-group-label{display:flex;align-items:center;gap:10px;margin:1rem 0 .5rem;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p)}
 .feat-group-line{flex:1;height:1px;background:var(--g150,#E5E5E5)}
 
-/* Feature list — single column, icon-left layout, no grid gaps */
-.feat-grid{display:flex;flex-direction:column;gap:4px;margin-bottom:.5rem}
-.feat-card{background:white;border:1px solid var(--g100);border-radius:10px;padding:10px 14px;display:flex;flex-direction:row;align-items:center;gap:12px;transition:box-shadow .15s}
-.feat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);border-color:var(--g200)}
-.feat-hero{padding:12px 14px}
-.feat-icon-wrap{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.feat-hero .feat-icon-wrap{width:38px;height:38px;border-radius:10px}
-.feat-content{flex:1}
-.feat-title{font-size:12.5px;font-weight:600;color:var(--g900);line-height:1.25;margin-bottom:2px}
-.feat-hero .feat-title{font-size:13px}
-.feat-desc{font-size:11px;color:var(--g500);line-height:1.4}
-.feat-hero .feat-desc{font-size:11.5px}
+/* Feature chips — 2-column compact grid */
+/* Feature chips — 2-column compact grid */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:.75rem}
+.feat-card{background:white;border:1px solid var(--g100);border-radius:8px;padding:9px 12px;display:flex;align-items:flex-start;gap:8px;transition:border-color .15s}
+.feat-card:hover{border-color:var(--g200)}
+.feat-chip-check{color:var(--p);font-size:13px;font-weight:700;line-height:1.3;flex-shrink:0;margin-top:.5px}
+.feat-title{font-size:12px;font-weight:600;color:var(--g900);line-height:1.3;margin-bottom:1px}
+.feat-desc{font-size:11px;color:var(--g500);line-height:1.35}
 
 /* Multi-year banner — section CLIMAX */
 .feat-multiyear-banner{background:linear-gradient(135deg,#4A2545 0%,#6B3D65 50%,#714B67 100%);border-radius:16px;padding:28px 32px;margin-bottom:2rem;color:white}
@@ -541,7 +537,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
   .feat-multiyear-banner{padding:20px}
 }
 @media(max-width:480px){
-  .feat-card{flex-direction:column}
+  .feat-grid{grid-template-columns:1fr}
 }
 
 /* ══ INLINE EDITING SYSTEM ══════════════════════════════════════════════ */
@@ -551,7 +547,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 .ph-client-input{
   width:100%;border:none;background:transparent;outline:none;
   font-size:32px;font-weight:700;color:var(--g900);letter-spacing:-.02em;
-  font-family:inherit;text-align:center;
+  font-family:inherit;text-align:left;
   border-bottom:2px solid transparent;transition:border-color .15s;
   padding:4px 8px;cursor:text;
 }
@@ -839,16 +835,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 
     <!-- Proposal header with inline editing -->
     <div class="proposal-hdr" id="proposal-hdr">
-      <div class="ph-product" style="margin-bottom:.6rem"><span class="ph-dot"></span><span id="lbl-prop-header">Propuesta de licenciamiento · Odoo Enterprise</span><span class="ph-dot"></span></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:.6rem">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--g400)" id="lbl-prop-header-small">ODOO ENTERPRISE</div>
+        <div id="ph-expiry-badge" style="display:none;flex-shrink:0"></div>
+      </div>
       <!-- Inline client name edit -->
-      <div class="ph-client-wrap">
+      <div class="ph-client-wrap" style="text-align:left">
         <input type="text" id="client-name-inline" class="ph-client-input" placeholder="Nombre del cliente..."
           oninput="document.getElementById('client-name').value=this.value;upd()"
           onfocus="this.parentNode.classList.add('editing')"
           onblur="this.parentNode.classList.remove('editing')">
       </div>
+      <div id="ph-sub-line" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--g500);margin-top:3px;margin-bottom:.6rem">
+        <span id="ph-sub-text"></span>
+      </div>
       <div class="ph-hr"></div>
-      <div class="ph-pills" id="ph-pills-row" style="margin-bottom:.75rem;display:none"></div>
       <!-- Configure proposal button only -->
       <div class="ph-inline-pills np" id="ph-inline-pills">
         <div class="pip-row" style="justify-content:center">
@@ -1113,9 +1114,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
 
     <!-- PRINT HEADER — only visible in PDF -->
     <div class="print-only-hdr" style="display:none;margin-bottom:1rem">
-      <div style="font-size:9px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.12em;margin-bottom:5px"><span id="lbl-print-header">Propuesta de licenciamiento · Odoo Enterprise</span></div>
-      <div id="print-client-name" style="font-size:22px;font-weight:700;color:var(--g900);letter-spacing:-.01em;margin-bottom:5px"></div>
-      <div id="print-client-sub" style="font-size:10px;color:var(--g500)"></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px">
+        <div style="font-size:9px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.12em"><span id="lbl-print-header">Odoo Enterprise</span></div>
+        <div id="ph-expiry-badge-print" style="display:none;flex-shrink:0"></div>
+      </div>
+      <div id="print-client-name" style="font-size:22px;font-weight:700;color:#000;letter-spacing:-.01em;margin-bottom:3px"></div>
+      <div id="print-client-sub" style="font-size:10px;color:#666;margin-bottom:0"></div>
     </div>
     <!-- PROPOSAL INTRO BLOCK — dynamic, rendered by upd() -->
     <div id="proposal-intro" style="margin-bottom:1rem"></div>
@@ -1126,7 +1130,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--g50);color:var(--g900);mi
     </div>
 
     <!-- USERS WARNING — after cards, before features -->
-    <div class="users-warn np" style="margin:1rem 0">
+    <div class="users-warn np" style="margin:1rem 0;display:none">
       <span class="uw-icon">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       </span>
@@ -1227,7 +1231,7 @@ var LANG={
     initial_disc:'Descuento de lanzamiento año 1', frozen_price:'Precio congelado',
     no_7_inc:'Sin incremento anual de precio',
     light_included:'usuarios light incluidos',
-    saves_full:(amt,mo)=>`Ahorras ${amt} — equivale a ${mo} meses de servicio gratis`,
+    saves_full:(amt,mo)=>`Ahorras ${amt} — equivale a ${mo} meses de servicio sin costo`,
     studio:'Odoo Studio',
     multicompany:'Multiempresa', api_access:'API completa + acceso al código',
     pt_title:'Término de pago', pt_select:'Selecciona un término de pago',
@@ -1266,7 +1270,7 @@ var LANG={
     impact_title:'¿Cuánto ahorras con un contrato multianual?',
     impact_sub:'Comparamos el costo total de cada plan vs renovar año a año durante 5 años',
     impact_contract:'Total del contrato (precio garantizado)',
-    impact_renewing:'Costo de renovar ese año sin contrato',
+    impact_renewing:'Precio de lista (renovación año a año)',
     impact_rec:'Plan recomendado',
     impact_col_total:'Total a 5 años',
     impact_col_total_sub:'contrato + renovaciones',
@@ -1281,6 +1285,7 @@ var LANG={
     impact_reference:'referencia',
     impact_footer_ann:'El total a 5 años incluye el contrato más las renovaciones hasta completar el período. El ahorro se calcula vs renovar año a año los 5 años completos.',
     impact_footer_7:'con incremento del 7% a partir de la primera renovación (Año 2)',
+    taxes_not_incl:'Impuestos no incluidos',
     renewing_annual:'renovar anualmente', paying_monthly:'pagar mensualmente',
     comparing_vs:'vs',
     yr:'Año',
@@ -1480,7 +1485,7 @@ var LANG={
     initial_disc:'Year 1 launch discount', frozen_price:'Price locked',
     no_7_inc:'No annual price increase',
     light_included:'light users included',
-    saves_full:(amt,mo)=>`Save ${amt} — that's ${mo} months of service, free`,
+    saves_full:(amt,mo)=>`Save ${amt} — that's ${mo} months of service at no cost`,
     studio:'Odoo Studio',
     multicompany:'Multi-company', api_access:'Full API + source code access',
     pt_title:'Payment term', pt_select:'Select a payment term',
@@ -1519,7 +1524,7 @@ var LANG={
     impact_title:'How much do you save with a multi-year contract?',
     impact_sub:'We compare the total cost of each plan vs renewing year by year for 5 years',
     impact_contract:'Total contract price (guaranteed)',
-    impact_renewing:'Cost of renewing that year without a contract',
+    impact_renewing:'List price (year-by-year renewal)',
     impact_rec:'Recommended plan',
     impact_col_total:'5-year total',
     impact_col_total_sub:'contract + renewals',
@@ -1534,6 +1539,7 @@ var LANG={
     impact_reference:'benchmark',
     impact_footer_ann:'The 5-year total includes the contract plus renewals to complete the period. Savings are calculated vs renewing annually for all 5 years.',
     impact_footer_7:'with 7% annual increase from first renewal (Year 2)',
+    taxes_not_incl:'Taxes not included',
     renewing_annual:'renewing annually', paying_monthly:'paying monthly',
     comparing_vs:'vs',
     yr:'Year',
@@ -1772,7 +1778,7 @@ var LANG={
     impact_title:'Combien économisez-vous avec un contrat pluriannuel ?',
     impact_sub:'Comparaison du coût total de chaque plan vs renouveler chaque année pendant 5 ans',
     impact_contract:'Total du contrat (prix garanti)',
-    impact_renewing:'Coût de renouvellement cette année sans contrat',
+    impact_renewing:'Prix catalogue (renouvellement annuel)',
     impact_rec:'Plan recommandé',
     impact_col_total:'Total sur 5 ans',
     impact_col_total_sub:'contrat + renouvellements',
@@ -1787,6 +1793,7 @@ var LANG={
     impact_reference:'référence',
     impact_footer_ann:'Le total sur 5 ans inclut le contrat plus les renouvellements pour compléter la période. Les économies sont calculées vs renouveler chaque année pendant 5 ans.',
     impact_footer_7:'avec hausse de 7% dès le premier renouvellement (An 2)',
+    taxes_not_incl:'Taxes non incluses',
     renewing_annual:'renouvellement annuel', paying_monthly:'paiement mensuel',
     comparing_vs:'vs',
     yr:'An',
@@ -2183,7 +2190,7 @@ let shManualOverride=false;
 let lu=0; // light users — flat rate, no discounts ever
 let discs={2:0,3:0,4:0,5:0};
 let visPlans=new Set([1,3,5]); // default: 12, 36, 60 meses Plan mensual (0) NOT default
-let infOn=true,infRate=7,view='plans',ptTargetPlans=new Set(),ptSelectedTerm={},erpPlanOverride=-1; // ptSelectedTerm[yrs] = chosen term label
+let infOn=true,infRate=7,view='plans',ptTargetPlans=new Set(),ptSelectedTerm={},erpPlanOverride=-1,lastRecY=1; // ptSelectedTerm[yrs] = chosen term label
 
 // ══ STAIRS STATE ════════════════════════════════════════
 let stairOn={2:false,3:false,4:false,5:false};
@@ -2398,6 +2405,7 @@ function updateExpiry(){
   if(!days){
     pill.textContent=t('no_date');pill.className='ep ep-none';
     if(banner)banner.style.display='none';
+    const b=document.getElementById('ph-expiry-badge');if(b)b.style.display='none';
     return;
   }
   const exp=new Date();exp.setDate(exp.getDate()+days);
@@ -2425,12 +2433,15 @@ function updateExpiry(){
     label=t('expiry_valid')+' '+ds;
     sub=days+' '+t('expiry_days');
   }
-  if(banner){
-    banner.style.display='flex';
-    banner.className='exp-banner';
-    banner.style.cssText=`display:flex;background:${bg};color:${color};border:1px solid ${color}30;padding:10px 16px;border-radius:var(--rs);font-size:13px;font-weight:500;margin-bottom:1rem;align-items:center;justify-content:space-between;gap:1rem`;
-    banner.innerHTML=`<span>${label}</span><span style="font-size:11px;font-weight:600;opacity:.85">${sub}</span>`;
-  }
+  // Hide the old banner — expiry now lives inline with the sub-line
+  if(banner) banner.style.display='none';
+  // Badge inline with sub-line (screen + print)
+  const icon=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+  const badgeHTML=`<span style="display:inline-flex;align-items:center;gap:5px;background:${bg};color:${color};border:0.5px solid ${color}50;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.01em">${icon}${label} · ${sub}</span>`;
+  const badge=document.getElementById('ph-expiry-badge');
+  if(badge){badge.style.display='block';badge.innerHTML=badgeHTML;}
+  const badgePrint=document.getElementById('ph-expiry-badge-print');
+  if(badgePrint){badgePrint.style.display='block';badgePrint.innerHTML=badgeHTML;}
 }
 
 // ══ FORMAT ══════════════════════════════════════════════
@@ -3025,12 +3036,15 @@ window.addEventListener('beforeprint', ()=>{
     if(el){el.style.removeProperty('break-before');el.style.removeProperty('page-break-before');}
   });
 
-  // Block #2 (index 1) starts a new page; block #1 stays with intro
-  if(blocks[1]){
-    blocks[1].style.breakBefore='page';
-    blocks[1].style.pageBreakBefore='always';
-  }
-  // Features always starts its own new page (handled by CSS already, reinforce here)
+  // Let browser decide page breaks naturally — break-inside:avoid on each block
+  // prevents cuts mid-section without forcing unnecessary blank space.
+  blocks.forEach(el=>{
+    if(el){
+      el.style.breakInside='avoid';
+      el.style.pageBreakInside='avoid';
+    }
+  });
+  // Features always starts its own new page (too long to share with other blocks)
   const featSec=document.getElementById('features-sec');
   if(featSec){
     featSec.style.breakBefore='page';
@@ -3133,24 +3147,40 @@ function buildIntro(){
 
   // ── Body — 1 sentence base + context additions ───────
   let body='';
+  // Plan range for dynamic copy
+  const sortedPlans=[...visPlans].sort((a,b)=>a-b);
+  const minPlan=sortedPlans[0]||1;
+  const maxPlan=sortedPlans[sortedPlans.length-1]||1;
+  const singlePlan=sortedPlans.length===1;
+  const singleYrs=minPlan;
+
   if(lang==='en'){
     body=`This proposal covers <strong>${u} user${u>1?'s':''}</strong>${luVal>0?` + <strong>${luVal} light user${luVal>1?'s':''}</strong>`:''} on <strong>${planLabel} plan</strong> via <strong>${hostLabel}</strong>.`;
-    if(hasMulti) body+=` Corporate plans are negotiated directly with Odoo — these rates are not available on odoo.com. Your price is frozen from the moment you sign.`;
-    if(hasMulti) body+=` A corporate plan isn't just a discount — it's Odoo committing to you. Your price, your rate, your conditions: guaranteed for as long as you need.`;
+    if(hasMulti){
+      body+=` Odoo's list price adjusts periodically. A corporate contract locks in your rate for the full contract term — the price you sign today is the price you pay, guaranteed.`;
+      if(singlePlan) body+=` This contract guarantees your price for <strong>${singleYrs} year${singleYrs>1?'s':''}</strong> from signing.`;
+      else body+=` This proposal compares your corporate contract options from <strong>${minPlan} to ${maxPlan} years</strong> — the longer the contract, the better the guaranteed rate.`;
+    }
     if(stairActive) body+=` With staggered deployment, you only pay for each user group when they go live — the launch price applies to all users in the contract.`;
-    if(infOn) body+=` Clause 5.2 scenario included: +${infRate}% compound annual increase from year 3.`;
+    if(infOn) body+=` A projection with +${infRate}% annual increase is included to show the cost of renewing without a contract.`;
   } else if(lang==='fr'){
     body=`Cette proposition couvre <strong>${u} utilisateur${u>1?'s':''}</strong>${luVal>0?` + <strong>${luVal} utilisateur${luVal>1?'s':''} léger${luVal>1?'s':''}</strong>`:''} sur le plan <strong>${planLabel}</strong> via <strong>${hostLabel}</strong>.`;
-    if(hasMulti) body+=` Les plans d'entreprise sont négociés directement avec Odoo — ils ne sont pas disponibles sur odoo.com. Votre tarif est bloqué dès la signature.`;
-    if(hasMulti) body+=` Un plan d'entreprise n'est pas qu'une remise — c'est Odoo qui s'engage envers vous. Votre tarif, votre taux, vos conditions : garantis aussi longtemps que vous en avez besoin.`;
+    if(hasMulti){
+      body+=` Le tarif catalogue d'Odoo évolue périodiquement. Un contrat d'entreprise bloque votre taux pour toute la durée du contrat — le tarif que vous signez aujourd'hui est celui que vous payez, garanti.`;
+      if(singlePlan) body+=` Ce contrat garantit votre tarif pendant <strong>${singleYrs} an${singleYrs>1?'s':''}</strong> à compter de la signature.`;
+      else body+=` Cette proposition compare vos options de contrat d'entreprise de <strong>${minPlan} à ${maxPlan} ans</strong> — plus le contrat est long, meilleur est le tarif garanti.`;
+    }
     if(stairActive) body+=` Avec le déploiement échelonné, vous ne payez chaque groupe d'utilisateurs qu'à leur activation — le tarif de lancement s'applique à l'ensemble du contrat.`;
-    if(infOn) body+=` Scénario avec clause 5.2 : +${infRate}% de hausse annuelle composée à partir de l'an 3.`;
+    if(infOn) body+=` Une projection avec +${infRate}% d'augmentation annuelle est incluse pour illustrer le coût d'un renouvellement sans contrat.`;
   } else {
     body=`Esta propuesta contempla <strong>${u} usuario${u>1?'s':''}</strong>${luVal>0?` + <strong>${luVal} light user${luVal>1?'s':''}</strong>`:''} en plan <strong>${planLabel}</strong> bajo alojamiento <strong>${hostLabel}</strong>.`;
-    if(hasMulti) body+=` Los planes corporativos son negociados directamente con Odoo — no están disponibles en odoo.com. Tu precio queda congelado desde el momento en que firmas.`;
-    if(hasMulti) body+=` Un plan corporativo no es solo un descuento — es Odoo comprometiéndose contigo. Tu precio, tu tasa, tus condiciones: blindados por el tiempo que necesites.`;
+    if(hasMulti){
+      body+=` El precio de lista de Odoo se ajusta periódicamente. Un contrato corporativo congela tu tasa por toda la vigencia del contrato — el precio que firmas hoy es el precio que pagas, garantizado.`;
+      if(singlePlan) body+=` Este contrato garantiza tu precio por <strong>${singleYrs} año${singleYrs>1?'s':''}</strong> desde la firma.`;
+      else body+=` Esta propuesta compara tus opciones de contrato corporativo de <strong>${minPlan} a ${maxPlan} años</strong> — cuanto más largo el contrato, mejor la tasa garantizada.`;
+    }
     if(stairActive) body+=` Con despliegue escalonado, solo pagas por cada grupo de usuarios cuando entran en producción — el precio de lanzamiento aplica a todos los usuarios del contrato.`;
-    if(infOn) body+=` Escenario con cláusula 5.2: +${infRate}% de incremento anual compuesto desde la primera renovación (año 2).`;
+    if(infOn) body+=` Se incluye una proyección con +${infRate}% anual para mostrar el costo de renovar sin contrato.`;
   }
 
   // ── FOMO / Urgency — priority system ────────────────
@@ -3244,9 +3274,7 @@ function buildIntro(){
   const chip=(icon,lbl,accent=false)=>`<div class="intro-chip${accent?' intro-chip-accent':''}">${S[icon]||''}<span>${lbl}</span></div>`;
 
   const chips=[];
-  chips.push(chip('users',`${u} ${lang==='en'?'users':lang==='fr'?'utilisateurs':'usuarios'}`));
-  if(luVal>0) chips.push(chip('users',`${luVal} ${lang==='en'?'light users':lang==='fr'?'utilisateurs légers':'light users'}`));
-  chips.push(chip('host',hostLabel));
+
   // Merge price locked + exchange rate + no increases into one "conditions frozen" chip
   if(hasMulti) chips.push(chip('lock',
     lang==='en'?'Price & rate frozen':lang==='fr'?'Tarif et taux bloqués':'Precio y tasa congelados',true));
@@ -3259,14 +3287,20 @@ function buildIntro(){
   if(vigDays>0) chips.push(chip('cal',`${lang==='en'?'Valid':lang==='fr'?'Valable':'Vigente'} ${vigDays} ${lang==='en'?'days':lang==='fr'?'jours':'días'}`));
   if(ptPlans.length) chips.push(chip('pt',lang==='en'?'Payment terms agreed':lang==='fr'?'Conditions de paiement':'Término de pago acordado',true));
 
+  // ── Callout note (subtle, not alarming) ─────────────
+  let noteText='';
+  if(hasMulti){
+    if(lang==='en') noteText=`These negotiated multi-year conditions are not available on odoo.com and won't apply after the proposal expires. Any users added after signing are quoted at the current list price — if you already know how many you'll need, include them now. The preferential rate applies only to new licenses.`;
+    else if(lang==='fr') noteText=`Ces conditions pluriannuelles négociées ne sont pas disponibles sur odoo.com et n'auront plus cours après l'expiration de la proposition. Tout utilisateur ajouté après la signature sera facturé au tarif catalogue en vigueur — si vous savez déjà combien il vous en faudra, incluez-les dès maintenant, le tarif préférentiel s'applique uniquement aux nouvelles licences.`;
+    else noteText=`Estas condiciones multianuales negociadas no están disponibles en odoo.com y dejarán de aplicar después del vencimiento de la propuesta. Los usuarios que agregues después de firmar se cotizan al precio de lista vigente — si ya sabes cuántos necesitarás, inclúyelos hoy, el precio preferencial aplica solo a licencias nuevas.`;
+  }
+
   el.innerHTML=`<div class="intro-wrap">
     <div class="intro-top">
-      <div class="intro-greeting">${greeting}</div>
       <div class="intro-headline">${headline}</div>
       <div class="intro-body">${body}</div>
-      ${urgency?`<div class="intro-urgency">${urgency}</div>`:''}
+      ${noteText?`<div class="intro-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>${noteText}</span></div>`:''}
     </div>
-    <div class="intro-chips">${chips.join('')}</div>
   </div>`;
 }
 
@@ -3316,44 +3350,61 @@ function buildFeatures(){
     migrate:{bg:'#F5F3FF',stroke:'#6D28D9'},
   };
 
-  // ── Feature card renderer ─────────────────────────────
-  // hero = large card spanning 2 cols
-  function featCard(iconKey,title,desc,hero=false){
-    const {bg,stroke}=colMap[iconKey]||{bg:'#F3F4F6',stroke:'#6B7280'};
-    return`<div class="feat-card${hero?' feat-hero':''}">
-      <div class="feat-icon-wrap" style="background:${bg};color:${stroke}">${ICONS[iconKey]||''}</div>
-      <div class="feat-content">
+  // ── Feature chip renderer ─────────────────────────────
+  function featCard(iconKey,title,desc){
+    return`<div class="feat-card">
+      <span class="feat-chip-check">✓</span>
+      <div>
         <div class="feat-title">${title}</div>
-        <div class="feat-desc">${desc}</div>
+        ${desc?`<div class="feat-desc">${desc}</div>`:''}
       </div>
     </div>`;
   }
 
-  // ── OPERATE & GROW grid — 4 items ─────────────────────
+  // Short benefit phrases for chips (inline, 3 langs)
+  const cp={
+    p1: lang==='es'?'CRM, Contabilidad, RRHH, Inventario y más':lang==='fr'?'CRM, Comptabilité, RH, Inventaire et plus':'CRM, Accounting, HR, Inventory and more',
+    p2: lang==='es'?'IA de escritura, predicción y detección sin configurar':lang==='fr'?'IA rédaction, prévision et détection sans configuration':'Writing AI, forecasting and anomaly detection built in',
+    p3: lang==='es'?'CFDI, NF-e, SAT, DIAN… cumplimiento fiscal local incluido':lang==='fr'?'CFDI, NF-e, SAT, DIAN… conformité fiscale locale incluse':'CFDI, NF-e, SAT, DIAN… local tax compliance included',
+    p4: lang==='es'?'Multi-subsidiaria y multi-moneda en una sola instancia':lang==='fr'?'Multi-filiale et multidevise depuis une seule instance':'Multi-subsidiary and multi-currency, one instance',
+    p5: lang==='es'?'iOS y Android. Acceso offline a inventario y CRM':lang==='fr'?'iOS et Android. Accès hors ligne inventaire et CRM':'iOS and Android. Offline inventory and CRM access',
+    p6: lang==='es'?'Dashboards ejecutivos y reportes personalizables':lang==='fr'?'Tableaux de bord et rapports personnalisables':'Executive dashboards and customizable reports',
+    s1: lang==='es'?'Active Directory, Google Workspace y Okta':lang==='fr'?'Active Directory, Google Workspace et Okta':'Active Directory, Google Workspace and Okta',
+    s2: lang==='es'?'AES-256, SSL, 2FA y protección anti-DDoS':lang==='fr'?'AES-256, SSL, 2FA et protection anti-DDoS':'AES-256, SSL, 2FA and DDoS protection',
+    s3: lang==='es'?'Tickets y documentación técnica sin límite':lang==='fr'?'Tickets et documentation technique sans limite':'Unlimited tickets and technical documentation',
+    s4: lang==='es'?'Soporte activo en las 3 versiones más recientes':lang==='fr'?'Support actif sur les 3 dernières versions':'Active support on the 3 most recent versions',
+    s5: lang==='es'?'Avisos 2 semanas antes de publicación pública':lang==='fr'?'Alertes 2 semaines avant divulgation publique':'Alerts 2 weeks before public disclosure',
+    s6: lang==='es'?'Correcciones retroportadas a todas las versiones activas':lang==='fr'?'Correctifs rétro-portés sur toutes les versions actives':'Fixes backported to all active versions',
+  };
+
+  // ── PLATFORM grid — 6 chips ───────────────────────────
   const operateHtml=`
     <div class="feat-group-label">
       <span>${t('feat_platform')}</span>
       <div class="feat-group-line"></div>
     </div>
     <div class="feat-grid">
-      ${featCard('apps',    t('feat_p1_t'), t('feat_p1_d'), true)}
-      ${featCard('ai',      t('feat_p2_t'), t('feat_p2_d'), true)}
-      ${featCard('receipt', t('feat_p3_t'), t('feat_p3_d'))}
-      ${featCard('globe',   t('feat_p4_t'), t('feat_p4_d'))}
+      ${featCard('apps',    t('feat_p1_t'), cp.p1)}
+      ${featCard('ai',      t('feat_p2_t'), cp.p2)}
+      ${featCard('receipt', t('feat_p3_t'), cp.p3)}
+      ${featCard('globe',   t('feat_p4_t'), cp.p4)}
+      ${featCard('mobile',  t('feat_p5_t'), cp.p5)}
+      ${featCard('chart',   t('feat_p6_t'), cp.p6)}
     </div>`;
 
-  // ── SECURITY & SUPPORT grid — 5 items ─────────────────
+  // ── SECURITY & SUPPORT grid — 6 chips ────────────────
   const protectHtml=`
     <div class="feat-group-label">
       <span>${t('feat_security')}</span>
       <div class="feat-group-line"></div>
     </div>
     <div class="feat-grid">
-      ${featCard('shield',  t('feat_s1_t'), t('feat_s1_d'), true)}
-      ${featCard('headset', t('feat_s3_t'), t('feat_s3_d'), true)}
-      ${featCard('lock',    t('feat_s2_t'), t('feat_s2_d'))}
-      ${featCard('refresh', t('feat_s4_t'), t('feat_s4_d'))}
-      ${featCard('alert',   t('feat_s5_t'), t('feat_s5_d'))}
+      ${featCard('shield',  t('feat_s1_t'), cp.s1)}
+      ${featCard('lock',    t('feat_s2_t'), cp.s2)}
+      ${featCard('headset', t('feat_s3_t'), cp.s3)}
+      ${featCard('refresh', t('feat_s4_t'), cp.s4)}
+      ${featCard('bug',     t('feat_s6_t'), cp.s6)}
+      ${featCard('alert',   t('feat_s5_t'), cp.s5)}
     </div>`;
 
   // ── Multi-year banner — dynamic tags based on active config ─
@@ -3415,8 +3466,8 @@ function buildFeatures(){
   // Clause 5.2 active — show as warning
   if(infOn) tags.push(buildMultiyearTag(iconInf,
     lang==='en'?`+${infRate}% annual applies`:lang==='fr'?`+${infRate}% annuel inclus`:`+${infRate}% anual incluido`,
-    lang==='en'?'Clause 5.2 active — annual increase applies from year 3':
-    lang==='fr'?`Clause 5.2 active — hausse annuelle de ${infRate}% à partir de l'an 3`:
+    lang==='en'?'Clause 5.2 active — annual increase applies from year 2':
+    lang==='fr'?`Clause 5.2 active — hausse annuelle de ${infRate}% à partir de l'an 2`:
     `Cláusula 5.2 activa — incremento del ${infRate}% desde la primera renovación (año 2)`));
   // Discount
   if(maxDisc>0) tags.push(buildMultiyearTag(iconDisc,
@@ -3492,9 +3543,9 @@ function buildFeatures(){
         <div class="feat-group-line"></div>
       </div>
       <div class="feat-grid" style="margin-bottom:1.25rem">
-        ${featCard('lock',   t('feat_studio_t'),      t('feat_studio_d'),      true)}
-        ${featCard('apps',   t('feat_multicompany_t'),t('feat_multicompany_d'),true)}
-        ${showAdvanced?featCard('migrate',t('feat_api_t'),t('feat_api_d')):''}
+        ${featCard('lock',   t('feat_studio_t'),      lang==='es'?'Formularios, vistas y flujos sin código':lang==='fr'?'Formulaires, vues et workflows sans code':'Forms, views and workflows — no code needed')}
+        ${featCard('apps',   t('feat_multicompany_t'),lang==='es'?'Varias empresas, datos y permisos separados':lang==='fr'?'Plusieurs sociétés, données et droits séparés':'Multiple companies, separate data and permissions')}
+        ${showAdvanced?featCard('migrate',t('feat_api_t'),lang==='es'?'REST API y webhooks para integraciones externas':lang==='fr'?'API REST et webhooks pour intégrations externes':'REST API and webhooks for external integrations'):''}
       </div>`;
   }
 
@@ -3545,6 +3596,7 @@ function buildImpact(){
         const cb=calcP(best,plan,u,0,isAnn);
         return cc.saving>cb.saving?y:best;
       },activePlans[0]||1);
+  lastRecY=recY;
 
   const baseRate=isAnn?plan.ann.y2:plan.mon.y2;
   const modeLabel=isAnn?t('renewing_annual'):t('paying_monthly');
@@ -3762,7 +3814,7 @@ function buildImpact(){
         <tbody>${rowsHtml}${refRow}</tbody>
       </table>
     </div>
-    <div style="padding:8px 16px;font-size:10px;color:var(--g400);border-top:0.5px solid var(--g100);background:var(--g50);line-height:1.5">${t('impact_footer_ann')}${infOn?' · '+t('impact_footer_7')+'.' : ''}</div>
+    <div style="padding:8px 16px;font-size:10px;color:var(--g400);border-top:0.5px solid var(--g100);background:var(--g50);line-height:1.5">${t('impact_footer_ann')}${infOn?' · '+t('impact_footer_7')+'.' : ''} · ${t('taxes_not_incl')}.</div>
   </div>`;
 }
 
@@ -3791,6 +3843,9 @@ function upd(){
   const planLabel=curPlan==='Standard'?t('plan_std'):t('plan_custom');
   const hostLabel=curHost==='online'?t('hosting_online'):curHost==='onprem'?t('hosting_onprem'):t('hosting_sh');
   const subText=`${u} ${t('users').toLowerCase().replace(/es$/,'').replace(/s$/,'')}${u>1?'s':''} · ${planLabel} · ${hostLabel}`;
+  // Update inline sub-line text
+  const phSubText=document.getElementById('ph-sub-text');
+  if(phSubText) phSubText.textContent=subText;
   // Proposal header
   // Light users cost — flat rate, no discount ever
   const lightRate = d.light ? (isAnn ? d.light.ann : d.light.mon) : 0;
@@ -3859,8 +3914,13 @@ function upd(){
     const tagItems=[];
     tagItems.push({icon:'★',label:t('desc_initial'),cls:'ty1'});
     if(hasDisc)tagItems.push({icon:'%',label:`-${(c.disc*100).toFixed(1)}% ${t('additional_disc')}`,cls:'tdisc'});
-    if(y>1)tagItems.push({icon:'🔒',label:t('price_frozen'),cls:'tfrz'});
-    if(infOn&&y>1)tagItems.push({icon:'🛡️',label:t('tag_7pct'),cls:'tinf'});
+    if(y>1){
+      // Merged price-lock tag: adapts based on whether inflation projection is active
+      const lockLabel=infOn
+        ?(lang==='en'?`Price locked · +${infRate}% without contract`:lang==='fr'?`Tarif garanti · +${infRate}% sans contrat`:`Precio congelado · +${infRate}% sin contrato`)
+        :(lang==='en'?'Price locked · no annual increase':lang==='fr'?'Tarif garanti · 0% hausse annuelle':'Precio congelado · sin incremento anual');
+      tagItems.push({icon:'🔒',label:lockLabel,cls:infOn?'tinf':'tfrz'});
+    }
     if(y>=2&&stairOn[y])tagItems.push({icon:'📊',label:lang==='en'?'Stairs':lang==='fr'?'Escaliers':'Escaleras',cls:'tstair'});
     if(y===maxSavingYear&&maxSavingVal>0&&sorted.length>1)tagItems.push({icon:'💰',label:lang==='en'?'Max Savings':lang==='fr'?'Économies max':'Máximo Ahorro',cls:'tmax'});
 
@@ -3870,9 +3930,6 @@ function upd(){
     const allChecks=[
       {y:true,              t:'all_apps',tkey:true},
       {y:true,              t:'auto_updates',tkey:true},
-      {y:true,              t:'initial_disc',tkey:true},
-      {y:y>1,               t:t('price_frozen')},
-      ...(infOn&&y>1?[{y:true,t:t('no_7_inc')}]:[]),
       ...(lu>0&&lightRate>0?[{y:true,t:`${lu} ${t('light_included')}`}]:[]),
       {y:isCustom,          t:'studio',tkey:true},
       {y:isCustom,          t:'multicompany',tkey:true},
@@ -3948,7 +4005,7 @@ function upd(){
           const mesesNum = sc && displaySaving>0
             ? (displaySaving/monthlyCostPerMonth).toFixed(1)
             : c.mesesAhorrados>0 ? c.mesesAhorrados.toFixed(1) : null;
-          const stairMesesGratis = mesesNum ? `${mesesNum} ${t('months_free')}` : mesesGratis;
+          const stairMesesGratis = mesesNum ? mesesNum : c.mesesAhorrados>0 ? c.mesesAhorrados.toFixed(1) : null;
           return `
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
             <div class="pc-strike-wrap">
@@ -3956,9 +4013,10 @@ function upd(){
               <div class="pc-strike-line"></div>
             </div>
           </div>
-          <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
             <div class="pc-total-big" style="color:${isRec?'var(--s)':'var(--g900)'}">${fN(displayTotal,cur)}</div>
-            <div style="font-size:11px;color:var(--g400);font-weight:500;white-space:nowrap">${isMo?t('per_month'):''}</div>
+            ${isMo?`<div style="font-size:11px;color:var(--g400);font-weight:500;white-space:nowrap">${t('per_month')}</div>`:''}
+            <div style="font-size:10px;color:var(--g400);font-weight:400;white-space:nowrap;align-self:flex-end;padding-bottom:3px">${lang==='fr'?'+ taxes':lang==='es'?'+ impuestos':'+ taxes'}</div>
           </div>
           ${(()=>{
             const userTotal = sc ? sc.licTotal : c.licTotal;
@@ -3973,6 +4031,7 @@ function upd(){
             const line2 = line2parts.join(' · ');
             return `<div class="pc-per-user-inline">${line1}${line2?`<br><span style="opacity:.8">${line2}</span>`:''}</div>`;
           })()}
+
           ${displaySaving>0?`
           <div class="pc-savings-block">
             <div class="pc-savings-months">
@@ -3987,7 +4046,6 @@ function upd(){
       <!-- FEATURES — collapsed for non-rec, subtle list -->
       <div class="pc-bd">
         <div class="pc-feat-divider"></div>
-        <div class="fl-ttl">${t('includes')}</div>
         <div class="pc-feats">
           ${checks.filter(f=>f.y).map(f=>`<div class="fi">
             <svg width="9" height="9" viewBox="0 0 12 12" fill="none" style="flex-shrink:0;margin-top:2px"><path d="M2 6l3 3 5-5" stroke="${isRec?'#017E84':'#6B7280'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4092,23 +4150,20 @@ function renderErp(){
   if(plan2&&u2>0){
     const sorted2=[...visPlans].filter(y=>y>0).sort((a,b)=>a-b);
     if(sorted2.length){
-      // Determine which plan to use: override or recommended (highest saving)
+      // Mirror exact same priority as upd(): manual star > erpPlanOverride > auto best saving
       let useY;
-      if(erpPlanOverride>=0&&visPlans.has(erpPlanOverride)&&erpPlanOverride>0){
+      if(bestValuePlan!==null&&visPlans.has(bestValuePlan)){
+        useY=bestValuePlan;
+      } else if(erpPlanOverride>0&&visPlans.has(erpPlanOverride)){
         useY=erpPlanOverride;
       } else {
-        // Find recommended plan = highest saving vs monthly
-        const tempCalcs=sorted2.map(y=>{
-          const disc=y>1?Math.min(discs[y]||0,DMAX[y])/100:0;
-          const licY1=plan2.ann.y1*u2*12*(1-disc);
-          const licY2=plan2.ann.y2*u2*12*(y-1)*(1-disc);
-          const shT=curHost==='sh'?shCost(true)*12*y:0;
-          const total=licY1+licY2+shT;
-          const baseRef=plan2.mon.y2*u2*12*y+shT;
-          return{y,saving:baseRef-total};
-        });
-        const best=tempCalcs.reduce((a,b)=>b.saving>a.saving?b:a);
-        useY=best.y;
+        const isAnn2=billing==='annual';
+        const best2=sorted2.reduce((best,y)=>{
+          const cc=calcP(y,plan2,u2,0,isAnn2);
+          const cb=calcP(best,plan2,u2,0,isAnn2);
+          return cc.saving>cb.saving?y:best;
+        },sorted2[0]);
+        useY=best2;
       }
       const months={1:'12 m.',2:'24 m.',3:'36 m.',4:'48 m.',5:'60 m.'};
       erpPlanLabel=` · ${months[useY]||''}`;
